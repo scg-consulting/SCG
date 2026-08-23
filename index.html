@@ -403,55 +403,64 @@
   }
 
   function sendCalcResult(){
-    var emailInput = document.getElementById('calcEmail');
-    var email = emailInput.value.trim();
-    var msg = document.getElementById('calcSendMsg');
-    var btn = document.getElementById('calcSendBtn');
+  var emailInput = document.getElementById('calcEmail');
+  var email = emailInput.value.trim();
+  var msg = document.getElementById('calcSendMsg');
+  var btn = document.getElementById('calcSendBtn');
 
-    if(!email || !email.includes('@')){
-      msg.style.display = 'block';
-      msg.style.color = '#C0392B';
-      msg.textContent = 'Пожалуйста, укажите корректный email.';
-      return;
-    }
+  if(!email || !email.includes('@')){
+    msg.style.display = 'block';
+    msg.style.color = '#C0392B';
+    msg.textContent = 'Пожалуйста, укажите корректный email.';
+    return;
+  }
 
-    var rev = parseInt(document.getElementById('calcRevenue').value, 10);
-    var revenueText = fmt(rev) + ' ₽';
-    var resultText = document.getElementById('calcResult').textContent;
+  var rev = parseInt(document.getElementById('calcRevenue').value, 10);
+  var revenueText = fmt(rev) + ' ₽';
+  var resultText = document.getElementById('calcResult').textContent;
 
-    btn.disabled = true;
-    btn.textContent = 'Отправляем...';
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
 
-    var fd = new FormData();
-    fd.append('Тип заявки', 'Калькулятор потерь');
-    fd.append('Email', email);
-    fd.append('Выручка отдела продаж в месяц', revenueText);
-    fd.append('Расчётные потери', resultText);
+  var fd = new FormData();
+  fd.append('Тип заявки', 'Калькулятор потерь');
+  fd.append('Email', email);
+  fd.append('Выручка отдела продаж в месяц', revenueText);
+  fd.append('Расчётные потери', resultText);
 
-    fetch('https://formspree.io/f/mwleyqqr', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: fd
-    }).then(function(response){
-      btn.disabled = false;
-      btn.textContent = 'Получить расчёт';
-      msg.style.display = 'block';
-      if(response.ok){
-        msg.style.color = '#2E7D32';
-        msg.textContent = 'Готово! Расчёт отправлен, мы также свяжемся с вами с рекомендациями.';
-        emailInput.value = '';
-      } else {
-        msg.style.color = '#C0392B';
-        msg.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите на info@scg-sales.ru';
-      }
-    }).catch(function(){
-      btn.disabled = false;
-      btn.textContent = 'Получить расчёт';
-      msg.style.display = 'block';
+  var notifyPromise = fetch('https://formspree.io/f/mwleyqqr', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: fd
+  });
+
+  var sendPromise = fetch('/api/send-calc', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, revenue: rev })
+  });
+
+  Promise.all([notifyPromise, sendPromise]).then(function(results){
+    btn.disabled = false;
+    btn.textContent = 'Получить расчёт';
+    msg.style.display = 'block';
+    var sendOk = results[1] && results[1].ok;
+    if(sendOk){
+      msg.style.color = '#2E7D32';
+      msg.textContent = 'Готово! Расчёт с рекомендациями отправлен на вашу почту.';
+      emailInput.value = '';
+    } else {
       msg.style.color = '#C0392B';
       msg.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите на info@scg-sales.ru';
-    });
-  }
+    }
+  }).catch(function(){
+    btn.disabled = false;
+    btn.textContent = 'Получить расчёт';
+    msg.style.display = 'block';
+    msg.style.color = '#C0392B';
+    msg.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите на info@scg-sales.ru';
+  });
+}
   </script>
 
 <section class="values">
