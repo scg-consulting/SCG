@@ -373,22 +373,86 @@
       <input type="range" id="calcRevenue" min="500000" max="20000000" step="100000" value="3000000" oninput="updateCalc()">
       <div class="calc-val" id="calcRevenueVal">3 000 000 ₽</div>
       <div class="calc-result">
-        <div class="num" id="calcResult">450 000 — 1 050 000 ₽</div>
+        <div class="num" id="calcResult">450 000 – 1 050 000 ₽</div>
         <div class="cap">потенциально теряется ежемесячно из-за узких мест в воронке</div>
+      </div>
+
+      <div id="calcEmailBlock" style="margin-top:24px; padding-top:24px; border-top:1px solid #EEE7DE;">
+        <label style="display:block; margin-bottom:10px;">Получить точный расчёт с рекомендациями на почту</label>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input type="email" id="calcEmail" placeholder="you@company.ru" required
+            style="flex:1; min-width:220px; padding:12px 14px; border:1px solid #DDD; border-radius:6px; font-size:14px; font-family:inherit;">
+          <button type="button" onclick="sendCalcResult()" id="calcSendBtn"
+            style="background:var(--orange); color:#fff; border:none; padding:12px 24px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap;">
+            Получить расчёт
+          </button>
+        </div>
+        <div id="calcSendMsg" style="margin-top:10px; font-size:13px; display:none;"></div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
   function fmt(n){ return Math.round(n).toLocaleString('ru-RU'); }
+
   function updateCalc(){
     var rev = parseInt(document.getElementById('calcRevenue').value, 10);
     document.getElementById('calcRevenueVal').textContent = fmt(rev) + ' ₽';
     var lo = rev * 0.15, hi = rev * 0.35;
-    document.getElementById('calcResult').textContent = fmt(lo) + ' — ' + fmt(hi) + ' ₽';
+    document.getElementById('calcResult').textContent = fmt(lo) + ' – ' + fmt(hi) + ' ₽';
   }
-</script>
+
+  function sendCalcResult(){
+    var emailInput = document.getElementById('calcEmail');
+    var email = emailInput.value.trim();
+    var msg = document.getElementById('calcSendMsg');
+    var btn = document.getElementById('calcSendBtn');
+
+    if(!email || !email.includes('@')){
+      msg.style.display = 'block';
+      msg.style.color = '#C0392B';
+      msg.textContent = 'Пожалуйста, укажите корректный email.';
+      return;
+    }
+
+    var rev = parseInt(document.getElementById('calcRevenue').value, 10);
+    var revenueText = fmt(rev) + ' ₽';
+    var resultText = document.getElementById('calcResult').textContent;
+
+    btn.disabled = true;
+    btn.textContent = 'Отправляем...';
+
+    var fd = new FormData();
+    fd.append('Тип заявки', 'Калькулятор потерь');
+    fd.append('Email', email);
+    fd.append('Выручка отдела продаж в месяц', revenueText);
+    fd.append('Расчётные потери', resultText);
+
+    fetch('https://formspree.io/f/mwleyqqr', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: fd
+    }).then(function(response){
+      btn.disabled = false;
+      btn.textContent = 'Получить расчёт';
+      msg.style.display = 'block';
+      if(response.ok){
+        msg.style.color = '#2E7D32';
+        msg.textContent = 'Готово! Расчёт отправлен, мы также свяжемся с вами с рекомендациями.';
+        emailInput.value = '';
+      } else {
+        msg.style.color = '#C0392B';
+        msg.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите на info@scg-sales.ru';
+      }
+    }).catch(function(){
+      btn.disabled = false;
+      btn.textContent = 'Получить расчёт';
+      msg.style.display = 'block';
+      msg.style.color = '#C0392B';
+      msg.textContent = 'Не получилось отправить. Попробуйте ещё раз или напишите на info@scg-sales.ru';
+    });
+  }
+  </script>
 
 <section class="values">
   <div class="wrap">
