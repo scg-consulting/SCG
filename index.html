@@ -132,6 +132,8 @@
   .dir-card ul{list-style:none; font-size:13.5px; color:var(--graphite);}
   .dir-card li{padding:7px 0; border-top:1px solid #F3EEE6; display:flex; gap:8px;}
   .dir-card li::before{content:'—'; color:var(--orange); flex-shrink:0;}
+  .dir-card li .lbl{flex:1;}
+  .dir-card li .price{color:var(--orange); font-weight:700; white-space:nowrap; font-size:13px;}
 
   /* PROBLEM */
   .problem{background:var(--graphite); color:var(--white); padding:90px 0;}
@@ -189,6 +191,27 @@
   .compare-table td:first-child{font-weight:700; color:var(--graphite); white-space:nowrap;}
   .compare-table tr:last-child td{border-bottom:none;}
   .compare-scroll{overflow-x:auto;}
+
+  /* AI CONTROL */
+  .ai-control{padding:90px 0; background:var(--peach);}
+  .ai-control .head{max-width:720px; margin-bottom:36px;}
+  .ai-control h2{font-size:clamp(24px,3.2vw,34px); margin-bottom:12px;}
+  .ai-control .head p{color:var(--gray); font-size:15.5px;}
+  .ai-tariff-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:8px;}
+  .ai-tariff{background:var(--white); border-radius:8px; padding:26px 24px; border:1px solid #EEE7DE;}
+  .ai-tariff.featured{border-color:var(--orange); box-shadow:0 4px 20px rgba(232,100,31,0.12);}
+  .ai-tariff .tn{font-weight:700; color:var(--orange); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:10px;}
+  .ai-tariff h4{font-size:19px; margin-bottom:10px;}
+  .ai-tariff .aud{font-size:13px; color:var(--gray); margin-bottom:14px;}
+  .ai-tariff p.desc{font-size:14px; color:var(--graphite); margin-bottom:18px; line-height:1.55;}
+  .ai-tariff .price{font-size:22px; font-weight:700; color:var(--orange);}
+  .ai-tariff .price span{font-size:13px; font-weight:400; color:var(--gray);}
+  .ai-note{margin-top:22px; font-size:13.5px; color:var(--gray); max-width:760px;}
+  .ai-entry{margin-top:44px;}
+  .ai-entry h3{font-size:18px; margin-bottom:16px;}
+  .ai-entry ul{list-style:none; display:grid; gap:10px; max-width:760px;}
+  .ai-entry li{font-size:14.5px; color:var(--graphite); padding-left:22px; position:relative;}
+  .ai-entry li::before{content:'—'; color:var(--orange); position:absolute; left:0;}
 
   /* CERTS */
   .certs{padding:90px 0; background:var(--peach);}
@@ -298,6 +321,10 @@
     .certs-grid{grid-template-columns:1fr 1fr;}
     .process-mini{grid-template-columns:1fr;}
     .founder-grid{grid-template-columns:1fr; text-align:center;}
+    .ai-tariff-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:700px){
+    .ai-control .process-mini{grid-template-columns:1fr 1fr;}
   }
   @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important;}}
 </style>
@@ -325,10 +352,11 @@
     </div>
     <nav class="links">
       <a href="#directions">Направления</a>
+      <a href="#ai-control">AI-контроль</a>
       <a href="#signs">Когда это нужно</a>
       <a href="#faq">Вопросы</a>
       <a href="#journey">Путь клиента</a>
-      <a href="#founder">Наша команда</a>
+      <a href="#founder">Основатель</a>
       <a href="#contact">Контакты</a>
     </nav>
     <a href="#contact" class="btn btn-primary" onclick="openModal();return false;">Получить аудит</a>
@@ -501,10 +529,10 @@
           <h3>Люди и управление</h3>
           <p>Регулярное развитие людей: коучинг, стратегические сессии с РОПом, обучение менеджеров и книжный клуб.</p>
           <ul>
-            <li>Коучинг РОПа</li>
-            <li>Стратегическая сессия с РОПом</li>
-            <li>Обучение и развитие МОП</li>
-            <li>Книжный клуб — по абонентской модели</li>
+            <li><span class="lbl">Коучинг РОПа</span><span class="price">от 20 000 ₽/мес</span></li>
+            <li><span class="lbl">Стратегическая сессия с РОПом</span><span class="price">от 25 000 ₽</span></li>
+            <li><span class="lbl">Обучение и развитие МОП</span><span class="price">от 40 000 ₽</span></li>
+            <li><span class="lbl">Книжный клуб — по абонентской модели</span><span class="price">от 15 000 ₽</span></li>
           </ul>
         </div>
         <div class="dir-card reveal">
@@ -512,10 +540,10 @@
           <h3>Система продаж</h3>
           <p>Точечная и проектная работа с отделом продаж: диагностика, разбор процессов и построение системы «под ключ».</p>
           <ul>
-            <li>Аудит отдела продаж — по масштабу команды</li>
-            <li>Консультирование</li>
-            <li>Настройка: от базового пакета до полного «под ключ»</li>
-            <li>Сопровождение после запуска</li>
+            <li><span class="lbl">Аудит отдела продаж — по масштабу команды</span><span class="price">от 40 000 ₽</span></li>
+            <li><span class="lbl">Консультирование</span><span class="price">от 6 000 ₽</span></li>
+            <li><span class="lbl">Настройка: от базового пакета до полного «под ключ»</span><span class="price">от 200 000 ₽</span></li>
+            <li><span class="lbl">Сопровождение после запуска</span><span class="price">от 40 000 ₽/мес</span></li>
           </ul>
         </div>
         <div class="dir-card reveal">
@@ -523,8 +551,8 @@
           <h3>Инструменты</h3>
           <p>Готовые документы для отдела продаж: стандарт работы и сценарии разговоров, которые не устаревают вместе с людьми.</p>
           <ul>
-            <li>Корпоративная книга продаж</li>
-            <li>Скрипты продаж B2B</li>
+            <li><span class="lbl">Корпоративная книга продаж</span><span class="price">по запросу</span></li>
+            <li><span class="lbl">Скрипты продаж B2B</span><span class="price">по запросу</span></li>
           </ul>
         </div>
       </div>
@@ -546,7 +574,7 @@
       <div class="dir-card reveal">
         <span class="dn">Неделя 2</span>
         <h3>Диагностика</h3>
-        <p>Разбираем воронку продаж: конверсия на каждом этапе, где теряются клиенты, длина цикла сделки. Оцениваем KPI и систему мотивации. Проводим тестовые звонки и ролевые игры с менеджерами.</p>
+        <p>Разбираем воронку продаж: конверсия на каждом этапе, где теряются клиенты, длина цикла сделки. Оцениваем KPI и систему мотивации.</p>
       </div>
       <div class="dir-card reveal">
         <span class="dn">Неделя 3</span>
@@ -618,32 +646,112 @@
           <th>Цель</th>
           <th>Срок</th>
           <th>Что получаете</th>
+          <th>Стоимость</th>
         </tr>
         <tr>
           <td>Аудит</td>
           <td>Найти проблему и узкие места</td>
           <td>1–4 недели</td>
           <td>Отчёт с цифрами и приоритизированный план</td>
+          <td>от 40 000 ₽</td>
         </tr>
         <tr>
           <td>Консультирование</td>
           <td>Разово решить конкретный вопрос</td>
           <td>1–2 часа</td>
           <td>Рекомендации по конкретной ситуации</td>
+          <td>от 6 000 ₽</td>
         </tr>
         <tr>
           <td>Настройка</td>
           <td>Внедрить систему «под ключ»</td>
           <td>от 3–4 недель</td>
           <td>Готовая система, найм, обучение, сопровождение</td>
+          <td>от 200 000 ₽</td>
         </tr>
         <tr>
           <td>Инструменты</td>
           <td>Зафиксировать стандарт работы</td>
           <td>2–4 недели</td>
           <td>Книга продаж или скрипты — готовый документ</td>
+          <td>по запросу</td>
+        </tr>
+        <tr>
+          <td>AI Sales Control</td>
+          <td>Постоянный автоконтроль звонков</td>
+          <td>подписка</td>
+          <td>Еженедельные отчёты, скоринг сделок, прогноз выручки</td>
+          <td>от 35 000 ₽/мес</td>
         </tr>
       </table>
+    </div>
+  </div>
+</section>
+
+<section class="ai-control" id="ai-control">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="num-label">Новый продукт</p>
+      <h2 style="margin-top:16px;">SCG AI Sales Control — автоматический контроль звонков на базе ИИ</h2>
+      <p>Разбор каждого звонка каждого менеджера — то, на что у РОПа физически не хватает времени. Продукт анализирует звонки по вашему скрипту продаж, находит необработанные возражения и присылает еженедельный отчёт с конкретными выводами — без найма отдельного аналитика по контролю качества.</p>
+    </div>
+
+    <div class="process-mini" style="grid-template-columns:repeat(5,1fr);">
+      <div class="pm-step reveal">
+        <span class="n">Шаг 1</span>
+        <h4>Транскрибация</h4>
+        <p>Интеграция с телефонией (Mango Office, UIS, Битрикс24) или загрузка записей вручную на старте.</p>
+      </div>
+      <div class="pm-step reveal">
+        <span class="n">Шаг 2</span>
+        <h4>Оценка по скрипту</h4>
+        <p>ИИ находит пропущенные этапы и необработанные возражения по вашему чек-листу продаж.</p>
+      </div>
+      <div class="pm-step reveal">
+        <span class="n">Шаг 3</span>
+        <h4>Автогенерация КП</h4>
+        <p>Черновик follow-up письма формируется автоматически на основе содержания звонка.</p>
+      </div>
+      <div class="pm-step reveal">
+        <span class="n">Шаг 4</span>
+        <h4>Скоринг сделок</h4>
+        <p>Приоритизация сделок по вероятности закрытия на основе истории CRM.</p>
+      </div>
+      <div class="pm-step reveal">
+        <span class="n">Шаг 5</span>
+        <h4>Отчётность</h4>
+        <p>Еженедельный отчёт РОПу — PDF/Excel на старте, веб-дашборд по мере роста базы.</p>
+      </div>
+    </div>
+
+    <div class="ai-tariff-grid" style="margin-top:48px;">
+      <div class="ai-tariff reveal">
+        <span class="tn">Контроль</span>
+        <h4>от 35 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
+        <p class="aud">3–7 менеджеров</p>
+        <p class="desc">Транскрибация звонков, оценка по скрипту, выявление возражений, еженедельный отчёт РОПу.</p>
+      </div>
+      <div class="ai-tariff featured reveal">
+        <span class="tn">Рост</span>
+        <h4>от 75 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
+        <p class="aud">7–15 менеджеров</p>
+        <p class="desc">Всё из «Контроль» + автогенерация писем и КП + скоринг лидов по приоритету закрытия.</p>
+      </div>
+      <div class="ai-tariff reveal">
+        <span class="tn">Система</span>
+        <h4>от 130 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
+        <p class="aud">15–20+ менеджеров</p>
+        <p class="desc">Всё из «Рост» + прогноз выручки по воронке + квартальный разбор с РОП лично.</p>
+      </div>
+    </div>
+    <div class="ai-entry reveal">
+      <h3>Точка входа</h3>
+      <ul>
+        <li>Бесплатный аудит одной недели звонков — разбор 5–10 звонков вручную специалистом SCG, который показывает на цифрах, где теряются деньги</li>
+        <li>Первые недели работы курируются специалистом SCG вручную для точной настройки под скрипт вашей компании</li>
+        <li>Ежемесячная подписка без разовых внедренческих платежей на старте</li>
+      </ul>
+      <a href="#contact" class="btn btn-primary" style="margin-top:26px;" onclick="openModal();return false;">Запросить бесплатный аудит недели звонков</a>
     </div>
   </div>
 </section>
@@ -734,20 +842,16 @@
 
   <section class="founder" id="founder">
     <div class="wrap">
-      <div class="head reveal">
-        <p class="num-label">Команда</p>
-        <h2>Наша команда</h2>
-      </div>
       <div class="founder-grid">
         <div class="founder-photo reveal"><img src="/founder-photo.jpg" alt="Виталий Сидоров"></div>
         <div class="reveal">
           <p class="role">Основатель</p>
           <h2>Виталий Сидоров</h2>
-          <p class="bio">Более 10 лет управляет коммерческими подразделениями и отделами продаж — от небольших команд до 50+ менеджеров.</p>
-          <p class="bio"><strong>10+ лет опыта · 50+ менеджеров в управлении · рост оборота с 600 млн до 1 млрд ₽</strong></p>
-          <p class="bio"><strong>Директор по продажам, IT-компания (партнёр федеральной сети)</strong> — 5+ лет, команда 50+ менеджеров. Провёл компанию через несколько кризисных периодов: сместил стратегию с наращивания штата на качество работы, реализовал полное внедрение CRM Битрикс24 под ключ — настройка воронок, автоматизация процессов, интеграции, обучение команды. Результат — рост выручки +25% год к году.</p>
-          <p class="bio"><strong>Построение отдела продаж с нуля и вывод компании из кризиса</strong> — внедрил систему мотивации, перестроил воронку продаж и бизнес-процессы в CRM, ввёл регламентные документы, нанял и обучил РОПа и менеджеров. Оборот компании вырос с 600 млн до 1 млрд рублей.</p>
-          <p class="bio"><strong>Антикризисный проект в розничной сети</strong> — пересмотрел товарную матрицу, наладил взаимодействие между подразделениями, написал регламенты, реализовал внедрение CRM Мегаплан под ключ, нанял и обучил команду. Оборот вырос на 150 млн рублей за 6 месяцев.</p>
+          <p class="bio">Более 10 лет строит и перезапускает отделы продаж — от небольших кризисных команд до компаний федерального масштаба.</p>
+          <p class="bio"><strong>10+ лет опыта · 50+ менеджеров в управлении</strong></p>
+          <p class="bio">— <strong>Построение отдела продаж в IT-компании (партнёр федеральной сети)</strong> — 5+ лет, 50+ менеджеров. Сместил стратегию с наращивания штата на качество, внедрил CRM Битрикс24 «под ключ».</p>
+          <p class="bio">— <strong>Построение отдела продаж с нуля</strong> — внедрил систему мотивации, перестроил воронку и регламенты, нанял и обучил РОПа и менеджеров. Оборот компании вырос с 600 млн до 1 млрд ₽.</p>
+          <p class="bio">— <strong>Антикризисный проект в оптовой сети</strong> — пересмотрел товарную матрицу, внедрил CRM Мегаплан «под ключ». Оборот вырос на 150 млн ₽ за 6 месяцев.</p>
         </div>
       </div>
     </div>
