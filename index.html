@@ -134,6 +134,10 @@
   .dir-card li::before{content:'—'; color:var(--orange); flex-shrink:0;}
   .dir-card li .lbl{flex:1;}
   .dir-card li .price{color:var(--orange); font-weight:700; white-space:nowrap; font-size:13px;}
+  .dir-card li .kb-toggle{color:var(--orange); text-decoration:underline; cursor:pointer; font-size:12.5px; margin-left:6px; white-space:nowrap;}
+  .dir-card li .kb-desc{display:none; font-size:13px; color:var(--gray); margin-top:8px; line-height:1.55;}
+  .dir-card li.expanded .kb-desc{display:block;}
+  .dir-card li.expanded{flex-wrap:wrap;}
 
   /* PROBLEM */
   .problem{background:var(--graphite); color:var(--white); padding:90px 0;}
@@ -163,7 +167,7 @@
   .faq-item h4::after{content:'+'; color:var(--orange); font-size:20px; flex-shrink:0; transition:transform .2s ease;}
   .faq-item.open h4::after{transform:rotate(45deg);}
   .faq-item p{font-size:14px; color:var(--gray); line-height:1.6; margin-top:0; max-height:0; overflow:hidden; transition:max-height .25s ease, margin-top .25s ease;}
-  .faq-item.open p{margin-top:12px; max-height:200px;}
+  .faq-item.open p{margin-top:12px; max-height:260px;}
 
   /* CALCULATOR */
   .calc{background:var(--peach); padding:70px 0;}
@@ -355,6 +359,7 @@
       <a href="#ai-control">AI-контроль</a>
       <a href="#signs">Когда это нужно</a>
       <a href="#faq">Вопросы</a>
+      <a href="/blog.html">Блог</a>
       <a href="#journey">Путь клиента</a>
       <a href="#founder">Основатель</a>
       <a href="#contact">Контакты</a>
@@ -551,7 +556,7 @@
           <h3>Инструменты</h3>
           <p>Готовые документы для отдела продаж: стандарт работы и сценарии разговоров, которые не устаревают вместе с людьми.</p>
           <ul>
-            <li><span class="lbl">Корпоративная книга продаж</span><span class="price">по запросу</span></li>
+            <li><span class="lbl">Корпоративная книга продаж <span class="kb-toggle" onclick="event.stopPropagation(); this.closest('li').classList.toggle('expanded')">Подробнее</span><span class="kb-desc">Единый документ для отдела продаж: описание продукта и целевой аудитории, этапы воронки, аргументация по каждому этапу, ответы на типовые возражения, примеры успешных диалогов. То, на что новый менеджер опирается с первого дня — вместо того чтобы учиться на реальных клиентах.</span></span><span class="price">по запросу</span></li>
             <li><span class="lbl">Скрипты продаж B2B</span><span class="price">по запросу</span></li>
           </ul>
         </div>
@@ -680,7 +685,7 @@
           <td>AI Sales Control</td>
           <td>Постоянный автоконтроль звонков</td>
           <td>подписка</td>
-          <td>Еженедельные отчёты, скоринг сделок, прогноз выручки</td>
+          <td>Еженедельные отчёты по звонкам менеджеров</td>
           <td>от 35 000 ₽/мес</td>
         </tr>
       </table>
@@ -696,7 +701,7 @@
       <p>Разбор каждого звонка каждого менеджера — то, на что у РОПа физически не хватает времени. Продукт анализирует звонки по вашему скрипту продаж, находит необработанные возражения и присылает еженедельный отчёт с конкретными выводами — без найма отдельного аналитика по контролю качества.</p>
     </div>
 
-    <div class="process-mini" style="grid-template-columns:repeat(5,1fr);">
+    <div class="process-mini" style="grid-template-columns:repeat(2,1fr); max-width:640px;">
       <div class="pm-step reveal">
         <span class="n">Шаг 1</span>
         <h4>Транскрибация</h4>
@@ -707,41 +712,14 @@
         <h4>Оценка по скрипту</h4>
         <p>ИИ находит пропущенные этапы и необработанные возражения по вашему чек-листу продаж.</p>
       </div>
-      <div class="pm-step reveal">
-        <span class="n">Шаг 3</span>
-        <h4>Автогенерация КП</h4>
-        <p>Черновик follow-up письма формируется автоматически на основе содержания звонка.</p>
-      </div>
-      <div class="pm-step reveal">
-        <span class="n">Шаг 4</span>
-        <h4>Скоринг сделок</h4>
-        <p>Приоритизация сделок по вероятности закрытия на основе истории CRM.</p>
-      </div>
-      <div class="pm-step reveal">
-        <span class="n">Шаг 5</span>
-        <h4>Отчётность</h4>
-        <p>Еженедельный отчёт РОПу — PDF/Excel на старте, веб-дашборд по мере роста базы.</p>
-      </div>
     </div>
 
-    <div class="ai-tariff-grid" style="margin-top:48px;">
+    <div class="ai-tariff-grid" style="margin-top:48px; grid-template-columns:1fr; max-width:360px;">
       <div class="ai-tariff reveal">
         <span class="tn">Контроль</span>
         <h4>от 35 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
         <p class="aud">3–7 менеджеров</p>
         <p class="desc">Транскрибация звонков, оценка по скрипту, выявление возражений, еженедельный отчёт РОПу.</p>
-      </div>
-      <div class="ai-tariff featured reveal">
-        <span class="tn">Рост</span>
-        <h4>от 75 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
-        <p class="aud">7–15 менеджеров</p>
-        <p class="desc">Всё из «Контроль» + автогенерация писем и КП + скоринг лидов по приоритету закрытия.</p>
-      </div>
-      <div class="ai-tariff reveal">
-        <span class="tn">Система</span>
-        <h4>от 130 000 ₽<span style="font-size:13px;font-weight:400;color:var(--gray);"> / мес</span></h4>
-        <p class="aud">15–20+ менеджеров</p>
-        <p class="desc">Всё из «Рост» + прогноз выручки по воронке + квартальный разбор с РОП лично.</p>
       </div>
     </div>
     <div class="ai-entry reveal">
@@ -798,6 +776,26 @@
       <div class="faq-item reveal" onclick="this.classList.toggle('open')">
         <h4>В каких нишах у вас есть опыт?</h4>
         <p>Работаем с компаниями малого и среднего бизнеса с отделом продаж от 3 до 50 менеджеров — методология применима к B2B-продажам в целом, вне зависимости от отрасли.</p>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <h4>Насколько безопасны данные о звонках в AI Sales Control?</h4>
+        <p>Записи и транскрипты звонков обрабатываются только для оценки по вашему скрипту и не передаются третьим лицам. Доступ к отчётам есть только у вас и у куратора SCG, ведущего проект.</p>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <h4>С какими CRM и телефониями совместим AI Sales Control?</h4>
+        <p>Есть готовая интеграция с Mango Office, UIS и Битрикс24. Если у вас другая система — на старте можно загружать записи звонков вручную, пока не настроим интеграцию под вас.</p>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <h4>Можно ли отменить подписку AI Sales Control?</h4>
+        <p>Да, подписку можно отменить в любой месяц: жёстких контрактов на срок нет, разовых внедренческих платежей тоже.</p>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <h4>Как оформляется оплата?</h4>
+        <p>Работаем с ИП и ООО по договору и безналичной оплате. Актуальные условия по НДС и системе налогообложения уточняем на созвоне, исходя из формата сотрудничества.</p>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <h4>Что именно значит гарантия возврата денег?</h4>
+        <p>Если по итогам аудита сумма найденных точек роста (в потенциальной выручке) окажется меньше стоимости аудита — возвращаем полную стоимость. Это фиксируется в отчёте и договоре до старта работ.</p>
       </div>
     </div>
   </div>
@@ -943,7 +941,7 @@
       </div>
       <label class="modal-check">
         <input type="checkbox" required>
-        <span>Даю согласие на обработку персональных данных</span>
+        <span>Даю согласие на обработку персональных данных в соответствии с <a href="/privacy.html" target="_blank" style="color:var(--orange);">политикой конфиденциальности</a></span>
       </label>
       <button type="submit" class="modal-submit">Отправить заявку</button>
     </form>
@@ -980,6 +978,10 @@
           <a href="mailto:info@scg-sales.ru" style="color:inherit;text-decoration:underline;">info@scg-sales.ru</a>
           &nbsp;·&nbsp;
           <a href="tel:+79067583988" style="color:inherit;text-decoration:underline;">+7 906 758 39 88</a>
+          &nbsp;·&nbsp;
+          <a href="/privacy.html" style="color:inherit;text-decoration:underline;">Политика конфиденциальности</a>
+          &nbsp;·&nbsp;
+          <a href="/blog.html" style="color:inherit;text-decoration:underline;">Блог</a>
         </div>
   </div>
 </footer>
