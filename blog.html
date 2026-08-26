@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог — SCG, Sales Consulting Group</title>
+<meta name="description" content="Статьи об аудите отделов продаж, воронке, скриптах и управлении командой менеджеров.">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root{
+    --orange:#E8641F; --orange-light:#F2954F; --graphite:#1A1A1A; --gray:#595959; --peach:#FBE9DD; --white:#FFFFFF;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--white); color:var(--graphite); font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  h1,h2,h3{font-weight:700; letter-spacing:-0.01em;}
+
+  header{border-bottom:1px solid #F0E6DA; padding:20px 0;}
+  .header-wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px; letter-spacing:0.02em;}
+  .logo b{color:var(--orange);}
+  .logo .mark{width:22px; height:22px; color:var(--orange);}
+  .back-link{font-size:14px; color:var(--gray);}
+  .back-link:hover{color:var(--orange);}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  .hero{padding:64px 0 20px;}
+  .kicker{font-weight:700; color:var(--orange); font-size:13px; letter-spacing:0.06em; text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .kicker::before{content:''; width:22px; height:2px; background:var(--orange); display:inline-block;}
+  h1{font-size:clamp(26px,4vw,38px); margin-bottom:14px;}
+  .hero p{color:var(--gray); font-size:16px; max-width:560px;}
+
+  .post-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:40px 0 100px;}
+  .post-card{background:var(--peach); border-radius:12px; padding:30px 28px; display:flex; flex-direction:column; transition:transform .15s ease;}
+  .post-card:hover{transform:translateY(-3px);}
+  .post-card .tag{font-size:12px; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:12px;}
+  .post-card h2{font-size:20px; margin-bottom:10px; line-height:1.35;}
+  .post-card p{color:#4a4a4a; font-size:14.5px; line-height:1.55; flex-grow:1; margin-bottom:18px;}
+  .post-card .read-more{font-size:14px; font-weight:700; color:var(--orange);}
+  .post-card.soon{background:var(--white); border:1.5px dashed #E5DACB; opacity:0.75;}
+  .post-card.soon .tag{color:var(--gray);}
+
+  footer{background:var(--graphite); color:rgba(255,255,255,0.6); padding:32px 0; font-size:13px;}
+  .footer-wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .footer-wrap a{color:rgba(255,255,255,0.75);}
+
+  @media (max-width:760px){
+    .post-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-wrap">
+    <div class="logo">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      SALES CONSULTING <b>GROUP</b>
+    </div>
+    <a class="back-link" href="/">← На главную</a>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <p class="kicker">Блог SCG</p>
+  <h1>Практика, а не общие советы</h1>
+  <p>Разборы из реальных аудитов и проектов: воронка, найм, скрипты, мотивация — то, с чем сталкивается каждый отдел продаж на пути к системе.</p>
+</div>
+
+<div class="wrap">
+  <div class="post-grid">
+    <a class="post-card" href="/blog-voronka-poteri-vyruchki.html">
+      <div class="tag">Аудит</div>
+      <h2>Как посчитать, сколько ваш отдел продаж теряет на воронке</h2>
+      <p>Пошаговая методика с формулами: как разложить воронку на этапы, найти узкое место и перевести просадку конверсии в конкретную сумму упущенной выручки.</p>
+      <span class="read-more">Читать →</span>
+    </a>
+    <div class="post-card soon">
+      <div class="tag">Скоро</div>
+      <h2>Чек-лист для найма РОПа: 10 вопросов на собеседовании</h2>
+      <p>Как за одно собеседование отличить сильного руководителя отдела продаж от того, кто хорошо продаёт себя, но не умеет строить систему.</p>
+    </div>
+    <div class="post-card soon">
+      <div class="tag">Скоро</div>
+      <h2>Разбор реального звонка менеджера: 7 ошибок, которые слышно с первой минуты</h2>
+      <p>Построчный разбор типичного звонка — где менеджер теряет клиента и что сказать вместо этого.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-wrap">
+    <div>© 2026 Sales Consulting Group</div>
+    <div><a href="/">На главную</a> · <a href="/privacy.html">Политика конфиденциальности</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

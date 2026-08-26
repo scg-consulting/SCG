@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Как посчитать, сколько ваш отдел продаж теряет на воронке — SCG</title>
+<meta name="description" content="Пошаговая методика: как посчитать конверсию на каждом этапе воронки продаж и перевести потери в деньги. С формулами и примером расчёта.">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root{
+    --orange:#E8641F; --orange-light:#F2954F; --graphite:#1A1A1A; --gray:#595959; --peach:#FBE9DD; --white:#FFFFFF;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--white); color:var(--graphite); font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  a{color:var(--orange); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  img,svg{display:block; max-width:100%;}
+  h1,h2,h3{font-weight:700; letter-spacing:-0.01em; color:var(--graphite);}
+
+  header{border-bottom:1px solid #F0E6DA; padding:20px 0;}
+  .header-wrap{max-width:1180px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px; letter-spacing:0.02em;}
+  .logo b{color:var(--orange);}
+  .logo .mark{width:22px; height:22px; color:var(--orange);}
+  .back-link{font-size:14px; color:var(--gray); text-decoration:none;}
+  .back-link:hover{color:var(--orange); text-decoration:none;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  article{padding:56px 0 90px;}
+
+  .kicker{font-weight:700; color:var(--orange); font-size:13px; letter-spacing:0.06em; text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .kicker::before{content:''; width:22px; height:2px; background:var(--orange); display:inline-block;}
+  .meta{color:var(--gray); font-size:13.5px; margin-bottom:28px;}
+
+  h1{font-size:clamp(26px,4vw,36px); margin-bottom:8px; line-height:1.25;}
+  .lead{font-size:17.5px; color:#3d3d3d; margin:20px 0 8px; line-height:1.6;}
+
+  h2{font-size:22px; margin-top:44px; margin-bottom:14px;}
+  h3{font-size:17px; margin-top:28px; margin-bottom:10px;}
+  p{margin-bottom:16px; color:#2b2b2b;}
+  ul,ol{padding-left:22px; margin-bottom:16px;}
+  li{margin-bottom:8px; color:#2b2b2b;}
+  strong{color:var(--graphite);}
+
+  .formula-box{background:var(--peach); border-radius:10px; padding:22px 26px; margin:26px 0; font-size:15px;}
+  .formula-box .f{font-weight:700; font-size:16px; color:var(--graphite); margin-bottom:6px;}
+  .formula-box .ex{color:var(--gray); font-size:14px; margin-top:8px;}
+
+  table{width:100%; border-collapse:collapse; margin:24px 0; font-size:14.5px;}
+  th{background:var(--graphite); color:var(--white); text-align:left; padding:12px 14px; font-size:12.5px; text-transform:uppercase; letter-spacing:0.03em;}
+  td{padding:12px 14px; border-bottom:1px solid #F0E6DA;}
+  tr:nth-child(even) td{background:#FCF7F2;}
+
+  .cta-box{background:var(--graphite); color:var(--white); border-radius:12px; padding:32px 30px; margin:44px 0 12px; text-align:center;}
+  .cta-box h3{color:var(--white); margin-top:0; font-size:20px;}
+  .cta-box p{color:rgba(255,255,255,0.75); font-size:14.5px; margin-bottom:20px;}
+  .btn-primary{display:inline-block; background:var(--orange); color:var(--white); font-weight:700; padding:13px 26px; border-radius:8px; font-size:15px;}
+  .btn-primary:hover{background:var(--orange-light); text-decoration:none;}
+
+  footer{background:var(--graphite); color:rgba(255,255,255,0.6); padding:32px 0; margin-top:40px; font-size:13px;}
+  .footer-wrap{max-width:1180px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .footer-wrap a{color:rgba(255,255,255,0.75);}
+
+  @media (max-width:600px){
+    article{padding:36px 0 60px;}
+    .formula-box{padding:18px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-wrap">
+    <div class="logo">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      SALES CONSULTING <b>GROUP</b>
+    </div>
+    <a class="back-link" href="/blog.html">← Все статьи</a>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <p class="kicker">Экспертный блог</p>
+    <h1>Как посчитать, сколько ваш отдел продаж теряет на воронке</h1>
+    <p class="meta">SCG · Разбор методики аудита</p>
+
+    <p class="lead">«У нас всё нормально с продажами, просто лидов маловато» — типичная фраза перед аудитом, после которого выясняется, что лидов достаточно, а деньги теряются между этапами воронки. Ниже — методика, по которой можно посчитать это самостоятельно, за час-полтора, без специальных инструментов.</p>
+
+    <h2>Почему «конверсия в целом» ничего не говорит</h2>
+    <p>Если смотреть только на итоговую конверсию «лид → сделка», узкое место не видно: она может быть средней по рынку, а внутри воронки — один провальный этап, который съедает всю эффективность остальных.</p>
+    <p>Пример: из 100 лидов в оплату переходит 8 — вроде бы конверсия 8%, «нормально». Но если разложить по этапам, может оказаться, что 70 из 100 лидов вообще не доходят до презентации — потому что менеджеры не дозваниваются вторым касанием. Проблема не в продажах как таковых, а в конкретном шаге, который несложно поправить.</p>
+
+    <h2>Шаг 1. Разбейте воронку на этапы</h2>
+    <p>Возьмите вашу реальную последовательность, а не «идеальную» из учебника. Обычно это:</p>
+    <ol>
+      <li>Лид (заявка/звонок пришёл)</li>
+      <li>Квалификация (созвонились, подходит ли клиент)</li>
+      <li>Презентация / КП отправлено</li>
+      <li>Переговоры (обсуждение условий, возражения)</li>
+      <li>Оплата</li>
+    </ol>
+    <p>Если в вашей CRM этапов больше или они называются иначе — используйте свои. Важно, чтобы каждый этап был зафиксирован как отдельный статус сделки, а не просто «в работе».</p>
+
+    <h2>Шаг 2. Посчитайте конверсию между каждой парой соседних этапов</h2>
+    <div class="formula-box">
+      <div class="f">Конверсия этапа = (Сделок на этапе N+1 ÷ Сделок на этапе N) × 100%</div>
+      <div class="ex">Считайте по каждой паре соседних этапов отдельно, а не сквозную конверсию от первого до последнего — иначе провал спрячется внутри общего числа.</div>
+    </div>
+    <p>Возьмите период не короче месяца (лучше — квартал), чтобы исключить случайные колебания. Если у вас есть CRM — это выгрузка по воронке за период. Если нет — придётся поднять историю переписок и звонков вручную, это тот самый час-полтора.</p>
+
+    <h2>Шаг 3. Сравните с бенчмарком по этапу, а не с воронкой целиком</h2>
+    <p>У каждого этапа своя «нормальная» просадка — сравнивать нужно этап с этапом, а не одну цифру со средней по больнице. Ориентировочные диапазоны для B2B (сильно зависят от ниши и чека, но как отправная точка подходят):</p>
+    <table>
+      <tr><th>Этап</th><th>Обычная конверсия</th><th>Стоит насторожиться, если</th></tr>
+      <tr><td>Лид → Квалификация</td><td>60–80%</td><td>ниже 50%</td></tr>
+      <tr><td>Квалификация → Презентация/КП</td><td>50–70%</td><td>ниже 40%</td></tr>
+      <tr><td>Презентация → Переговоры</td><td>40–60%</td><td>ниже 30%</td></tr>
+      <tr><td>Переговоры → Оплата</td><td>30–50%</td><td>ниже 20%</td></tr>
+    </table>
+    <p>Этап, который заметно ниже своего диапазона — и есть узкое место. Часто их 1–2 на всю воронку, а не «всё плохо везде».</p>
+
+    <h2>Шаг 4. Переведите просадку в деньги</h2>
+    <p>Это тот шаг, который обычно убеждает лучше любых процентов — потому что руководителю нужна не конверсия, а сумма.</p>
+    <div class="formula-box">
+      <div class="f">Потери на этапе = Число «застрявших» сделок × Средний чек × Конверсия оставшихся этапов до оплаты</div>
+      <div class="ex">Пример: на этапе «Квалификация → КП» теряется 25 сделок в месяц сверх нормы. Средний чек — 150 000 ₽. Конверсия из КП в оплату по остальным этапам — 20%. Потери: 25 × 150 000 × 0,20 = 750 000 ₽ упущенной выручки в месяц.</div>
+    </div>
+    <p>Именно так устроен и калькулятор на нашем сайте — он использует усреднённую вилку 15–35% потерь между этапами воронки, чтобы сразу дать ориентир без ручного расчёта.</p>
+
+    <h2>Что делать с результатом</h2>
+    <p>Дальше логика простая:</p>
+    <ul>
+      <li><strong>Если просадка на этапе «Лид → Квалификация»</strong> — чаще всего проблема в скорости обработки заявки или в скрипте первого звонка.</li>
+      <li><strong>Если просадка на этапе «КП → Переговоры»</strong> — обычно дело в качестве коммерческого предложения или в том, что менеджер не возвращается ко второму касанию.</li>
+      <li><strong>Если просадка на этапе «Переговоры → Оплата»</strong> — почти всегда это отработка возражений: менеджеры либо не слышат настоящую причину отказа, либо не умеют торговаться в рамках допустимых условий.</li>
+    </ul>
+    <p>Ручной расчёт хорош тем, что не требует инструментов — но у него есть слепая зона: он не показывает, <em>что именно</em> менеджеры делают не так внутри проблемного этапа, только то, что этап проблемный. Для этого нужен уже разбор звонков — вручную или автоматически.</p>
+
+    <div class="cta-box">
+      <h3>Хотите точный расчёт по вашей воронке?</h3>
+      <p>Посчитаем конверсию по каждому этапу на ваших реальных данных и покажем, где именно теряется выручка — в рамках аудита отдела продаж.</p>
+      <a class="btn-primary" href="/#contact">Запросить аудит</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-wrap">
+    <div>© 2026 Sales Consulting Group</div>
+    <div><a href="/">На главную</a> · <a href="/blog.html">Все статьи</a> · <a href="/privacy.html">Политика конфиденциальности</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
