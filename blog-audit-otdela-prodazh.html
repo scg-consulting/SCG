@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аудит отдела продаж: что проверять и как понять, что он нужен — SCG</title>
+<meta name="description" content="Как понять, что отделу продаж пора на аудит, и что именно проверяется. Разбор на реальных кейсах: от антикризисного управления до роста оборота с 600 млн до 1 млрд рублей.">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root{
+    --orange:#E8641F; --orange-light:#F2954F; --graphite:#1A1A1A; --gray:#595959; --peach:#FBE9DD; --white:#FFFFFF;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--white); color:var(--graphite); font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  a{color:var(--orange); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  img,svg{display:block; max-width:100%;}
+  h1,h2,h3{font-weight:700; letter-spacing:-0.01em; color:var(--graphite);}
+
+  header{border-bottom:1px solid #F0E6DA; padding:20px 0;}
+  .header-wrap{max-width:1180px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .logo{display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px; letter-spacing:0.02em;}
+  .logo b{color:var(--orange);}
+  .logo .mark{width:22px; height:22px; color:var(--orange);}
+  .back-link{font-size:14px; color:var(--gray); text-decoration:none;}
+  .back-link:hover{color:var(--orange); text-decoration:none;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  article{padding:56px 0 90px;}
+
+  .kicker{font-weight:700; color:var(--orange); font-size:13px; letter-spacing:0.06em; text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .kicker::before{content:''; width:22px; height:2px; background:var(--orange); display:inline-block;}
+  .meta{color:var(--gray); font-size:13.5px; margin-bottom:28px;}
+
+  h1{font-size:clamp(26px,4vw,36px); margin-bottom:8px; line-height:1.25;}
+  .lead{font-size:17.5px; color:#3d3d3d; margin:20px 0 8px; line-height:1.6;}
+
+  h2{font-size:22px; margin-top:44px; margin-bottom:14px;}
+  h3{font-size:17px; margin-top:28px; margin-bottom:10px;}
+  p{margin-bottom:16px; color:#2b2b2b;}
+  ul,ol{padding-left:22px; margin-bottom:16px;}
+  li{margin-bottom:8px; color:#2b2b2b;}
+  strong{color:var(--graphite);}
+
+  .case-box{background:var(--peach); border-left:4px solid var(--orange); border-radius:6px; padding:20px 24px; margin:26px 0; font-size:15px;}
+  .case-box .f{font-weight:700; font-size:15px; color:var(--graphite); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.02em;}
+
+  table{width:100%; border-collapse:collapse; margin:24px 0; font-size:14.5px;}
+  th{background:var(--graphite); color:var(--white); text-align:left; padding:12px 14px; font-size:12.5px; text-transform:uppercase; letter-spacing:0.03em;}
+  td{padding:12px 14px; border-bottom:1px solid #F0E6DA;}
+  tr:nth-child(even) td{background:#FCF7F2;}
+
+  .cta-box{background:var(--graphite); color:var(--white); border-radius:12px; padding:32px 30px; margin:44px 0 12px; text-align:center;}
+  .cta-box h3{color:var(--white); margin-top:0; font-size:20px;}
+  .cta-box p{color:rgba(255,255,255,0.75); font-size:14.5px; margin-bottom:20px;}
+  .btn-primary{display:inline-block; background:var(--orange); color:var(--white); font-weight:700; padding:13px 26px; border-radius:8px; font-size:15px;}
+  .btn-primary:hover{background:var(--orange-light); text-decoration:none;}
+
+  footer{background:var(--graphite); color:rgba(255,255,255,0.6); padding:32px 0; margin-top:40px; font-size:13px;}
+  .footer-wrap{max-width:1180px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .footer-wrap a{color:rgba(255,255,255,0.75);}
+
+  @media (max-width:600px){
+    article{padding:36px 0 60px;}
+    .case-box{padding:16px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-wrap">
+    <div class="logo">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      SALES CONSULTING <b>GROUP</b>
+    </div>
+    <a class="back-link" href="/blog.html">← Все статьи</a>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <p class="kicker">Экспертный блог</p>
+    <h1>Аудит отдела продаж: что проверять и как понять, что он нужен</h1>
+    <p class="meta">Виталий Сидоров · Основатель SCG · 10+ лет в управлении коммерческими блоками</p>
+
+    <p class="lead">В одном из проектов, где я перестраивал отдел продаж, руководство было убеждено: проблема в лидах и в людях. По факту всё оказалось иначе — и разница между «кажется» и «есть на самом деле» напрямую отражалась на выручке компании. Аудит — это не формальность для галочки, это единственный способ увидеть эту разницу до того, как решения начнут приниматься вслепую.</p>
+
+    <h2>Почему собственник обычно ошибается с диагнозом</h2>
+    <p>Типичная ситуация: продажи не растут, и первая реакция — «нужны новые менеджеры» или «нужно больше лидов». Это самая дорогая ошибка, которую можно сделать, потому что она лечит симптом, а не причину.</p>
+
+    <div class="case-box">
+      <div class="f">Кейс: ООО «Регламент Тест»</div>
+      В антикризисном проекте в ООО «Регламент Тест» первым импульсом руководства было расширять штат и увеличивать рекламный бюджет. Но проблема оказалась не в количестве продавцов, а в том, как был устроен сам процесс — от постановки задач до контроля результата. Мы перестроили систему управления, и за 6 месяцев оборот компании вырос на 150 млн рублей — без единого нового найма в первые месяцы.
+    </div>
+
+    <p>По моему опыту это правило, а не исключение: в девяти случаях из десяти дело не в «плохих» продавцах и не в «мало лидов». Дело в системе — в том, как выстроены процессы, метрики и управление. Именно это и должен выявить аудит, прежде чем вы потратите бюджет на то, что не решит проблему.</p>
+
+    <h2>Признаки, что отделу продаж нужен внешний взгляд</h2>
+    <ul>
+      <li><strong>Выручка стагнирует, хотя лидов не меньше, чем раньше</strong> — значит, проблема не в источнике заявок, а внутри воронки</li>
+      <li><strong>Результаты сильно зависят от 1-2 «звёздных» менеджеров</strong> — это не система, а везение, и оно закончится, как только эти люди уйдут</li>
+      <li><strong>Руководитель не может ответить, на каком этапе теряются сделки</strong> — если нет цифр по конверсии между этапами, управлять нечем, только гадать</li>
+      <li><strong>Прогнозы регулярно не сбываются</strong> — план на месяц не выполняется, но объяснения каждый раз новые</li>
+      <li><strong>Собственник — единственный, кто «тащит» ключевые сделки</strong> — отдел продаж существует номинально, а не по факту</li>
+    </ul>
+
+    <p>Если хотя бы два пункта из списка про вас — аудит не роскошь, а способ перестать терять деньги на ощущениях вместо фактов.</p>
+
+    <h2>Что именно проверяется на аудите</h2>
+
+    <h3>1. Воронка и конверсия по этапам</h3>
+    <p>Разбираем, где именно «утекают» сделки — не в целом, а по каждому переходу между этапами. Это база, без которой любые другие выводы — гадание на кофейной гуще.</p>
+
+    <h3>2. Звонки и переписки менеджеров</h3>
+    <p>Смотрим не количество звонков, а их качество: как отрабатываются возражения, задаются ли квалифицирующие вопросы, доводится ли клиент до следующего шага. Здесь чаще всего вскрывается разрыв между тем, что менеджер должен делать по регламенту, и тем, что он делает на самом деле.</p>
+
+    <h3>3. CRM и то, как ей реально пользуются</h3>
+    <p>Не факт наличия CRM, а то, отражает ли она реальное положение дел. Я лично внедрял Битрикс24 и Мегаплан «под ключ» в нескольких компаниях — и в каждой встречал одну и ту же картину: система стоит, но сделки двигаются по этапам «на глаз», а не по факту.</p>
+
+    <h3>4. Система мотивации</h3>
+    <p>Проверяем, действительно ли мотивация толкает менеджеров к нужному поведению, или просто платит за выход на работу. Часто схема мотивации годами не пересматривалась и тянет отдел в сторону, противоположную целям компании.</p>
+
+    <h3>5. Управленческие метрики руководителя</h3>
+    <p>По каким цифрам РОП принимает решения — и принимает ли вообще, или управляет интуицией. Это один из самых недооценённых блоков: часто отдел «объективно неплохой», а слабое звено — сама система управления над ним.</p>
+
+    <h2>Аудит своими силами или со стороны — в чём разница</h2>
+    <p>Формально ничего не мешает провести аудит самостоятельно. На практике это редко работает по одной причине: руководитель и его команда варятся внутри процессов и не видят их со стороны — то, что кажется нормой изнутри, снаружи может быть очевидной проблемой.</p>
+    <table>
+      <tr><th>Аудит своими силами</th><th>Аудит со стороны</th></tr>
+      <tr><td>Быстро, без затрат на консультанта</td><td>Дороже, но объективнее</td></tr>
+      <tr><td>Риск не увидеть «слепые зоны» в своих же процессах</td><td>Взгляд без привязки к внутренней политике компании</td></tr>
+      <tr><td>Нет базы для сравнения с другими отделами продаж</td><td>Есть бенчмарки из десятков других проектов</td></tr>
+      <tr><td>Подходит для регулярной самопроверки</td><td>Подходит, когда цена ошибки высока</td></tr>
+    </table>
+
+    <p>Я прошёл обе стороны этого процесса — и как руководитель, который перестраивал отделы изнутри, и как консультант, который заходит со стороны. Изнутри почти невозможно увидеть то, что видно за 2-3 недели диагностики извне — именно поэтому даже сильные внутренние РОПы регулярно приглашают внешний аудит.</p>
+
+    <h2>Сколько по времени занимает нормальный аудит</h2>
+    <p>Полноценная диагностика — это обычно 3-4 недели: разбор CRM и цифр, прослушка звонков, интервью с менеджерами и руководителем, сверка с рынком. Меньше — есть риск поверхностных выводов. Больше — как правило, уже не диагностика, а затягивание процесса.</p>
+
+    <div class="cta-box">
+      <h3>Хотите узнать, что покажет аудит вашего отдела продаж?</h3>
+      <p>Проведём диагностику на ваших реальных данных — без готовых шаблонов, с конкретными цифрами и планом действий.</p>
+      <a class="btn-primary" href="/#contact">Запросить аудит</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-wrap">
+    <div>© 2026 Sales Consulting Group</div>
+    <div><a href="/">На главную</a> · <a href="/blog.html">Все статьи</a> · <a href="/privacy.html">Политика конфиденциальности</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
