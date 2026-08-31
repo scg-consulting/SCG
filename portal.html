@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCG AI Sales Control — Личный кабинет (прототип)</title>
+<style>
+  :root{
+    --orange:#E8641F;
+    --orange-light:#F2954F;
+    --graphite:#1A1A1A;
+    --gray:#595959;
+    --gray-light:#8A8A8A;
+    --peach:#FBE9DD;
+    --white:#FFFFFF;
+    --line:#EEE7DE;
+    --good:#2E7D32;
+    --good-bg:#E8F3E9;
+    --bad:#C0392B;
+    --bad-bg:#FBEAE8;
+    --wait:#B8860B;
+    --wait-bg:#FBF3DF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#F7F4EF; color:var(--graphite);
+    font-size:15px; line-height:1.55;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+
+  /* ---------- demo switcher (not part of the product itself) ---------- */
+  #demoBar{
+    position:fixed; top:0; left:0; right:0; z-index:999;
+    background:var(--graphite); color:#fff; display:flex; gap:0;
+    font-size:12.5px; overflow-x:auto;
+  }
+  #demoBar button{
+    background:none; border:none; color:rgba(255,255,255,0.6);
+    padding:10px 16px; font-weight:700; white-space:nowrap; border-bottom:2px solid transparent;
+  }
+  #demoBar button.active{color:#fff; border-bottom-color:var(--orange);}
+  #demoBar .tag{padding:10px 14px; color:rgba(255,255,255,0.35); font-weight:400;}
+  .app{padding-top:40px;}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  /* ---------- LOGIN ---------- */
+  #screen-login{
+    min-height:calc(100vh - 40px);
+    display:flex; align-items:center; justify-content:center;
+    background:var(--peach);
+    padding:40px 20px;
+  }
+  .login-card{
+    background:var(--white); border-radius:10px; padding:44px 40px;
+    width:100%; max-width:380px; box-shadow:0 12px 40px rgba(26,26,26,0.08);
+  }
+  .login-mark{width:34px; height:34px; color:var(--orange); margin-bottom:22px;}
+  .login-mark svg{width:100%; height:100%;}
+  .login-card h1{font-size:20px; margin-bottom:6px;}
+  .login-card .sub{font-size:13.5px; color:var(--gray); margin-bottom:28px;}
+  .field{margin-bottom:16px;}
+  .field label{font-size:12.5px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;}
+  .field input{
+    width:100%; padding:12px 14px; border:1px solid #DDD; border-radius:6px;
+    font-size:14.5px; font-family:inherit; color:var(--graphite);
+  }
+  .field input:focus{outline:none; border-color:var(--orange);}
+  .login-btn{
+    width:100%; background:var(--graphite); color:#fff; border:none;
+    padding:14px; border-radius:6px; font-size:14.5px; font-weight:700; margin-top:6px;
+  }
+  .login-btn:hover{background:var(--orange);}
+  .login-foot{font-size:12.5px; color:var(--gray-light); margin-top:20px; text-align:center;}
+
+  /* ---------- APP SHELL ---------- */
+  .shell{display:grid; grid-template-columns:230px 1fr; min-height:calc(100vh - 40px);}
+  .sidebar{
+    background:var(--graphite); color:rgba(255,255,255,0.75);
+    padding:26px 18px; display:flex; flex-direction:column;
+  }
+  .sb-logo{display:flex; align-items:center; gap:9px; padding:0 4px 26px; color:#fff;}
+  .sb-logo .mk{width:20px; height:20px; color:var(--orange);}
+  .sb-logo .mk svg{width:100%; height:100%;}
+  .sb-logo .tx{font-weight:700; font-size:13px; letter-spacing:0.02em;}
+  .sb-nav{display:flex; flex-direction:column; gap:2px; flex:1;}
+  .sb-nav a{
+    padding:10px 12px; border-radius:6px; font-size:13.5px; font-weight:700;
+    color:rgba(255,255,255,0.55); display:flex; align-items:center; gap:10px;
+  }
+  .sb-nav a.on{background:rgba(232,100,31,0.16); color:#fff;}
+  .sb-nav a:hover{color:#fff;}
+  .sb-foot{border-top:1px solid rgba(255,255,255,0.1); padding-top:14px; font-size:12.5px;}
+  .sb-foot .nm{color:#fff; font-weight:700; margin-bottom:2px;}
+  .sb-foot .br{color:rgba(255,255,255,0.4);}
+
+  .main{padding:30px 36px 60px;}
+  .topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .topbar h2{font-size:22px;}
+  .week-select{
+    display:flex; align-items:center; gap:10px;
+    background:var(--white); border:1px solid var(--line); border-radius:6px; padding:8px 14px; font-size:13.5px; font-weight:700;
+  }
+  .week-select .arrow{color:var(--gray-light); cursor:pointer; font-size:13px;}
+
+  .stat-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:30px;}
+  .stat{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px 22px;}
+  .stat .lbl{font-size:12.5px; color:var(--gray); margin-bottom:8px;}
+  .stat .val{font-size:26px; font-weight:700;}
+  .stat .val small{font-size:13px; font-weight:400; color:var(--gray);}
+  .stat.warn .val{color:var(--wait);}
+
+  .section-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .section-head h3{font-size:16px;}
+  .section-head .cnt{font-size:12.5px; color:var(--gray); background:var(--peach); padding:3px 9px; border-radius:20px; font-weight:700;}
+
+  .list{background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:32px;}
+  .row{display:flex; align-items:center; gap:16px; padding:15px 20px; border-bottom:1px solid var(--line); cursor:pointer;}
+  .row:last-child{border-bottom:none;}
+  .row:hover{background:#FCFAF7;}
+  .row .who{flex:1; min-width:0;}
+  .row .who .n{font-weight:700; font-size:14px;}
+  .row .who .m{font-size:12.5px; color:var(--gray); margin-top:2px;}
+  .pill{font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:20px; white-space:nowrap;}
+  .pill.wait{background:var(--wait-bg); color:var(--wait);}
+  .pill.bad{background:var(--bad-bg); color:var(--bad);}
+  .pill.good{background:var(--good-bg); color:var(--good);}
+  .row .score{width:36px; text-align:right; font-weight:700; font-size:14.5px; color:var(--graphite);}
+  .row .arrow-btn{color:var(--gray-light); font-size:14px;}
+
+  .team-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .trend{display:flex; align-items:center; gap:3px; font-size:12px; font-weight:700; width:52px;}
+  .trend.up{color:var(--good);} .trend.down{color:var(--bad);} .trend.flat{color:var(--gray-light);}
+  .grp-tag{font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px; background:var(--peach); color:var(--orange);}
+
+  /* ---------- CALL CARD ---------- */
+  .back-link{font-size:13px; font-weight:700; color:var(--gray); margin-bottom:16px; display:inline-block;}
+  .back-link:hover{color:var(--orange);}
+  .call-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:24px; align-items:start;}
+  .panel{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:24px;}
+  .panel h4{font-size:14.5px; margin-bottom:14px;}
+  .call-meta{display:flex; flex-wrap:wrap; gap:22px; margin-bottom:22px; font-size:13px; color:var(--gray);}
+  .call-meta b{color:var(--graphite); display:block; font-size:14.5px; margin-bottom:2px;}
+  .transcript{max-height:420px; overflow-y:auto; font-size:13.5px;}
+  .t-line{padding:9px 0; border-bottom:1px solid var(--line); display:flex; gap:10px;}
+  .t-line:last-child{border-bottom:none;}
+  .t-line .tm{color:var(--gray-light); font-size:11.5px; width:38px; flex-shrink:0; padding-top:2px;}
+  .t-line .who{font-weight:700; font-size:11.5px; width:52px; flex-shrink:0; padding-top:2px;}
+  .t-line.mop .who{color:var(--orange);}
+  .t-line.client .who{color:var(--gray);}
+  .t-line.flag{background:#FBF3DF;}
+  .finding{display:flex; gap:10px; padding:12px 0; border-bottom:1px solid var(--line);}
+  .finding:last-child{border-bottom:none;}
+  .finding .dot{width:7px; height:7px; border-radius:50%; background:var(--bad); margin-top:6px; flex-shrink:0;}
+  .finding .tx{font-size:13.5px;}
+  .finding .tx b{display:block; font-size:13.5px; margin-bottom:2px;}
+  .finding .tx span{color:var(--gray); font-size:12.5px;}
+  .review-box textarea{
+    width:100%; border:1px solid #DDD; border-radius:6px; padding:12px; font-family:inherit;
+    font-size:13.5px; resize:vertical; margin-bottom:12px;
+  }
+  .review-box .status{display:flex; align-items:center; gap:8px; margin-bottom:16px; font-size:13px; font-weight:700;}
+  .confirm-btn{background:var(--graphite); color:#fff; border:none; padding:11px 20px; border-radius:6px; font-size:13.5px; font-weight:700; width:100%;}
+  .confirm-btn:hover{background:var(--orange);}
+
+  /* ---------- MANAGER CARD ---------- */
+  .mgr-head{display:flex; align-items:center; gap:16px; margin-bottom:26px;}
+  .mgr-avatar{
+    width:54px; height:54px; border-radius:50%; background:var(--peach); color:var(--orange);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:19px; flex-shrink:0;
+  }
+  .mgr-head h2{font-size:20px; margin-bottom:4px;}
+  .mgr-head .meta{font-size:13px; color:var(--gray); display:flex; gap:10px; align-items:center;}
+
+  .chart-wrap{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin-bottom:24px;}
+  .chart-wrap .chead{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;}
+  .chart-wrap .chead h4{font-size:14.5px;}
+  .chart-wrap .chead .avg{font-size:13px; color:var(--gray);}
+  .chart-wrap .chead .avg b{color:var(--graphite);}
+
+  .rec-list{display:grid; gap:10px; margin-bottom:24px;}
+  .rec{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:14px 18px; font-size:13.5px; display:flex; gap:12px;}
+  .rec .num{color:var(--orange); font-weight:700; flex-shrink:0;}
+
+  /* ---------- RATING ---------- */
+  .rating-list{background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .rrow{display:flex; align-items:center; gap:16px; padding:16px 20px; border-bottom:1px solid var(--line);}
+  .rrow:last-child{border-bottom:none;}
+  .rrow .rank{width:24px; font-weight:700; color:var(--gray-light); font-size:14px; text-align:center;}
+  .rrow.top1 .rank, .rrow.top1 .who .n{color:var(--orange);}
+  .badge{font-size:11px; font-weight:700; padding:4px 9px; border-radius:20px; background:var(--peach); color:var(--orange);}
+  .badge.blue{background:#E7EEF8; color:#2A5B9C;}
+  .badge.green{background:var(--good-bg); color:var(--good);}
+  .badges-row{display:flex; gap:6px; flex-wrap:wrap;}
+  .rrow .bar-wrap{width:120px; height:6px; background:var(--line); border-radius:4px; overflow:hidden; flex-shrink:0;}
+  .rrow .bar{height:100%; background:var(--orange); border-radius:4px;}
+
+  @media (max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .call-grid{grid-template-columns:1fr;}
+    .stat-strip{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="scg-mark" viewBox="0 0 100 100">
+    <rect x="14" y="58" width="14" height="24" fill="currentColor"/>
+    <rect x="34" y="44" width="14" height="38" fill="currentColor"/>
+    <rect x="54" y="30" width="14" height="52" fill="currentColor"/>
+    <circle cx="70" cy="34" r="17" fill="none" stroke="currentColor" stroke-width="7"/>
+    <line x1="81" y1="45" x2="92" y2="56" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div id="demoBar">
+  <span class="tag">ДЕМО-ПРОСМОТР ЭКРАНОВ:</span>
+  <button data-go="login" class="active">Логин</button>
+  <button data-go="dashboard">Дашборд</button>
+  <button data-go="call">Карточка звонка</button>
+  <button data-go="manager">Карточка МОП</button>
+  <button data-go="rating">Рейтинг</button>
+</div>
+
+<div class="app">
+
+  <!-- ================= LOGIN ================= -->
+  <section class="screen active" id="screen-login">
+    <div class="login-card">
+      <div class="login-mark"><svg><use href="#scg-mark"/></svg></div>
+      <h1>Личный кабинет РОПа</h1>
+      <p class="sub">SCG AI Sales Control — контроль качества звонков</p>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="v.a.sidorov@company.ru">
+      </div>
+      <div class="field">
+        <label>Пароль</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <div id="loginError" style="display:none; color:var(--bad); font-size:13px; margin:-8px 0 14px;"></div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">Войти</button>
+      <p class="login-foot">Доступ только по приглашению аналитика SCG</p>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section class="screen" id="screen-dashboard">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" class="on">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot">
+          <div class="nm sbName">Петров А.С.</div>
+          <div class="br sbBranch">Санкт-Петербург · РОП</div>
+          <div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2 id="topGreeting">Здравствуйте, Александр</h2>
+          <div class="week-select"><span class="arrow">‹</span> Неделя 34 · 18–24 августа <span class="arrow">›</span></div>
+        </div>
+
+        <div id="realDataNote" style="display:none; background:var(--wait-bg); color:var(--wait); border-radius:6px; padding:10px 16px; font-size:13px; font-weight:700; margin-bottom:20px;">
+          Показана реальная команда из Firebase. Звонки и оценки — демо, пока не подключён разбор.
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat"><div class="lbl">Звонков разобрано</div><div class="val">58 <small>из 60 за неделю</small></div></div>
+          <div class="stat"><div class="lbl">Средний балл по команде</div><div class="val">7.4 <small>/ 10</small></div></div>
+          <div class="stat warn"><div class="lbl">Ждут подтверждения аналитика</div><div class="val">3</div></div>
+        </div>
+
+        <div class="section-head"><h3>Требует внимания</h3><span class="cnt">3</span></div>
+        <div class="list">
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">Смирнова Е.</div><div class="m">Звонок 22.08 · 14:10 · возражение по цене не отработано</div></div>
+            <span class="pill bad">Низкий балл</span>
+            <div class="score">4.2</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">Козлов Д.</div><div class="m">Звонок 21.08 · 11:05 · пропущен этап выявления потребности</div></div>
+            <span class="pill wait">На проверке</span>
+            <div class="score">5.8</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">Игнатьева О.</div><div class="m">Звонок 20.08 · 16:40 · спорная оценка ИИ</div></div>
+            <span class="pill wait">На проверке</span>
+            <div class="score">6.1</div>
+            <div class="arrow-btn">›</div>
+          </div>
+        </div>
+
+        <div class="section-head"><h3>Команда</h3><span class="cnt" id="teamCount">6 МОП</span></div>
+        <div class="list team-grid" id="teamList">
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Новый</span>
+            <div class="who"><div class="n">Смирнова Елена</div><div class="m">3 звонка на этой неделе</div></div>
+            <div class="trend down">▼ 0.6</div>
+            <div class="score">4.2</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Слабый</span>
+            <div class="who"><div class="n">Козлов Дмитрий</div><div class="m">3 звонка на этой неделе</div></div>
+            <div class="trend flat">— 0.1</div>
+            <div class="score">5.8</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Средний</span>
+            <div class="who"><div class="n">Игнатьева Ольга</div><div class="m">2 звонка на этой неделе</div></div>
+            <div class="trend up">▲ 0.4</div>
+            <div class="score">6.1</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Средний</span>
+            <div class="who"><div class="n">Фролов Иван</div><div class="m">2 звонка на этой неделе</div></div>
+            <div class="trend up">▲ 0.2</div>
+            <div class="score">6.9</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Сильный</span>
+            <div class="who"><div class="n">Волкова Мария</div><div class="m">1 звонок на этой неделе</div></div>
+            <div class="trend flat">— 0.0</div>
+            <div class="score">8.7</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('manager')">
+            <span class="grp-tag">Сильный</span>
+            <div class="who"><div class="n">Титов Сергей</div><div class="m">1 звонок на этой неделе</div></div>
+            <div class="trend up">▲ 0.3</div>
+            <div class="score">9.1</div>
+            <div class="arrow-btn">›</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ================= CALL CARD ================= -->
+  <section class="screen" id="screen-call">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
+      </aside>
+      <main class="main">
+        <a class="back-link" href="#" onclick="go('dashboard');return false;">← Назад к дашборду</a>
+        <div class="topbar">
+          <h2>Звонок · Смирнова Елена</h2>
+          <span class="pill bad">Низкий балл · 4.2</span>
+        </div>
+
+        <div class="call-grid">
+          <div class="panel">
+            <h4>Расшифровка звонка</h4>
+            <div class="call-meta">
+              <div><b>22.08.2026, 14:10</b>Дата и время</div>
+              <div><b>6 мин 40 сек</b>Длительность</div>
+              <div><b>Входящий</b>Тип звонка</div>
+            </div>
+            <div class="transcript">
+              <div class="t-line client"><span class="tm">00:02</span><span class="who">Клиент</span><span>Здравствуйте, я по поводу вашего предложения, но у конкурентов дешевле почти в полтора раза.</span></div>
+              <div class="t-line mop flag"><span class="tm">00:11</span><span class="who">Смирнова</span><span>Да, у нас действительно немного дороже. Но продукт хороший, можем подумать над скидкой.</span></div>
+              <div class="t-line client"><span class="tm">00:24</span><span class="who">Клиент</span><span>А в чём вообще разница, если честно? Не очень понимаю, за что переплачивать.</span></div>
+              <div class="t-line mop flag"><span class="tm">00:31</span><span class="who">Смирнова</span><span>Ну, у нас сервис, поддержка... В целом всё стандартно, как у всех, наверное.</span></div>
+              <div class="t-line client"><span class="tm">00:52</span><span class="who">Клиент</span><span>Понятно. Я тогда подумаю ещё, спасибо.</span></div>
+              <div class="t-line mop"><span class="tm">01:03</span><span class="who">Смирнова</span><span>Хорошо, звоните, если что.</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel" style="margin-bottom:20px;">
+              <h4>Что нашёл ИИ</h4>
+              <div class="finding">
+                <div class="dot"></div>
+                <div class="tx"><b>Возражение по цене не отработано</b><span>00:11 — менеджер согласился с возражением вместо аргументации ценности</span></div>
+              </div>
+              <div class="finding">
+                <div class="dot"></div>
+                <div class="tx"><b>Не выявлена реальная потребность клиента</b><span>00:24 — вопрос клиента "в чём разница" остался без конкретного ответа</span></div>
+              </div>
+              <div class="finding">
+                <div class="dot" style="background:var(--wait);"></div>
+                <div class="tx"><b>Звонок завершён без следующего шага</b><span>01:03 — не назначена дата повторного контакта</span></div>
+              </div>
+            </div>
+
+            <div class="panel review-box">
+              <h4>Оценка аналитика SCG</h4>
+              <div class="status"><span class="pill wait">Ожидает подтверждения</span></div>
+              <textarea rows="4" placeholder="Комментарий аналитика...">Согласен с находками ИИ. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
+              <button class="confirm-btn">Подтвердить оценку 4.2</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ================= MANAGER CARD ================= -->
+  <section class="screen" id="screen-manager">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
+      </aside>
+      <main class="main">
+        <a class="back-link" href="#" onclick="go('dashboard');return false;">← Назад к дашборду</a>
+        <div class="mgr-head">
+          <div class="mgr-avatar">СЕ</div>
+          <div>
+            <h2>Смирнова Елена</h2>
+            <div class="meta"><span class="grp-tag">Новый · 2 мес в компании</span><span>·</span><span>12 звонков разобрано с начала месяца</span></div>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="chead">
+            <h4>Динамика балла по неделям</h4>
+            <div class="avg">Средний за месяц: <b>5.1</b></div>
+          </div>
+          <svg viewBox="0 0 560 140" width="100%" height="140" style="overflow:visible;">
+            <line x1="0" y1="20" x2="560" y2="20" stroke="#EEE7DE" stroke-width="1"/>
+            <line x1="0" y1="70" x2="560" y2="70" stroke="#EEE7DE" stroke-width="1"/>
+            <line x1="0" y1="120" x2="560" y2="120" stroke="#EEE7DE" stroke-width="1"/>
+            <polyline points="20,84 160,96 300,72 440,90 540,66" fill="none" stroke="#E8641F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="84" r="4.5" fill="#E8641F"/>
+            <circle cx="160" cy="96" r="4.5" fill="#E8641F"/>
+            <circle cx="300" cy="72" r="4.5" fill="#E8641F"/>
+            <circle cx="440" cy="90" r="4.5" fill="#E8641F"/>
+            <circle cx="540" cy="66" r="4.5" fill="#E8641F"/>
+            <text x="20" y="135" font-size="11" fill="#8A8A8A">Нед. 30</text>
+            <text x="150" y="135" font-size="11" fill="#8A8A8A">Нед. 31</text>
+            <text x="290" y="135" font-size="11" fill="#8A8A8A">Нед. 32</text>
+            <text x="430" y="135" font-size="11" fill="#8A8A8A">Нед. 33</text>
+            <text x="515" y="135" font-size="11" fill="#8A8A8A">Нед. 34</text>
+          </svg>
+        </div>
+
+        <div class="section-head"><h3>Рекомендации на эту неделю</h3></div>
+        <div class="rec-list">
+          <div class="rec"><span class="num">1.</span> Отработать возражения по цене — сразу переходит к скидке вместо аргументации ценности продукта.</div>
+          <div class="rec"><span class="num">2.</span> Задавать уточняющие вопросы о потребности клиента, прежде чем предлагать решение.</div>
+          <div class="rec"><span class="num">3.</span> Всегда фиксировать следующий шаг в конце звонка — дату или условие повторного контакта.</div>
+        </div>
+
+        <div class="section-head"><h3>Звонки за неделю</h3><span class="cnt">3</span></div>
+        <div class="list">
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">22.08 · 14:10</div><div class="m">Входящий · 6 мин 40 сек</div></div>
+            <span class="pill bad">Низкий балл</span>
+            <div class="score">4.2</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">20.08 · 10:22</div><div class="m">Исходящий · 4 мин 15 сек</div></div>
+            <span class="pill good">Хорошо</span>
+            <div class="score">7.0</div>
+            <div class="arrow-btn">›</div>
+          </div>
+          <div class="row" onclick="go('call')">
+            <div class="who"><div class="n">19.08 · 16:05</div><div class="m">Входящий · 9 мин 02 сек</div></div>
+            <span class="pill good">Хорошо</span>
+            <div class="score">6.8</div>
+            <div class="arrow-btn">›</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ================= RATING ================= -->
+  <section class="screen" id="screen-rating">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" class="on">Рейтинг команды</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Рейтинг команды</h2>
+          <div class="week-select"><span class="arrow">‹</span> Август 2026 <span class="arrow">›</span></div>
+        </div>
+
+        <div class="rating-list">
+          <div class="rrow top1">
+            <div class="rank">1</div>
+            <div class="who"><div class="n">Титов Сергей</div></div>
+            <div class="badges-row"><span class="badge">Топ месяца</span></div>
+            <div class="bar-wrap"><div class="bar" style="width:91%;"></div></div>
+            <div class="score">9.1</div>
+          </div>
+          <div class="rrow">
+            <div class="rank">2</div>
+            <div class="who"><div class="n">Волкова Мария</div></div>
+            <div class="badges-row"><span class="badge green">Стабильно топ</span></div>
+            <div class="bar-wrap"><div class="bar" style="width:87%;"></div></div>
+            <div class="score">8.7</div>
+          </div>
+          <div class="rrow">
+            <div class="rank">3</div>
+            <div class="who"><div class="n">Фролов Иван</div></div>
+            <div class="badges-row"><span class="badge blue">Растёт 3-ю неделю</span></div>
+            <div class="bar-wrap"><div class="bar" style="width:69%;"></div></div>
+            <div class="score">6.9</div>
+          </div>
+          <div class="rrow">
+            <div class="rank">4</div>
+            <div class="who"><div class="n">Игнатьева Ольга</div></div>
+            <div class="badges-row"></div>
+            <div class="bar-wrap"><div class="bar" style="width:61%;"></div></div>
+            <div class="score">6.1</div>
+          </div>
+          <div class="rrow">
+            <div class="rank">5</div>
+            <div class="who"><div class="n">Козлов Дмитрий</div></div>
+            <div class="badges-row"></div>
+            <div class="bar-wrap"><div class="bar" style="width:58%;"></div></div>
+            <div class="score">5.8</div>
+          </div>
+          <div class="rrow">
+            <div class="rank">6</div>
+            <div class="who"><div class="n">Смирнова Елена</div></div>
+            <div class="badges-row"><span class="badge" style="background:var(--bad-bg);color:var(--bad);">Нужна поддержка</span></div>
+            <div class="bar-wrap"><div class="bar" style="width:42%; background:var(--bad);"></div></div>
+            <div class="score">4.2</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+</div>
+
+<!-- Firebase SDK (compat build — works with plain <script> tags, no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyC8zai8A4ynGxJz22YKmkwNP7Ir2MXwbAQ",
+    authDomain: "scg-portal-d129d.firebaseapp.com",
+    projectId: "scg-portal-d129d",
+    storageBucket: "scg-portal-d129d.firebasestorage.app",
+    messagingSenderId: "239332916516",
+    appId: "1:239332916516:web:646163b28009b1f6c107b1"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  const GROUP_LABELS = { 'новый':'Новый', 'слабый':'Слабый', 'средний':'Средний', 'сильный':'Сильный' };
+
+  function go(name){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen-'+name).classList.add('active');
+    document.querySelectorAll('#demoBar button').forEach(b=>b.classList.toggle('active', b.dataset.go===name));
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('#demoBar button').forEach(b=>{
+    b.addEventListener('click', ()=>go(b.dataset.go));
+  });
+
+  function setLoginError(msg){
+    const box = document.getElementById('loginError');
+    box.textContent = msg;
+    box.style.display = msg ? 'block' : 'none';
+  }
+
+  function doLogin(){
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginBtn');
+    setLoginError('');
+
+    if(!email || !password){
+      setLoginError('Введите email и пароль.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Входим...';
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(cred => loadRopData(cred.user.uid))
+      .catch(err => {
+        btn.disabled = false;
+        btn.textContent = 'Войти';
+        setLoginError('Неверный email или пароль.');
+        console.error(err);
+      });
+  }
+
+  async function loadRopData(uid){
+    const btn = document.getElementById('loginBtn');
+    try{
+      const userDoc = await db.collection('users').doc(uid).get();
+      if(!userDoc.exists){
+        setLoginError('Этот аккаунт не привязан к команде. Обратитесь к аналитику SCG.');
+        btn.disabled = false;
+        btn.textContent = 'Войти';
+        auth.signOut();
+        return;
+      }
+      const userData = userDoc.data();
+
+      const ropDoc = await db.collection('rops').doc(userData.ropId).get();
+      const ropData = ropDoc.exists ? ropDoc.data() : { name: userData.name, branch: '—' };
+
+      const mopsSnap = await db.collection('mops').where('ropId', '==', userData.ropId).get();
+      const mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      renderRealDashboard(userData, ropData, mops);
+      btn.disabled = false;
+      btn.textContent = 'Войти';
+      go('dashboard');
+    } catch(err){
+      console.error(err);
+      setLoginError('Не удалось загрузить данные. Попробуйте ещё раз.');
+      btn.disabled = false;
+      btn.textContent = 'Войти';
+    }
+  }
+
+  function renderRealDashboard(userData, ropData, mops){
+    document.querySelectorAll('.sbName').forEach(el => el.textContent = userData.name || ropData.name || '—');
+    document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + ' · РОП');
+
+    const firstName = (userData.name || '').split(' ')[0] || '';
+    document.getElementById('topGreeting').textContent = firstName ? `Здравствуйте, ${firstName}` : 'Здравствуйте';
+
+    document.getElementById('realDataNote').style.display = 'block';
+    document.getElementById('teamCount').textContent = mops.length + ' МОП';
+
+    const list = document.getElementById('teamList');
+    if(mops.length === 0){
+      list.innerHTML = '<div class="row"><div class="who"><div class="n">В команде пока нет МОП</div><div class="m">Добавьте сотрудников в коллекцию mops в Firestore</div></div></div>';
+      return;
+    }
+    list.innerHTML = mops.map(m => `
+      <div class="row" onclick="go('manager')">
+        <span class="grp-tag">${GROUP_LABELS[(m.group||'').toLowerCase()] || m.group || '—'}</span>
+        <div class="who"><div class="n">${m.name || 'Без имени'}</div><div class="m">Звонков за неделю: нет данных</div></div>
+        <div class="trend flat">—</div>
+        <div class="score">—</div>
+        <div class="arrow-btn">›</div>
+      </div>
+    `).join('');
+  }
+
+  function doLogout(){
+    auth.signOut().then(() => {
+      document.getElementById('loginEmail').value = '';
+      document.getElementById('loginPassword').value = '';
+      setLoginError('');
+      go('login');
+    });
+  }
+</script>
+
+</body>
+</html>
