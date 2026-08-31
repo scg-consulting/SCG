@@ -30,20 +30,6 @@
   a{color:inherit; text-decoration:none;}
   button{font-family:inherit; cursor:pointer;}
 
-  /* ---------- demo switcher (not part of the product itself) ---------- */
-  #demoBar{
-    position:fixed; top:0; left:0; right:0; z-index:999;
-    background:var(--graphite); color:#fff; display:flex; gap:0;
-    font-size:12.5px; overflow-x:auto;
-  }
-  #demoBar button{
-    background:none; border:none; color:rgba(255,255,255,0.6);
-    padding:10px 16px; font-weight:700; white-space:nowrap; border-bottom:2px solid transparent;
-  }
-  #demoBar button.active{color:#fff; border-bottom-color:var(--orange);}
-  #demoBar .tag{padding:10px 14px; color:rgba(255,255,255,0.35); font-weight:400;}
-  .app{padding-top:40px;}
-
   .screen{display:none;}
   .screen.active{display:block;}
 
@@ -199,11 +185,28 @@
   .rrow .bar-wrap{width:120px; height:6px; background:var(--line); border-radius:4px; overflow:hidden; flex-shrink:0;}
   .rrow .bar{height:100%; background:var(--orange); border-radius:4px;}
 
+  /* ---------- GAMES ---------- */
+  .games-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .game-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px 24px; cursor:pointer;}
+  .game-card .gh{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:10px;}
+  .game-card h4{font-size:16px;}
+  .game-card .meta{display:flex; gap:10px; font-size:12.5px; color:var(--gray); margin-bottom:12px;}
+  .game-card .meta span{background:var(--peach); color:var(--orange); padding:3px 9px; border-radius:20px; font-weight:700;}
+  .game-card p.desc{font-size:13.5px; color:var(--gray); line-height:1.55; margin-bottom:0;}
+  .game-card .expand{display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--line);}
+  .game-card.open .expand{display:block;}
+  .game-card .expand h5{font-size:12.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--gray); margin-bottom:8px;}
+  .game-card .expand ol{padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px;}
+  .game-card .toggle{font-size:12.5px; font-weight:700; color:var(--orange); margin-top:14px; display:inline-block;}
+  .game-card-add{border:1.5px dashed var(--line); border-radius:8px; padding:22px 24px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:14px; font-weight:700; cursor:pointer; background:transparent;}
+  .game-card-add:hover{border-color:var(--orange); color:var(--orange);}
+
   @media (max-width:900px){
     .shell{grid-template-columns:1fr;}
     .sidebar{display:none;}
     .call-grid{grid-template-columns:1fr;}
     .stat-strip{grid-template-columns:1fr;}
+    .games-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -218,15 +221,6 @@
     <line x1="81" y1="45" x2="92" y2="56" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
   </symbol>
 </svg>
-
-<div id="demoBar">
-  <span class="tag">ДЕМО-ПРОСМОТР ЭКРАНОВ:</span>
-  <button data-go="login" class="active">Логин</button>
-  <button data-go="dashboard">Дашборд</button>
-  <button data-go="call">Карточка звонка</button>
-  <button data-go="manager">Карточка МОП</button>
-  <button data-go="rating">Рейтинг</button>
-</div>
 
 <div class="app">
 
@@ -258,6 +252,7 @@
         <nav class="sb-nav">
           <a href="#" class="on">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot">
@@ -361,6 +356,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -427,6 +423,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -504,6 +501,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" class="on">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -562,6 +560,96 @@
     </div>
   </section>
 
+  <!-- ================= BUSINESS GAMES ================= -->
+  <section class="screen" id="screen-games">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" class="on">Бизнес-игры</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Бизнес-игры для планёрок</h2>
+        </div>
+        <p style="color:var(--gray); font-size:14px; margin-bottom:26px; max-width:640px;">Короткие ролевые упражнения на 10–20 минут — разбирайте с командой на планёрке то, что чаще всего проседает в звонках. Каждую игру можно развернуть и посмотреть, как проводить.</p>
+
+        <div class="games-grid">
+          <div class="game-card" onclick="this.classList.toggle('open')">
+            <div class="gh"><h4>Отработка возражения «дорого»</h4></div>
+            <div class="meta"><span>10–15 мин</span><span>2 участника</span></div>
+            <p class="desc">РОП играет клиента, который сравнивает с конкурентом по цене. МОП должен не соглашаться с возражением сразу, а аргументировать ценность.</p>
+            <div class="expand">
+              <h5>Как проводить</h5>
+              <ol>
+                <li>Один МОП играет менеджера, РОП или другой МОП — клиента.</li>
+                <li>Клиент один раз произносит возражение по цене и не сдаётся сразу — держит позицию 2-3 реплики.</li>
+                <li>После диалога команда разбирает: где менеджер согласился с возражением вместо аргументации.</li>
+                <li>Повторить с другим МОП в роли менеджера.</li>
+              </ol>
+              <span class="toggle">Свернуть ↑</span>
+            </div>
+          </div>
+
+          <div class="game-card" onclick="this.classList.toggle('open')">
+            <div class="gh"><h4>Холодный звонок за 60 секунд</h4></div>
+            <div class="meta"><span>15 мин</span><span>2 участника</span></div>
+            <p class="desc">Отработка первых секунд разговора — самой частой точки провала холодных звонков. Цель — зацепить внимание за 60 секунд.</p>
+            <div class="expand">
+              <h5>Как проводить</h5>
+              <ol>
+                <li>МОП звонит «клиенту» (роль играет коллега), который сразу говорит «нам ничего не нужно».</li>
+                <li>Задача — за 60 секунд удержать разговор и получить согласие на 2-3 минуты.</li>
+                <li>Засеките время, остановите ровно на 60-й секунде.</li>
+                <li>Разберите вслух: что зацепило, а что прозвучало как шаблон.</li>
+              </ol>
+              <span class="toggle">Свернуть ↑</span>
+            </div>
+          </div>
+
+          <div class="game-card" onclick="this.classList.toggle('open')">
+            <div class="gh"><h4>Выявление потребности: 5 вопросов</h4></div>
+            <div class="meta"><span>10 мин</span><span>2 участника</span></div>
+            <p class="desc">МОП должен задать 5 открытых вопросов подряд, прежде чем переходить к презентации продукта — тренирует паузу перед продажей.</p>
+            <div class="expand">
+              <h5>Как проводить</h5>
+              <ol>
+                <li>«Клиент» отвечает односложно, не помогает разговору сам.</li>
+                <li>МОП обязан задать минимум 5 открытых вопросов, прежде чем предложить решение.</li>
+                <li>Каждый вопрос «да/нет» не засчитывается — нужно переформулировать.</li>
+                <li>В конце — что узнали о клиенте, чего не знали в начале.</li>
+              </ol>
+              <span class="toggle">Свернуть ↑</span>
+            </div>
+          </div>
+
+          <div class="game-card" onclick="this.classList.toggle('open')">
+            <div class="gh"><h4>Закрытие без «подумаю»</h4></div>
+            <div class="meta"><span>10 мин</span><span>2 участника</span></div>
+            <p class="desc">Клиент в финале говорит «мне надо подумать» — задача МОП понять реальную причину паузы и назначить конкретный следующий шаг.</p>
+            <div class="expand">
+              <h5>Как проводить</h5>
+              <ol>
+                <li>Клиент завершает разговор фразой «я подумаю» несмотря на попытки менеджера.</li>
+                <li>МОП должен выяснить настоящую причину сомнения, не дожимая продажу силой.</li>
+                <li>Финал — либо конкретная дата следующего созвона, либо честно понятая причина отказа.</li>
+                <li>Разбор: удалось ли уйти от общей фразы к конкретике.</li>
+              </ol>
+              <span class="toggle">Свернуть ↑</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="game-card-add" style="margin-top:16px; width:100%;" onclick="alert('Добавление своих игр — в следующей версии портала')">+ Добавить свою игру</button>
+      </main>
+    </div>
+  </section>
+
 </div>
 
 <!-- Firebase SDK (compat build — works with plain <script> tags, no bundler needed) -->
@@ -587,12 +675,8 @@
   function go(name){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-'+name).classList.add('active');
-    document.querySelectorAll('#demoBar button').forEach(b=>b.classList.toggle('active', b.dataset.go===name));
     window.scrollTo(0,0);
   }
-  document.querySelectorAll('#demoBar button').forEach(b=>{
-    b.addEventListener('click', ()=>go(b.dataset.go));
-  });
 
   function setLoginError(msg){
     const box = document.getElementById('loginError');
