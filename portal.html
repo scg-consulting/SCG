@@ -153,6 +153,36 @@
   .confirm-btn{background:var(--graphite); color:#fff; border:none; padding:11px 20px; border-radius:6px; font-size:13.5px; font-weight:700; width:100%;}
   .confirm-btn:hover{background:var(--orange);}
 
+  /* ---------- CALL REPORT (score/stages/checklist/objections) ---------- */
+  .score-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px;}
+  .score-mini{background:var(--peach); border-radius:6px; padding:12px 10px; text-align:center;}
+  .score-mini .v{font-size:19px; font-weight:700; color:var(--orange);}
+  .score-mini .l{font-size:11px; color:var(--gray); margin-top:2px;}
+  .stage-list{display:grid; gap:9px;}
+  .stage-row{display:flex; align-items:baseline; gap:9px; font-size:13.5px;}
+  .stage-row .mk{width:16px; flex-shrink:0; font-weight:700; text-align:center;}
+  .stage-row.done .mk{color:var(--good);}
+  .stage-row.partial .mk{color:var(--wait);}
+  .stage-row.bad .mk{color:var(--bad);}
+  .stage-row .t{flex-shrink:0;}
+  .stage-row .c{color:var(--gray); font-size:12.5px;}
+  .sw-block{margin-bottom:12px;}
+  .sw-block:last-child{margin-bottom:0;}
+  .sw-block .lbl{font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; color:var(--gray); display:block; margin-bottom:6px;}
+  .sw-block.good p{color:var(--good); font-size:13.5px; margin:0 0 3px;}
+  .sw-block.bad p{color:var(--bad); font-size:13.5px; margin:0 0 3px;}
+  .obj-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .obj-table th{text-align:left; font-size:11.5px; text-transform:uppercase; color:var(--gray); padding-bottom:8px; font-weight:700;}
+  .obj-table td{padding:10px 10px 10px 0; border-top:1px solid var(--line); vertical-align:top; color:var(--graphite);}
+  .cl-block{margin-bottom:20px;}
+  .cl-block:last-child{margin-bottom:0;}
+  .cl-block h5{font-size:12.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--gray); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--line);}
+  .cl-item{display:flex; align-items:center; gap:9px; font-size:13.5px; padding:5px 0;}
+  .cl-item .mk{width:16px; flex-shrink:0; font-weight:700; text-align:center;}
+  .cl-item.done .mk{color:var(--good);}
+  .cl-item.bad .mk{color:var(--bad);}
+  .cl-item.bad{color:var(--gray);}
+
   /* ---------- MANAGER CARD ---------- */
   .mgr-head{display:flex; align-items:center; gap:16px; margin-bottom:26px;}
   .mgr-avatar{
@@ -200,6 +230,23 @@
   .game-card .toggle{font-size:12.5px; font-weight:700; color:var(--orange); margin-top:14px; display:inline-block;}
   .game-card-add{border:1.5px dashed var(--line); border-radius:8px; padding:22px 24px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:14px; font-weight:700; cursor:pointer; background:transparent;}
   .game-card-add:hover{border-color:var(--orange); color:var(--orange);}
+
+  /* ---------- CALL SCRIPT (reference for MOP) ---------- */
+  .script-block{margin-bottom:28px;}
+  .script-block:last-child{margin-bottom:0;}
+  .script-block .sb-num{font-weight:700; color:var(--orange); font-size:13px; letter-spacing:0.03em; text-transform:uppercase; display:block; margin-bottom:6px;}
+  .script-block h3{font-size:17px; margin-bottom:10px;}
+  .script-block .note{font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px; max-width:760px;}
+  .script-quote{background:var(--peach); border-left:3px solid var(--orange); border-radius:0 6px 6px 0; padding:12px 16px; font-size:13.5px; font-style:italic; color:var(--graphite); margin-bottom:10px; max-width:760px;}
+  .script-table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+  .script-table th{text-align:left; font-size:11.5px; text-transform:uppercase; color:var(--gray); padding:8px 10px 8px 0; font-weight:700; border-bottom:1px solid var(--line);}
+  .script-table td{padding:11px 10px 11px 0; border-bottom:1px solid var(--line); vertical-align:top;}
+  .script-table td:first-child{width:22px; color:var(--gray-light);}
+  .script-table td.q{font-weight:700; color:var(--graphite); width:34%;}
+  .script-table td.why{color:var(--gray); font-style:italic;}
+  .script-fields{display:grid; gap:14px; max-width:640px;}
+  .script-fields .f-label{font-size:13.5px; font-weight:700; margin-bottom:6px; display:block;}
+  .script-fields .f-line{border-bottom:1px solid var(--line); height:22px;}
 
   @media (max-width:900px){
     .shell{grid-template-columns:1fr;}
@@ -253,6 +300,7 @@
           <a href="#" class="on">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot">
@@ -357,6 +405,7 @@
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -388,27 +437,105 @@
 
           <div>
             <div class="panel" style="margin-bottom:20px;">
-              <h4>Что нашёл ИИ</h4>
-              <div class="finding">
-                <div class="dot"></div>
-                <div class="tx"><b>Возражение по цене не отработано</b><span>00:11 — менеджер согласился с возражением вместо аргументации ценности</span></div>
+              <h4>Разбор по этапам продаж</h4>
+              <div class="score-strip">
+                <div class="score-mini"><div class="v">4.2</div><div class="l">Оценка /10</div></div>
+                <div class="score-mini"><div class="v">3/6</div><div class="l">Этапов полностью</div></div>
+                <div class="score-mini"><div class="v">1/2</div><div class="l">Возражений снято</div></div>
               </div>
-              <div class="finding">
-                <div class="dot"></div>
-                <div class="tx"><b>Не выявлена реальная потребность клиента</b><span>00:24 — вопрос клиента "в чём разница" остался без конкретного ответа</span></div>
+              <div class="stage-list">
+                <div class="stage-row done"><span class="mk">✓</span><span class="t">0. Установление контакта</span></div>
+                <div class="stage-row done"><span class="mk">✓</span><span class="t">1. До демонстрации</span></div>
+                <div class="stage-row done"><span class="mk">✓</span><span class="t">2. По ходу демонстрации</span></div>
+                <div class="stage-row partial"><span class="mk">±</span><span class="t">3. Перед ценой</span><span class="c">Не уточнили, кто принимает решение</span></div>
+                <div class="stage-row bad"><span class="mk">✗</span><span class="t">4. Презентация цены</span><span class="c">Согласилась на скидку вместо аргументации ценности</span></div>
+                <div class="stage-row bad"><span class="mk">✗</span><span class="t">5. Закрытие</span><span class="c">Не назначен следующий контакт</span></div>
               </div>
-              <div class="finding">
-                <div class="dot" style="background:var(--wait);"></div>
-                <div class="tx"><b>Звонок завершён без следующего шага</b><span>01:03 — не назначена дата повторного контакта</span></div>
+            </div>
+
+            <div class="panel" style="margin-bottom:20px;">
+              <h4>Сильные и слабые стороны</h4>
+              <div class="sw-block good">
+                <span class="lbl">Сильные стороны</span>
+                <p>+ Дружелюбный, спокойный тон на протяжении всего разговора</p>
               </div>
+              <div class="sw-block bad">
+                <span class="lbl">Слабые стороны</span>
+                <p>– Согласилась с возражением по цене вместо аргументации</p>
+                <p>– Не выявлена реальная причина сравнения с конкурентом</p>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-bottom:20px;">
+              <h4>Возражения клиента</h4>
+              <table class="obj-table">
+                <tr><th>Возражение</th><th>Как отработано</th></tr>
+                <tr><td>«У конкурентов дешевле почти в полтора раза»</td><td>Согласилась и сразу предложила скидку, не назвав ценность продукта</td></tr>
+              </table>
             </div>
 
             <div class="panel review-box">
               <h4>Оценка аналитика SCG</h4>
               <div class="status"><span class="pill wait">Ожидает подтверждения</span></div>
-              <textarea rows="4" placeholder="Комментарий аналитика...">Согласен с находками ИИ. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
+              <div style="font-size:13px; color:var(--gray); margin-bottom:14px;"><b style="color:var(--graphite);">Рекомендация специалисту:</b> отработать возражения по цене через ценность продукта, не соглашаться сразу; всегда фиксировать дату следующего контакта.</div>
+              <textarea rows="4" placeholder="Комментарий аналитика...">Согласен с разбором по чек-листу. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
               <button class="confirm-btn">Подтвердить оценку 4.2</button>
             </div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:24px;">
+          <div class="section-head" style="margin-bottom:6px;">
+            <h3 style="font-size:16px;">Чек-лист МОП — 17 из 28 пунктов</h3>
+            <span class="cnt">по шаблону SCG</span>
+          </div>
+          <p style="font-size:13px; color:var(--gray); margin-bottom:18px;">Провал в блоке: «Презентация цены» и «Закрытие».</p>
+
+          <div class="cl-block">
+            <h5>0. Контакт — 2/2</h5>
+            <div class="cl-item done"><span class="mk">✓</span>Тёплое приветствие, без «удобно говорить»</div>
+            <div class="cl-item done"><span class="mk">✓</span>Сразу назван повод звонка</div>
+          </div>
+          <div class="cl-block">
+            <h5>1. До демонстрации — 4/4</h5>
+            <div class="cl-item done"><span class="mk">✓</span>Чем занимается компания</div>
+            <div class="cl-item done"><span class="mk">✓</span>Пользуются/пользовались СПС</div>
+            <div class="cl-item done"><span class="mk">✓</span>Сколько платят/платили</div>
+            <div class="cl-item done"><span class="mk">✓</span>До какого срока подписка</div>
+          </div>
+          <div class="cl-block">
+            <h5>2. По ходу демонстрации — 6/8</h5>
+            <div class="cl-item done"><span class="mk">✓</span>Кто пользуется системой</div>
+            <div class="cl-item done"><span class="mk">✓</span>Сколько доступов сейчас</div>
+            <div class="cl-item done"><span class="mk">✓</span>Что чаще всего ищут</div>
+            <div class="cl-item done"><span class="mk">✓</span>Сколько времени на поиск ответа</div>
+            <div class="cl-item done"><span class="mk">✓</span>Чего не хватает в подписке</div>
+            <div class="cl-item done"><span class="mk">✓</span>Решали ли вопросы с нашей системой</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Семинары/вебинары/квалификация</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Сколько доступов нужно было бы</div>
+          </div>
+          <div class="cl-block">
+            <h5>3. Перед ценой — 4/6</h5>
+            <div class="cl-item done"><span class="mk">✓</span>Какие отделы представлены</div>
+            <div class="cl-item done"><span class="mk">✓</span>Сколько сотрудников в подразделении</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Кто принимает решение</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Кто ещё влияет на решение</div>
+            <div class="cl-item done"><span class="mk">✓</span>Как согласуется покупка</div>
+            <div class="cl-item done"><span class="mk">✓</span>ЭДО или бумага</div>
+          </div>
+          <div class="cl-block">
+            <h5>4. Презентация цены — 1/4</h5>
+            <div class="cl-item bad"><span class="mk">✗</span>Цена в 3 форматах: год/мес/день</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Сразу резюме, что входит</div>
+            <div class="cl-item done"><span class="mk">✓</span>Названа акция со сроком</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Что должно произойти для решения</div>
+          </div>
+          <div class="cl-block">
+            <h5>5. Закрытие — 0/4</h5>
+            <div class="cl-item bad"><span class="mk">✗</span>Дата/время след. контакта</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Что именно будет выслано</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Кому передать материалы</div>
+            <div class="cl-item bad"><span class="mk">✗</span>Микро-обязательство клиента</div>
           </div>
         </div>
       </main>
@@ -424,6 +551,7 @@
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -502,6 +630,7 @@
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" class="on">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -569,6 +698,7 @@
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" class="on">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
@@ -646,6 +776,113 @@
         </div>
 
         <button class="game-card-add" style="margin-top:16px; width:100%;" onclick="alert('Добавление своих игр — в следующей версии портала')">+ Добавить свою игру</button>
+      </main>
+    </div>
+  </section>
+
+  <!-- ================= CALL SCRIPT (question checklist) ================= -->
+  <section class="screen" id="screen-script">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" class="on">Скрипт звонка</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Скрипт звонка: вопросы клиенту + презентация цены</h2>
+        </div>
+        <p style="color:var(--gray); font-size:14px; margin-bottom:30px; max-width:760px;">Вопросы сгруппированы не по теме, а по моменту звонка — когда именно их задавать. Главное правило: сначала контакт, потом вопросы. Ни один блок не должен звучать как анкета или допрос.</p>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 0</span>
+          <h3>Установление контакта</h3>
+          <p class="note">Прежде чем задавать любые вопросы — установить контакт и дать клиенту освоиться. Живое приветствие по имени-отчеству, пара тёплых слов не по делу, уверенный тон — без вопроса «удобно ли сейчас говорить». Вместо этого — сразу называем повод звонка и естественно переходим дальше.</p>
+          <div class="script-quote">«Мария Ивановна, добрый день! Меня зовут Анна, компания «Актион». Звоню вам по поводу доступа к системе, который мы открывали на прошлой неделе»</div>
+          <div class="script-quote">«Иван Петрович, здравствуйте! Рад(а) вас слышать. Звоню как раз по тому вопросу, который мы обсуждали в прошлый раз»</div>
+          <div class="script-quote">«Ольга Сергеевна, добрый день, это Актион беспокоит. Спасибо, что ответили — буквально пара минут, и расскажу, зачем звоню»</div>
+        </div>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 1</span>
+          <h3>До демонстрации системы</h3>
+          <p class="note">ОБЯЗАТЕЛЬНО озвучиваем регламент разговора: сколько займёт звонок и что будет по шагам — это снимает напряжение и настраивает клиента на диалог. Дальше задаём открытые вопросы — такие, на которые нельзя ответить просто «да» или «нет»: они разговаривают клиента и дают содержательные ответы.</p>
+          <div class="script-quote">«Мария Ивановна, у нас с вами сегодня минут 10-15: сначала пару вопросов задам, чтобы понимать вашу специфику, потом покажу, что нового в системе, и в конце — по стоимости, если будет интересно»</div>
+          <div class="script-quote">«Займёт это буквально четверть часа: сначала коротко про вашу компанию, потом посмотрим систему, и обсудим варианты, если подойдёт»</div>
+          <table class="script-table">
+            <tr><th>№</th><th>Вопрос клиенту</th><th>Зачем это нужно</th></tr>
+            <tr><td>1</td><td class="q">Чем занимается компания?</td><td class="why">Даёт повод рассказать про новшества в системе именно под эту сферу</td></tr>
+            <tr><td>2</td><td class="q">Какой правовой системой (СПС) пользуетесь или пользовались?</td><td class="why">Показывает, насколько клиенту интересно работать с СПС, и есть ли конкурент</td></tr>
+            <tr><td>3</td><td class="q">Сколько платите или платили?</td><td class="why">Понимаем, можем ли быть конкурентоспособны по цене</td></tr>
+            <tr><td>4</td><td class="q">До какого срока действует текущая подписка?</td><td class="why">Когда клиент реально готов рассматривать наш продукт</td></tr>
+            <tr><td>5</td><td class="q">Какие отделы представлены в компании?</td><td class="why">На кого ещё выйти, чтобы заинтересовать системой — ищем союзников</td></tr>
+            <tr><td>6</td><td class="q">Сколько сотрудников в подразделении?</td><td class="why">Кто будет пользоваться системой — влияет на тариф и число доступов</td></tr>
+            <tr><td>7</td><td class="q">Как распределены задачи между сотрудниками?</td><td class="why">Подсказывает, какой раздел системы показать именно ему</td></tr>
+            <tr><td>8</td><td class="q">Кто принимает решение о подписке?</td><td class="why">Без этого цена называется «вслепую» — критично узнать сейчас, а не после возражения</td></tr>
+            <tr><td>9</td><td class="q">Как у вас происходит процесс согласования покупки?</td><td class="why">Определяет, сколько шагов и времени займёт сделка</td></tr>
+            <tr><td>10</td><td class="q">Кто пользуется системой (какие отделы, сотрудники)?</td><td class="why">Кому именно звонить и показывать преимущества системы</td></tr>
+            <tr><td>11</td><td class="q">Сколько одновременных доступов у вас сейчас?</td><td class="why">Ориентир по тарифу</td></tr>
+            <tr><td>12</td><td class="q">Сколько одновременных доступов удобно было бы вам?</td><td class="why">Прямой путь к апсейлу — расширенный тариф на несколько мест</td></tr>
+            <tr><td>13</td><td class="q">Что чаще всего ищете в системе?</td><td class="why">Показываем именно эти разделы в первую очередь, а не всё подряд</td></tr>
+            <tr><td>14</td><td class="q">Что добавили бы в текущую подписку?</td><td class="why">Прямой список аргументов для презентации и цены</td></tr>
+            <tr><td>15</td><td class="q">Как часто берёте демо-доступ нашей системы?</td><td class="why">Частые демо без покупки сигналят о скрытом блокере</td></tr>
+            <tr><td>16</td><td class="q">Какие рабочие вопросы удалось решить с нашей системой?</td><td class="why">Если да — это готовый кейс успеха, можно на него опираться</td></tr>
+            <tr><td>17</td><td class="q">Что нравится в нашей системе больше всего?</td><td class="why">Готовый аргумент для резюме ценности перед озвучиванием цены</td></tr>
+            <tr><td>18</td><td class="q">Как повышаете квалификацию? Какие посещаете семинары/вебинары?</td><td class="why">Разогревает интерес к разделу «Видео» и укрепляет контакт</td></tr>
+            <tr><td>19</td><td class="q">Какая сумма выделяется на семинары/вебинары?</td><td class="why">Ориентир бюджета клиента на развитие</td></tr>
+            <tr><td>20</td><td class="q">Какие журналы выписываете/покупаете?</td><td class="why">Показывает потенциал допродажи наших журналов</td></tr>
+            <tr><td>21</td><td class="q">Какая сумма выделена на подписные издания?</td><td class="why">Помогает подобрать пакет с журналами</td></tr>
+          </table>
+        </div>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 2</span>
+          <h3>По ходу демонстрации</h3>
+          <p class="note">Задаём закрытые вопросы для снятия обратной связи и сбора информации для презентации цены. Конкретные вопросы этого блока уточняются под ваш продукт — раздел дополнится.</p>
+        </div>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 3</span>
+          <h3>Перед озвучиванием цены</h3>
+          <p class="note">Если не выяснили ранее — естественный момент задать более предметные вопросы про компанию: клиент уже вовлечён показом и охотнее отвечает. Это определяет, кому и как называть цену.</p>
+          <table class="script-table">
+            <tr><th>№</th><th>Вопрос клиенту</th><th>Зачем это нужно</th></tr>
+            <tr><td>1</td><td class="q">Как у вас происходит процесс согласования покупки?</td><td class="why">Определяет, сколько шагов и времени займёт сделка</td></tr>
+            <tr><td>2</td><td class="q">Кто ещё влияет на принятие решения?</td><td class="why">Часто решение принимает не тот, с кем говорим — нужно знать, кому передать аргументы</td></tr>
+            <tr><td>3</td><td class="q">Каким способом обмениваетесь документами (ЭДО, бумага)?</td><td class="why">Влияет на скорость заключения договора</td></tr>
+          </table>
+        </div>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 4</span>
+          <h3>Презентация цены</h3>
+          <p class="note">ВАЖНО: сначала называем цену — в трёх форматах: за год, за месяц и за день. Сразу после цены — резюме, что клиент получает за эти деньги. Не «вот наш прайс», а «Х рублей в день — и вот что входит».</p>
+          <table class="script-table">
+            <tr><th>№</th><th>Проверка</th><th>Зачем это нужно</th></tr>
+            <tr><td>1</td><td class="q">Озвучена цена в трёх форматах: год / месяц / день?</td><td class="why">«140 088 ₽ в год — это около 11 674 ₽ в месяц, или порядка 390 ₽ в день». Крупная годовая сумма пугает, дневная — нет</td></tr>
+            <tr><td>2</td><td class="q">Сразу после цены резюмировано, что именно входит в подписку?</td><td class="why">Клиент должен услышать, что получает за эти деньги, сразу после цифры</td></tr>
+            <tr><td>3</td><td class="q">Названа выгода/акция (скидка, фиксация цены) со сроком действия?</td><td class="why">Создаёт причину решить сейчас, а не «когда-нибудь»</td></tr>
+            <tr><td>4</td><td class="q">Что должно произойти, чтобы клиент принял решение?</td><td class="why">Выявляет реальный триггер сделки, который иначе всплывает случайно и срывает закрытие</td></tr>
+          </table>
+        </div>
+
+        <div class="script-block">
+          <span class="sb-num">Этап 5</span>
+          <h3>Закрытие и договорённости</h3>
+          <p class="note">Заполняет сам МОП сразу после звонка — фиксирует результат, а не оставляет инициативу клиенту.</p>
+          <div class="script-fields">
+            <div><span class="f-label">Дата и время следующего контакта</span><div class="f-line"></div></div>
+            <div><span class="f-label">Что обещано выслать клиенту</span><div class="f-line"></div></div>
+            <div><span class="f-label">Кому передать материалы (если решение не за собеседником)</span><div class="f-line"></div></div>
+            <div><span class="f-label">Микро-обязательство клиента до следующего звонка</span><div class="f-line"></div></div>
+          </div>
+        </div>
       </main>
     </div>
   </section>
