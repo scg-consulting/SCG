@@ -321,13 +321,13 @@
         </div>
 
         <div class="stat-strip">
-          <div class="stat"><div class="lbl">Звонков разобрано</div><div class="val">58 <small>из 60 за неделю</small></div></div>
-          <div class="stat"><div class="lbl">Средний балл по команде</div><div class="val">7.4 <small>/ 10</small></div></div>
-          <div class="stat warn"><div class="lbl">Ждут подтверждения аналитика</div><div class="val">3</div></div>
+          <div class="stat"><div class="lbl">Звонков разобрано</div><div class="val" id="statCallsVal">58 <small>из 60 за неделю</small></div></div>
+          <div class="stat"><div class="lbl">Средний балл по команде</div><div class="val" id="statAvgVal">7.4 <small>/ 10</small></div></div>
+          <div class="stat warn"><div class="lbl">Ждут подтверждения аналитика</div><div class="val" id="statPendingVal">3</div></div>
         </div>
 
-        <div class="section-head"><h3>Требует внимания</h3><span class="cnt">3</span></div>
-        <div class="list">
+        <div class="section-head"><h3>Требует внимания</h3><span class="cnt" id="attentionCount">3</span></div>
+        <div class="list" id="attentionList">
           <div class="row" onclick="go('call')">
             <div class="who"><div class="n">Смирнова Е.</div><div class="m">Звонок 22.08 · 14:10 · возражение по цене не отработано</div></div>
             <span class="pill bad">Низкий балл</span>
@@ -415,19 +415,19 @@
       <main class="main">
         <a class="back-link" href="#" onclick="go('dashboard');return false;">← Назад к дашборду</a>
         <div class="topbar">
-          <h2>Звонок · Смирнова Елена</h2>
-          <span class="pill bad">Низкий балл · 4.2</span>
+          <h2 id="callTitle">Звонок · Смирнова Елена</h2>
+          <span class="pill bad" id="callPill">Низкий балл · 4.2</span>
         </div>
 
         <div class="call-grid">
           <div class="panel">
             <h4>Расшифровка звонка</h4>
-            <div class="call-meta">
+            <div class="call-meta" id="callMeta">
               <div><b>22.08.2026, 14:10</b>Дата и время</div>
               <div><b>6 мин 40 сек</b>Длительность</div>
               <div><b>Входящий</b>Тип звонка</div>
             </div>
-            <div class="transcript">
+            <div class="transcript" id="callTranscript">
               <div class="t-line client"><span class="tm">00:02</span><span class="who">Клиент</span><span>Здравствуйте, я по поводу вашего предложения, но у конкурентов дешевле почти в полтора раза.</span></div>
               <div class="t-line mop flag"><span class="tm">00:11</span><span class="who">Смирнова</span><span>Да, у нас действительно немного дороже. Но продукт хороший, можем подумать над скидкой.</span></div>
               <div class="t-line client"><span class="tm">00:24</span><span class="who">Клиент</span><span>А в чём вообще разница, если честно? Не очень понимаю, за что переплачивать.</span></div>
@@ -440,12 +440,12 @@
           <div>
             <div class="panel" style="margin-bottom:20px;">
               <h4>Разбор по этапам продаж</h4>
-              <div class="score-strip">
+              <div class="score-strip" id="callScoreStrip">
                 <div class="score-mini"><div class="v">4.2</div><div class="l">Оценка /10</div></div>
                 <div class="score-mini"><div class="v">3/6</div><div class="l">Этапов полностью</div></div>
                 <div class="score-mini"><div class="v">1/2</div><div class="l">Возражений снято</div></div>
               </div>
-              <div class="stage-list">
+              <div class="stage-list" id="callStageList">
                 <div class="stage-row done"><span class="mk">✓</span><span class="t">0. Установление контакта</span></div>
                 <div class="stage-row done"><span class="mk">✓</span><span class="t">1. До демонстрации</span></div>
                 <div class="stage-row done"><span class="mk">✓</span><span class="t">2. По ходу демонстрации</span></div>
@@ -459,12 +459,14 @@
               <h4>Сильные и слабые стороны</h4>
               <div class="sw-block good">
                 <span class="lbl">Сильные стороны</span>
-                <p>+ Дружелюбный, спокойный тон на протяжении всего разговора</p>
+                <div id="callStrengths"><p>+ Дружелюбный, спокойный тон на протяжении всего разговора</p></div>
               </div>
               <div class="sw-block bad">
                 <span class="lbl">Слабые стороны</span>
-                <p>– Согласилась с возражением по цене вместо аргументации</p>
-                <p>– Не выявлена реальная причина сравнения с конкурентом</p>
+                <div id="callWeaknesses">
+                  <p>– Согласилась с возражением по цене вместо аргументации</p>
+                  <p>– Не выявлена реальная причина сравнения с конкурентом</p>
+                </div>
               </div>
             </div>
 
@@ -472,27 +474,30 @@
               <h4>Возражения клиента</h4>
               <table class="obj-table">
                 <tr><th>Возражение</th><th>Как отработано</th></tr>
+                <tbody id="callObjTable">
                 <tr><td>«У конкурентов дешевле почти в полтора раза»</td><td>Согласилась и сразу предложила скидку, не назвав ценность продукта</td></tr>
+                </tbody>
               </table>
             </div>
 
             <div class="panel review-box">
               <h4>Оценка аналитика SCG</h4>
-              <div class="status"><span class="pill wait">Ожидает подтверждения</span></div>
-              <div style="font-size:13px; color:var(--gray); margin-bottom:14px;"><b style="color:var(--graphite);">Рекомендация специалисту:</b> отработать возражения по цене через ценность продукта, не соглашаться сразу; всегда фиксировать дату следующего контакта.</div>
-              <textarea rows="4" placeholder="Комментарий аналитика...">Согласен с разбором по чек-листу. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
-              <button class="confirm-btn">Подтвердить оценку 4.2</button>
+              <div class="status" id="callReviewStatus"><span class="pill wait">Ожидает подтверждения</span></div>
+              <div style="font-size:13px; color:var(--gray); margin-bottom:14px;"><b style="color:var(--graphite);">Рекомендация специалисту:</b> <span id="callRecommendation">отработать возражения по цене через ценность продукта, не соглашаться сразу; всегда фиксировать дату следующего контакта.</span></div>
+              <textarea id="callComment" rows="4" placeholder="Комментарий аналитика...">Согласен с разбором по чек-листу. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
+              <button class="confirm-btn" id="callConfirmBtn" onclick="confirmCurrentCall()">Подтвердить оценку 4.2</button>
             </div>
           </div>
         </div>
 
         <div class="panel" style="margin-top:24px;">
           <div class="section-head" style="margin-bottom:6px;">
-            <h3 style="font-size:16px;">Чек-лист МОП — 17 из 28 пунктов</h3>
+            <h3 style="font-size:16px;" id="callChecklistTitle">Чек-лист МОП — 17 из 28 пунктов</h3>
             <span class="cnt">по шаблону SCG</span>
           </div>
-          <p style="font-size:13px; color:var(--gray); margin-bottom:18px;">Провал в блоке: «Презентация цены» и «Закрытие».</p>
+          <p style="font-size:13px; color:var(--gray); margin-bottom:18px;" id="callChecklistNote">Провал в блоке: «Презентация цены» и «Закрытие».</p>
 
+          <div id="callChecklist">
           <div class="cl-block">
             <h5>0. Контакт — 2/2</h5>
             <div class="cl-item done"><span class="mk">✓</span>Тёплое приветствие, без «удобно говорить»</div>
@@ -538,6 +543,7 @@
             <div class="cl-item bad"><span class="mk">✗</span>Что именно будет выслано</div>
             <div class="cl-item bad"><span class="mk">✗</span>Кому передать материалы</div>
             <div class="cl-item bad"><span class="mk">✗</span>Микро-обязательство клиента</div>
+          </div>
           </div>
         </div>
       </main>
@@ -1012,10 +1018,17 @@
       const mopsSnap = await db.collection('mops').where('ropId', '==', userData.ropId).get();
       const mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
+      const callsSnap = await db.collection('calls').where('ropId', '==', userData.ropId).get();
+      const calls = callsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      calls.sort((a, b) => new Date(b.date) - new Date(a.date));
+
       currentRopId = userData.ropId;
       currentMops = mops;
+      currentCalls = calls;
+      mopMap = {};
+      mops.forEach(m => { mopMap[m.id] = m; });
 
-      renderRealDashboard(userData, ropData, mops);
+      renderRealDashboard(userData, ropData, mops, calls);
       populateMopSelect(mops);
       renderPromptBox();
       btn.disabled = false;
@@ -1029,7 +1042,7 @@
     }
   }
 
-  function renderRealDashboard(userData, ropData, mops){
+  function renderRealDashboard(userData, ropData, mops, calls){
     document.querySelectorAll('.sbName').forEach(el => el.textContent = userData.name || ropData.name || '—');
     document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + ' · РОП');
 
@@ -1039,25 +1052,181 @@
     document.getElementById('realDataNote').style.display = 'block';
     document.getElementById('teamCount').textContent = mops.length + ' МОП';
 
+    const totalCalls = calls.length;
+    const scores = calls.map(c => c.aiAnalysis && typeof c.aiAnalysis.score === 'number' ? c.aiAnalysis.score : null).filter(v => v !== null);
+    const avgScore = scores.length ? (scores.reduce((a,b)=>a+b,0) / scores.length).toFixed(1) : '—';
+    const pendingCount = calls.filter(c => c.analystReview && c.analystReview.status === 'pending').length;
+
+    document.getElementById('statCallsVal').innerHTML = totalCalls ? `${totalCalls}` : '0 <small>звонков пока нет</small>';
+    document.getElementById('statAvgVal').innerHTML = scores.length ? `${avgScore} <small>/ 10</small>` : '— <small>нет оценённых</small>';
+    document.getElementById('statPendingVal').textContent = pendingCount;
+
+    const attention = calls.filter(c => (c.analystReview && c.analystReview.status === 'pending') || (c.aiAnalysis && c.aiAnalysis.score < 6)).slice(0, 8);
+    document.getElementById('attentionCount').textContent = attention.length;
+    const attList = document.getElementById('attentionList');
+    if(attention.length === 0){
+      attList.innerHTML = '<div class="row"><div class="who"><div class="n">Пока нет звонков, требующих внимания</div><div class="m">Добавьте звонок через раздел «+ Добавить звонок»</div></div></div>';
+    } else {
+      attList.innerHTML = attention.map(c => {
+        const mop = mopMap[c.mopId];
+        const mopName = mop ? mop.name : 'МОП';
+        const score = c.aiAnalysis ? c.aiAnalysis.score : '—';
+        const isPending = c.analystReview && c.analystReview.status === 'pending';
+        const dateStr = formatCallDate(c.date);
+        const weak = c.aiAnalysis && c.aiAnalysis.weaknesses && c.aiAnalysis.weaknesses[0] ? c.aiAnalysis.weaknesses[0] : 'требует проверки';
+        return `
+          <div class="row" onclick="openCallDetail('${c.id}')">
+            <div class="who"><div class="n">${mopName}</div><div class="m">Звонок ${dateStr} · ${weak}</div></div>
+            <span class="pill ${isPending ? 'wait' : 'bad'}">${isPending ? 'На проверке' : 'Низкий балл'}</span>
+            <div class="score">${score}</div>
+            <div class="arrow-btn">›</div>
+          </div>`;
+      }).join('');
+    }
+
     const list = document.getElementById('teamList');
     if(mops.length === 0){
       list.innerHTML = '<div class="row"><div class="who"><div class="n">В команде пока нет МОП</div><div class="m">Добавьте сотрудников в коллекцию mops в Firestore</div></div></div>';
       return;
     }
-    list.innerHTML = mops.map(m => `
+    list.innerHTML = mops.map(m => {
+      const mopCalls = calls.filter(c => c.mopId === m.id);
+      const countLabel = mopCalls.length ? `${mopCalls.length} звонк${mopCalls.length===1?'':(mopCalls.length<5?'а':'ов')} в базе` : 'Звонков за неделю: нет данных';
+      const lastScore = mopCalls.length && mopCalls[0].aiAnalysis ? mopCalls[0].aiAnalysis.score : null;
+      return `
       <div class="row" onclick="go('manager')">
         <span class="grp-tag">${GROUP_LABELS[(m.group||'').toLowerCase()] || m.group || '—'}</span>
-        <div class="who"><div class="n">${m.name || 'Без имени'}</div><div class="m">Звонков за неделю: нет данных</div></div>
+        <div class="who"><div class="n">${m.name || 'Без имени'}</div><div class="m">${countLabel}</div></div>
         <div class="trend flat">—</div>
-        <div class="score">—</div>
+        <div class="score">${lastScore !== null ? lastScore : '—'}</div>
         <div class="arrow-btn">›</div>
-      </div>
+      </div>`;
+    }).join('');
+  }
+
+  function formatCallDate(iso){
+    try{
+      const d = new Date(iso);
+      return d.toLocaleDateString('ru-RU', {day:'2-digit', month:'2-digit'}) + ' · ' + d.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+    } catch(e){ return '—'; }
+  }
+
+  function stageMark(status){
+    if(status === 'done') return '✓';
+    if(status === 'partial') return '±';
+    return '✗';
+  }
+
+  function openCallDetail(callId){
+    const call = currentCalls.find(c => c.id === callId);
+    if(!call) return;
+    currentOpenCallId = callId;
+    const mop = mopMap[call.mopId] || { name: 'МОП' };
+    const a = call.aiAnalysis || {};
+    const stages = a.stages || [];
+    const checklist = a.checklist || [];
+    const strengths = a.strengths || [];
+    const weaknesses = a.weaknesses || [];
+    const objections = a.objections || [];
+    const isPending = !call.analystReview || call.analystReview.status === 'pending';
+    const score = typeof a.score === 'number' ? a.score : '—';
+
+    document.getElementById('callTitle').textContent = `Звонок · ${mop.name}`;
+    const pillEl = document.getElementById('callPill');
+    pillEl.className = 'pill ' + (score !== '—' && score < 6 ? 'bad' : 'good');
+    pillEl.textContent = (score !== '—' && score < 6 ? 'Низкий балл · ' : 'Балл · ') + score;
+
+    document.getElementById('callMeta').innerHTML = `
+      <div><b>${formatCallDate(call.date)}</b>Дата и время</div>
+      <div><b>${call.durationSeconds ? Math.round(call.durationSeconds/60) + ' мин' : '—'}</b>Длительность</div>
+      <div><b>Ручной ввод</b>Источник</div>`;
+
+    document.getElementById('callTranscript').innerHTML = call.transcript
+      ? call.transcript.split('\n').filter(Boolean).map(line => `<div class="t-line"><span>${line}</span></div>`).join('')
+      : '<div style="color:var(--gray); font-size:13.5px; padding:20px 0;">Текст расшифровки не был сохранён при ручном добавлении звонка.</div>';
+
+    const stagesDone = stages.filter(s => s.status === 'done').length;
+    document.getElementById('callScoreStrip').innerHTML = `
+      <div class="score-mini"><div class="v">${score}</div><div class="l">Оценка /10</div></div>
+      <div class="score-mini"><div class="v">${stagesDone}/${stages.length || 6}</div><div class="l">Этапов полностью</div></div>
+      <div class="score-mini"><div class="v">${objections.length}</div><div class="l">Возражений в звонке</div></div>`;
+
+    document.getElementById('callStageList').innerHTML = stages.map(s => `
+      <div class="stage-row ${s.status}"><span class="mk">${stageMark(s.status)}</span><span class="t">${s.id}. ${s.name}</span>${s.comment ? `<span class="c">${s.comment}</span>` : ''}</div>
     `).join('');
+
+    document.getElementById('callStrengths').innerHTML = strengths.length
+      ? strengths.map(s => `<p>+ ${s}</p>`).join('')
+      : '<p style="color:var(--gray);">Не выделено</p>';
+    document.getElementById('callWeaknesses').innerHTML = weaknesses.length
+      ? weaknesses.map(w => `<p>– ${w}</p>`).join('')
+      : '<p style="color:var(--gray);">Не выделено</p>';
+
+    document.getElementById('callObjTable').innerHTML = objections.length
+      ? objections.map(o => `<tr><td>«${o.objection}»</td><td>${o.handling}</td></tr>`).join('')
+      : '<tr><td colspan="2" style="color:var(--gray);">Возражений не зафиксировано</td></tr>';
+
+    document.getElementById('callReviewStatus').innerHTML = isPending
+      ? '<span class="pill wait">Ожидает подтверждения</span>'
+      : '<span class="pill good">Подтверждено аналитиком</span>';
+    document.getElementById('callRecommendation').textContent = a.recommendation || '—';
+    document.getElementById('callComment').value = (call.analystReview && call.analystReview.comment) || '';
+
+    const confirmBtn = document.getElementById('callConfirmBtn');
+    confirmBtn.textContent = isPending ? `Подтвердить оценку ${score}` : 'Оценка подтверждена';
+    confirmBtn.disabled = !isPending;
+
+    const totalItems = checklist.reduce((sum, b) => sum + b.items.length, 0);
+    const doneItems = checklist.reduce((sum, b) => sum + b.items.filter(i => i.done).length, 0);
+    document.getElementById('callChecklistTitle').textContent = `Чек-лист МОП — ${doneItems} из ${totalItems || 28} пунктов`;
+    const failedBlocks = checklist.filter(b => b.items.some(i => !i.done)).map(b => b.block);
+    document.getElementById('callChecklistNote').textContent = failedBlocks.length
+      ? `Провал в блоке: ${failedBlocks.map(b => `«${b}»`).join(', ')}.`
+      : 'Все пункты чек-листа закрыты.';
+
+    document.getElementById('callChecklist').innerHTML = checklist.map(b => {
+      const blockDone = b.items.filter(i => i.done).length;
+      return `<div class="cl-block">
+        <h5>${b.block} — ${blockDone}/${b.items.length}</h5>
+        ${b.items.map(i => `<div class="cl-item ${i.done ? 'done' : 'bad'}"><span class="mk">${i.done ? '✓' : '✗'}</span>${i.text}</div>`).join('')}
+      </div>`;
+    }).join('');
+
+    go('call');
+  }
+
+  async function confirmCurrentCall(){
+    if(!currentOpenCallId) return;
+    const btn = document.getElementById('callConfirmBtn');
+    const comment = document.getElementById('callComment').value;
+    btn.disabled = true;
+    btn.textContent = 'Сохраняем...';
+    try{
+      await db.collection('calls').doc(currentOpenCallId).update({
+        'analystReview.status': 'confirmed',
+        'analystReview.comment': comment,
+        'analystReview.confirmedAt': new Date().toISOString()
+      });
+      const call = currentCalls.find(c => c.id === currentOpenCallId);
+      if(call){
+        call.analystReview = { status: 'confirmed', comment, confirmedAt: new Date().toISOString() };
+      }
+      document.getElementById('callReviewStatus').innerHTML = '<span class="pill good">Подтверждено аналитиком</span>';
+      btn.textContent = 'Оценка подтверждена';
+    } catch(e){
+      console.error(e);
+      alert('Не удалось подтвердить — проверьте права доступа в Firestore Rules (нужно allow update для /calls).');
+      btn.disabled = false;
+      btn.textContent = 'Подтвердить оценку';
+    }
   }
 
   // ---------- ADD CALL (manual entry via Claude chat) ----------
   let currentRopId = null;
   let currentMops = [];
+  let currentCalls = [];
+  let currentOpenCallId = null;
+  let mopMap = {};
 
   const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе. Разбери расшифровку звонка менеджера (МОП) с клиентом строго по шаблону ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
 
