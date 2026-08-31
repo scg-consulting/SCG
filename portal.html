@@ -301,6 +301,7 @@
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot">
@@ -406,6 +407,7 @@
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -552,6 +554,7 @@
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -631,6 +634,7 @@
           <a href="#" class="on">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
@@ -699,6 +703,7 @@
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" class="on">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
@@ -790,6 +795,7 @@
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" class="on">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#">Настройки</a>
         </nav>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
@@ -887,6 +893,48 @@
     </div>
   </section>
 
+  <!-- ================= ADD CALL (manual entry via Claude chat + paste JSON) ================= -->
+  <section class="screen" id="screen-addcall">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" class="on">+ Добавить звонок</a>
+          <a href="#">Настройки</a>
+        </nav>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Добавить звонок вручную</h2>
+        </div>
+
+        <div class="panel" style="margin-bottom:20px;">
+          <h4>Шаг 1 — получить разбор в чате Claude</h4>
+          <p style="font-size:13.5px; color:var(--gray); margin-bottom:12px;">Скопируйте этот промпт, вставьте его в обычный чат Claude, добавьте в конец текст расшифровки звонка и отправьте. Claude вернёт готовый структурированный разбор.</p>
+          <textarea id="promptBox" rows="6" readonly style="width:100%; border:1px solid #DDD; border-radius:6px; padding:12px; font-family:inherit; font-size:12.5px; color:var(--gray); resize:vertical;"></textarea>
+          <button type="button" class="confirm-btn" style="margin-top:10px;" onclick="copyPrompt()">Скопировать промпт</button>
+        </div>
+
+        <div class="panel review-box">
+          <h4>Шаг 2 — вставить ответ Claude и сохранить</h4>
+          <div class="field" style="margin-bottom:14px;">
+            <label style="font-size:12.5px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">МОП</label>
+            <select id="addCallMop" style="width:100%; padding:12px 14px; border:1px solid #DDD; border-radius:6px; font-size:14.5px; font-family:inherit;"></select>
+          </div>
+          <textarea id="addCallJson" rows="10" placeholder="Вставьте сюда JSON-ответ из чата Claude целиком..."></textarea>
+          <div id="addCallError" style="display:none; color:var(--bad); font-size:13px; margin:-6px 0 12px;"></div>
+          <div id="addCallSuccess" style="display:none; color:var(--good); font-size:13px; margin:-6px 0 12px;"></div>
+          <button class="confirm-btn" id="addCallBtn" onclick="saveCallFromJson()">Сохранить звонок</button>
+        </div>
+      </main>
+    </div>
+  </section>
+
 </div>
 
 <!-- Firebase SDK (compat build — works with plain <script> tags, no bundler needed) -->
@@ -964,7 +1012,12 @@
       const mopsSnap = await db.collection('mops').where('ropId', '==', userData.ropId).get();
       const mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
+      currentRopId = userData.ropId;
+      currentMops = mops;
+
       renderRealDashboard(userData, ropData, mops);
+      populateMopSelect(mops);
+      renderPromptBox();
       btn.disabled = false;
       btn.textContent = 'Войти';
       go('dashboard');
@@ -1000,6 +1053,164 @@
         <div class="arrow-btn">›</div>
       </div>
     `).join('');
+  }
+
+  // ---------- ADD CALL (manual entry via Claude chat) ----------
+  let currentRopId = null;
+  let currentMops = [];
+
+  const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе. Разбери расшифровку звонка менеджера (МОП) с клиентом строго по шаблону ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
+
+ЭТАПЫ ЗВОНКА (оцени каждый: "done" — выполнен полностью, "partial" — частично, "bad" — не выполнен, с коротким комментарием на русском только для partial/bad):
+0. Установление контакта
+1. До демонстрации
+2. По ходу демонстрации
+3. Перед ценой
+4. Презентация цены
+5. Закрытие
+
+ЧЕК-ЛИСТ МОП (28 пунктов, отметь true/false для каждого):
+Блок "Контакт" (2): тёплое приветствие без "удобно говорить", сразу назван повод звонка
+Блок "До демонстрации" (4): чем занимается компания, пользуются/пользовались СПС, сколько платят/платили, до какого срока подписка
+Блок "По ходу демонстрации" (8): кто пользуется системой, сколько доступов сейчас, что чаще всего ищут, сколько времени на поиск ответа, чего не хватает в подписке, решали ли вопросы с системой, семинары/вебинары/квалификация, сколько доступов нужно было бы
+Блок "Перед ценой" (6): какие отделы представлены, сколько сотрудников в подразделении, кто принимает решение, кто ещё влияет на решение, как согласуется покупка, ЭДО или бумага
+Блок "Презентация цены" (4): цена в 3 форматах год/мес/день, сразу резюме что входит, названа акция со сроком, что должно произойти для решения
+Блок "Закрытие" (4): дата/время след. контакта, что именно будет выслано, кому передать материалы, микро-обязательство клиента
+
+Также определи:
+- score: оценка звонка от 0 до 10
+- durationSeconds: примерная длительность звонка в секундах (если не ясно из текста — поставь 0)
+- strengths: список сильных сторон (короткие пункты на русском, без "+")
+- weaknesses: список слабых сторон (короткие пункты на русском, без "-")
+- objections: список возражений клиента, каждое — {"objection": "...", "handling": "как отработано или не отработано"}
+- recommendation: одна-две фразы конкретной рекомендации специалисту
+
+Верни JSON СТРОГО в этой структуре (все ключи обязательны, checklist — 6 блоков как в списке выше):
+{
+  "score": 4.2,
+  "durationSeconds": 400,
+  "stages": [
+    {"id": 0, "name": "Установление контакта", "status": "done", "comment": ""},
+    {"id": 1, "name": "До демонстрации", "status": "done", "comment": ""},
+    {"id": 2, "name": "По ходу демонстрации", "status": "done", "comment": ""},
+    {"id": 3, "name": "Перед ценой", "status": "partial", "comment": "..."},
+    {"id": 4, "name": "Презентация цены", "status": "bad", "comment": "..."},
+    {"id": 5, "name": "Закрытие", "status": "bad", "comment": "..."}
+  ],
+  "checklist": [
+    {"block": "Контакт", "items": [{"text": "...", "done": true}]},
+    {"block": "До демонстрации", "items": [...]},
+    {"block": "По ходу демонстрации", "items": [...]},
+    {"block": "Перед ценой", "items": [...]},
+    {"block": "Презентация цены", "items": [...]},
+    {"block": "Закрытие", "items": [...]}
+  ],
+  "strengths": ["..."],
+  "weaknesses": ["..."],
+  "objections": [{"objection": "...", "handling": "..."}],
+  "recommendation": "..."
+}
+
+Ниже вставь текст расшифровки звонка и отправь сообщение:
+
+РАСШИФРОВКА ЗВОНКА:
+[вставьте сюда текст звонка]`;
+
+  function renderPromptBox(){
+    const box = document.getElementById('promptBox');
+    if(box) box.value = CALL_PROMPT_TEMPLATE;
+  }
+
+  function copyPrompt(){
+    const box = document.getElementById('promptBox');
+    box.select();
+    navigator.clipboard.writeText(box.value).then(() => {
+      alert('Промпт скопирован — вставьте его в чат Claude и допишите текст звонка в конце.');
+    }).catch(() => {
+      document.execCommand('copy');
+      alert('Промпт скопирован.');
+    });
+  }
+
+  function populateMopSelect(mops){
+    const sel = document.getElementById('addCallMop');
+    if(!sel) return;
+    if(mops.length === 0){
+      sel.innerHTML = '<option value="">Нет МОП в команде</option>';
+      return;
+    }
+    sel.innerHTML = mops.map(m => `<option value="${m.id}">${m.name || 'Без имени'}</option>`).join('');
+  }
+
+  function setAddCallMsg(kind, msg){
+    const errBox = document.getElementById('addCallError');
+    const okBox = document.getElementById('addCallSuccess');
+    errBox.style.display = 'none';
+    okBox.style.display = 'none';
+    if(kind === 'error'){ errBox.textContent = msg; errBox.style.display = 'block'; }
+    if(kind === 'ok'){ okBox.textContent = msg; okBox.style.display = 'block'; }
+  }
+
+  async function saveCallFromJson(){
+    setAddCallMsg(null, '');
+    const btn = document.getElementById('addCallBtn');
+    const mopId = document.getElementById('addCallMop').value;
+    const raw = document.getElementById('addCallJson').value.trim();
+
+    if(!mopId){
+      setAddCallMsg('error', 'Выберите МОП.');
+      return;
+    }
+    if(!raw){
+      setAddCallMsg('error', 'Вставьте ответ Claude в формате JSON.');
+      return;
+    }
+
+    let analysis;
+    try{
+      const cleaned = raw.replace(/^```json\s*|\s*```$/gm, '').trim();
+      analysis = JSON.parse(cleaned);
+    } catch(e){
+      setAddCallMsg('error', 'Не удалось разобрать JSON — проверьте, что скопирован весь ответ целиком, без лишнего текста до или после.');
+      return;
+    }
+
+    const required = ['score', 'stages', 'checklist', 'strengths', 'weaknesses', 'objections', 'recommendation'];
+    const missing = required.filter(k => !(k in analysis));
+    if(missing.length){
+      setAddCallMsg('error', `В JSON не хватает полей: ${missing.join(', ')}. Проверьте, что Claude вернул полный ответ по шаблону.`);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Сохраняем...';
+
+    try{
+      await db.collection('calls').add({
+        mopId: mopId,
+        ropId: currentRopId,
+        date: new Date().toISOString(),
+        durationSeconds: analysis.durationSeconds || 0,
+        transcript: '',
+        aiAnalysis: {
+          score: analysis.score,
+          stages: analysis.stages,
+          checklist: analysis.checklist,
+          strengths: analysis.strengths,
+          weaknesses: analysis.weaknesses,
+          objections: analysis.objections,
+          recommendation: analysis.recommendation
+        },
+        analystReview: { status: 'pending', comment: '', confirmedAt: null }
+      });
+      setAddCallMsg('ok', 'Звонок сохранён и появится в дашборде со статусом «ожидает подтверждения».');
+      document.getElementById('addCallJson').value = '';
+    } catch(e){
+      console.error(e);
+      setAddCallMsg('error', 'Не удалось сохранить — проверьте подключение и права доступа.');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Сохранить звонок';
   }
 
   function doLogout(){
