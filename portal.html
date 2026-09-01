@@ -1011,18 +1011,40 @@
         return;
       }
       const userData = userDoc.data();
+      const isAdmin = userData.role === 'admin';
 
-      const ropDoc = await db.collection('rops').doc(userData.ropId).get();
-      const ropData = ropDoc.exists ? ropDoc.data() : { name: userData.name, branch: '—' };
+      let ropData, mops, calls, rops;
 
-      const mopsSnap = await db.collection('mops').where('ropId', '==', userData.ropId).get();
-      const mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if(isAdmin){
+        const ropsSnap = await db.collection('rops').get();
+        rops = ropsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        ropMap = {};
+        rops.forEach(r => { ropMap[r.id] = r; });
 
-      const callsSnap = await db.collection('calls').where('ropId', '==', userData.ropId).get();
-      const calls = callsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-      calls.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const mopsSnap = await db.collection('mops').get();
+        mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-      currentRopId = userData.ropId;
+        const callsSnap = await db.collection('calls').get();
+        calls = callsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        calls.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        ropData = { name: userData.name, branch: `Вся компания · ${rops.length} филиал(ов)` };
+        currentRopId = null;
+      } else {
+        const ropDoc = await db.collection('rops').doc(userData.ropId).get();
+        ropData = ropDoc.exists ? ropDoc.data() : { name: userData.name, branch: '—' };
+
+        const mopsSnap = await db.collection('mops').where('ropId', '==', userData.ropId).get();
+        mops = mopsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        const callsSnap = await db.collection('calls').where('ropId', '==', userData.ropId).get();
+        calls = callsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        calls.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        currentRopId = userData.ropId;
+      }
+
+      isAdminUser = isAdmin;
       currentMops = mops;
       currentCalls = calls;
       mopMap = {};
@@ -1070,13 +1092,14 @@
       attList.innerHTML = attention.map(c => {
         const mop = mopMap[c.mopId];
         const mopName = mop ? mop.name : 'МОП';
+        const branchTag = isAdminUser && mop && ropMap[mop.ropId] ? `${ropMap[mop.ropId].branch || ropMap[mop.ropId].name} · ` : '';
         const score = c.aiAnalysis ? c.aiAnalysis.score : '—';
         const isPending = c.analystReview && c.analystReview.status === 'pending';
         const dateStr = formatCallDate(c.date);
         const weak = c.aiAnalysis && c.aiAnalysis.weaknesses && c.aiAnalysis.weaknesses[0] ? c.aiAnalysis.weaknesses[0] : 'требует проверки';
         return `
           <div class="row" onclick="openCallDetail('${c.id}')">
-            <div class="who"><div class="n">${mopName}</div><div class="m">Звонок ${dateStr} · ${weak}</div></div>
+            <div class="who"><div class="n">${branchTag}${mopName}</div><div class="m">Звонок ${dateStr} · ${weak}</div></div>
             <span class="pill ${isPending ? 'wait' : 'bad'}">${isPending ? 'На проверке' : 'Низкий балл'}</span>
             <div class="score">${score}</div>
             <div class="arrow-btn">›</div>
@@ -1091,7 +1114,12 @@
     }
     list.innerHTML = mops.map(m => {
       const mopCalls = calls.filter(c => c.mopId === m.id);
-      const countLabel = mopCalls.length ? `${mopCalls.length} звонк${mopCalls.length===1?'':(mopCalls.length<5?'а':'ов')} в базе` : 'Звонков за неделю: нет данных';
+      let countLabel = mopCalls.length ? `${mopCalls.length} звонк${mopCalls.length===1?'':(mopCalls.length<5?'а':'ов')} в базе` : 'Звонков пока нет';
+      if(isAdminUser){
+        const rop = ropMap[m.ropId];
+        const branchName = rop ? (rop.branch || rop.name) : '—';
+        countLabel = `${branchName} · ${countLabel}`;
+      }
       const lastScore = mopCalls.length && mopCalls[0].aiAnalysis ? mopCalls[0].aiAnalysis.score : null;
       return `
       <div class="row" onclick="go('manager')">
@@ -1227,6 +1255,8 @@
   let currentCalls = [];
   let currentOpenCallId = null;
   let mopMap = {};
+  let ropMap = {};
+  let isAdminUser = false;
 
   const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе. Разбери расшифровку звонка менеджера (МОП) с клиентом строго по шаблону ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
 
@@ -1308,7 +1338,10 @@
       sel.innerHTML = '<option value="">Нет МОП в команде</option>';
       return;
     }
-    sel.innerHTML = mops.map(m => `<option value="${m.id}">${m.name || 'Без имени'}</option>`).join('');
+    sel.innerHTML = mops.map(m => {
+      const branchTag = isAdminUser && ropMap[m.ropId] ? ` — ${ropMap[m.ropId].branch || ropMap[m.ropId].name}` : '';
+      return `<option value="${m.id}">${m.name || 'Без имени'}${branchTag}</option>`;
+    }).join('');
   }
 
   function setAddCallMsg(kind, msg){
@@ -1354,10 +1387,19 @@
     btn.disabled = true;
     btn.textContent = 'Сохраняем...';
 
+    const targetMop = mopMap[mopId];
+    const ropIdForCall = isAdminUser ? (targetMop ? targetMop.ropId : null) : currentRopId;
+    if(!ropIdForCall){
+      setAddCallMsg('error', 'Не удалось определить филиал этого МОП.');
+      btn.disabled = false;
+      btn.textContent = 'Сохранить звонок';
+      return;
+    }
+
     try{
       await db.collection('calls').add({
         mopId: mopId,
-        ropId: currentRopId,
+        ropId: ropIdForCall,
         date: new Date().toISOString(),
         durationSeconds: analysis.durationSeconds || 0,
         transcript: '',
