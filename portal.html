@@ -313,7 +313,7 @@
       <main class="main">
         <div class="topbar">
           <h2 id="topGreeting">Здравствуйте, Александр</h2>
-          <div class="week-select"><span class="arrow">‹</span> Неделя 34 · 18–24 августа <span class="arrow">›</span></div>
+          <div class="week-select"><span class="arrow" onclick="changeWeek(-1)">‹</span> <span id="weekLabel">Текущая неделя</span> <span class="arrow" onclick="changeWeek(1)">›</span></div>
         </div>
 
         <div id="realDataNote" style="display:none; background:var(--wait-bg); color:var(--wait); border-radius:6px; padding:10px 16px; font-size:13px; font-weight:700; margin-bottom:20px;">
@@ -1064,7 +1064,35 @@
     }
   }
 
+  function getWeekRange(offset){
+    const now = new Date();
+    const day = (now.getDay() + 6) % 7; // Monday = 0
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - day + offset * 7);
+    monday.setHours(0,0,0,0);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23,59,59,999);
+    return { start: monday, end: sunday };
+  }
+
+  function formatWeekLabel(range){
+    const startStr = range.start.toLocaleDateString('ru-RU', {day:'2-digit'});
+    const endStr = range.end.toLocaleDateString('ru-RU', {day:'2-digit', month:'long'});
+    return `${startStr}–${endStr}`;
+  }
+
+  function changeWeek(delta){
+    currentWeekOffset += delta;
+    if(currentUserData){
+      renderRealDashboard(currentUserData, currentRopData, currentMops, currentCalls);
+    }
+  }
+
   function renderRealDashboard(userData, ropData, mops, calls){
+    currentUserData = userData;
+    currentRopData = ropData;
+
     document.querySelectorAll('.sbName').forEach(el => el.textContent = userData.name || ropData.name || '—');
     document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + (isAdminUser ? ' · Админ' : ' · РОП'));
 
@@ -1074,12 +1102,19 @@
     document.getElementById('realDataNote').style.display = 'block';
     document.getElementById('teamCount').textContent = mops.length + ' МОП';
 
+    const weekRange = getWeekRange(currentWeekOffset);
+    document.getElementById('weekLabel').textContent = formatWeekLabel(weekRange);
+    calls = calls.filter(c => {
+      const d = new Date(c.date);
+      return d >= weekRange.start && d <= weekRange.end;
+    });
+
     const totalCalls = calls.length;
     const scores = calls.map(c => c.aiAnalysis && typeof c.aiAnalysis.score === 'number' ? c.aiAnalysis.score : null).filter(v => v !== null);
     const avgScore = scores.length ? (scores.reduce((a,b)=>a+b,0) / scores.length).toFixed(1) : '—';
     const pendingCount = calls.filter(c => c.analystReview && c.analystReview.status === 'pending').length;
 
-    document.getElementById('statCallsVal').innerHTML = totalCalls ? `${totalCalls}` : '0 <small>звонков пока нет</small>';
+    document.getElementById('statCallsVal').innerHTML = totalCalls ? `${totalCalls}` : '0 <small>звонков за эту неделю</small>';
     document.getElementById('statAvgVal').innerHTML = scores.length ? `${avgScore} <small>/ 10</small>` : '— <small>нет оценённых</small>';
     document.getElementById('statPendingVal').textContent = pendingCount;
 
@@ -1257,6 +1292,9 @@
   let mopMap = {};
   let ropMap = {};
   let isAdminUser = false;
+  let currentUserData = null;
+  let currentRopData = null;
+  let currentWeekOffset = 0;
 
   const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе. Разбери расшифровку звонка менеджера (МОП) с клиентом строго по шаблону ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
 
