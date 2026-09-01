@@ -91,7 +91,8 @@
     display:flex; align-items:center; gap:10px;
     background:var(--white); border:1px solid var(--line); border-radius:6px; padding:8px 14px; font-size:13.5px; font-weight:700;
   }
-  .week-select .arrow{color:var(--gray-light); cursor:pointer; font-size:13px;}
+  .week-select .arrow{color:var(--gray-light); cursor:pointer; font-size:16px; font-weight:700; padding:6px 10px; border-radius:4px; display:inline-block;}
+  .week-select .arrow:hover{background:var(--peach); color:var(--orange);}
 
   .stat-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:30px;}
   .stat{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px 22px;}
@@ -1077,7 +1078,8 @@
   }
 
   function formatWeekLabel(range){
-    const startStr = range.start.toLocaleDateString('ru-RU', {day:'2-digit'});
+    const sameMonth = range.start.getMonth() === range.end.getMonth();
+    const startStr = range.start.toLocaleDateString('ru-RU', sameMonth ? {day:'2-digit'} : {day:'2-digit', month:'long'});
     const endStr = range.end.toLocaleDateString('ru-RU', {day:'2-digit', month:'long'});
     return `${startStr}–${endStr}`;
   }
