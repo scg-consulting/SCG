@@ -1066,7 +1066,7 @@
 
   function renderRealDashboard(userData, ropData, mops, calls){
     document.querySelectorAll('.sbName').forEach(el => el.textContent = userData.name || ropData.name || '—');
-    document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + ' · РОП');
+    document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + (isAdminUser ? ' · Админ' : ' · РОП'));
 
     const firstName = (userData.name || '').split(' ')[0] || '';
     document.getElementById('topGreeting').textContent = firstName ? `Здравствуйте, ${firstName}` : 'Здравствуйте';
