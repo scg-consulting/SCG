@@ -1305,14 +1305,10 @@
       list.innerHTML = '<div class="row"><div class="who"><div class="n">В команде пока нет МОП</div><div class="m">Добавьте сотрудников в коллекцию mops в Firestore</div></div></div>';
       return;
     }
-    list.innerHTML = mops.map(m => {
+
+    function mopRow(m){
       const mopCalls = calls.filter(c => c.mopId === m.id);
-      let countLabel = mopCalls.length ? `${mopCalls.length} звонк${mopCalls.length===1?'':(mopCalls.length<5?'а':'ов')} в базе` : 'Звонков пока нет';
-      if(isAdminUser){
-        const rop = ropMap[m.ropId];
-        const branchName = rop ? (rop.branch || rop.name) : '—';
-        countLabel = `${branchName} · ${countLabel}`;
-      }
+      const countLabel = mopCalls.length ? `${mopCalls.length} звонк${mopCalls.length===1?'':(mopCalls.length<5?'а':'ов')} в базе` : 'Звонков пока нет';
       const lastScore = mopCalls.length && mopCalls[0].aiAnalysis ? mopCalls[0].aiAnalysis.score : null;
       return `
       <div class="row" onclick="openManagerDetail('${m.id}')">
@@ -1322,7 +1318,34 @@
         <div class="score">${lastScore !== null ? lastScore : '—'}</div>
         <div class="arrow-btn">›</div>
       </div>`;
-    }).join('');
+    }
+
+    if(isAdminUser){
+      const byRop = {};
+      mops.forEach(m => {
+        const key = m.ropId || '—';
+        if(!byRop[key]) byRop[key] = [];
+        byRop[key].push(m);
+      });
+      const ropIds = Object.keys(byRop).sort((a, b) => {
+        const nameA = (ropMap[a] && (ropMap[a].branch || ropMap[a].name)) || '';
+        const nameB = (ropMap[b] && (ropMap[b].branch || ropMap[b].name)) || '';
+        return nameA.localeCompare(nameB, 'ru');
+      });
+      list.innerHTML = ropIds.map(ropId => {
+        const rop = ropMap[ropId];
+        const branchName = rop ? (rop.branch || rop.name) : 'Без филиала';
+        const ropName = rop ? rop.name : '';
+        const group = byRop[ropId];
+        return `
+        <div class="row" style="background:#FCFAF7; cursor:default;">
+          <div class="who"><div class="n">${branchName}</div><div class="m">${ropName ? 'РОП: ' + ropName + ' · ' : ''}${group.length} МОП</div></div>
+        </div>
+        ${group.map(mopRow).join('')}`;
+      }).join('');
+    } else {
+      list.innerHTML = mops.map(mopRow).join('');
+    }
   }
 
   function formatCallDate(iso){
