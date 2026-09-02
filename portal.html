@@ -878,11 +878,15 @@
           <h2>Добавить звонок вручную</h2>
         </div>
 
+        <div id="addCallRopNotice" style="display:none; background:var(--wait-bg); color:var(--wait); border-radius:6px; padding:10px 16px; font-size:13px; font-weight:700; margin-bottom:20px;">
+          Добавление звонков доступно только аналитику SCG. Если у вас есть расшифровка звонка — передайте её аналитику.
+        </div>
+
         <div class="panel" style="margin-bottom:20px;">
           <h4>Шаг 1 — получить разбор в чате Claude</h4>
           <p style="font-size:13.5px; color:var(--gray); margin-bottom:12px;">Скопируйте этот промпт, вставьте его в обычный чат Claude, добавьте в конец текст расшифровки звонка и отправьте. Claude вернёт готовый структурированный разбор.</p>
           <textarea id="promptBox" rows="6" readonly style="width:100%; border:1px solid #DDD; border-radius:6px; padding:12px; font-family:inherit; font-size:12.5px; color:var(--gray); resize:vertical;"></textarea>
-          <button type="button" class="confirm-btn" style="margin-top:10px;" onclick="copyPrompt()">Скопировать промпт</button>
+          <button type="button" class="confirm-btn" id="copyPromptBtn" style="margin-top:10px;" onclick="copyPrompt()">Скопировать промпт</button>
         </div>
 
         <div class="panel review-box">
@@ -1132,6 +1136,7 @@
       populateMopSelect(mops);
       renderPromptBox();
       populateSettings(userData, ropData);
+      applyAddCallAccess();
       btn.disabled = false;
       btn.textContent = 'Войти';
       go('dashboard');
@@ -1446,6 +1451,28 @@
     }).catch(() => {
       document.execCommand('copy');
       alert('Промпт скопирован.');
+    });
+  }
+
+  function applyAddCallAccess(){
+    const notice = document.getElementById('addCallRopNotice');
+    const mopSel = document.getElementById('addCallMop');
+    const jsonBox = document.getElementById('addCallJson');
+    const saveBtn = document.getElementById('addCallBtn');
+    const copyBtn = document.getElementById('copyPromptBtn');
+    if(!notice || !mopSel || !jsonBox || !saveBtn) return;
+
+    const allowed = isAdminUser;
+    notice.style.display = allowed ? 'none' : 'block';
+    mopSel.disabled = !allowed;
+    jsonBox.disabled = !allowed;
+    saveBtn.disabled = !allowed;
+    if(copyBtn) copyBtn.disabled = !allowed;
+
+    [mopSel, jsonBox, saveBtn, copyBtn].forEach(el => {
+      if(!el) return;
+      el.style.opacity = allowed ? '1' : '0.5';
+      el.style.cursor = allowed ? '' : 'not-allowed';
     });
   }
 
