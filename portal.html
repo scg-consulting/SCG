@@ -1349,7 +1349,7 @@
     document.getElementById('attentionCount').textContent = attention.length;
     const attList = document.getElementById('attentionList');
     if(attention.length === 0){
-      attList.innerHTML = '<div class="row"><div class="who"><div class="n">Пока нет звонков, требующих внимания</div><div class="m">Добавьте звонок через раздел «+ Добавить звонок»</div></div></div>';
+      attList.innerHTML = '<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">Пока нет звонков, требующих внимания</div><div class="ds">Как только появятся спорные оценки или звонки на проверке — они появятся здесь. Добавьте звонок через раздел «+ Добавить звонок».</div></div>';
     } else {
       attList.innerHTML = attention.map(c => {
         const mop = mopMap[c.mopId];
@@ -1371,7 +1371,7 @@
 
     const list = document.getElementById('teamList');
     if(mops.length === 0){
-      list.innerHTML = '<div class="row"><div class="who"><div class="n">В команде пока нет МОП</div><div class="m">Добавьте сотрудников в коллекцию mops в Firestore</div></div></div>';
+      list.innerHTML = '<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">В команде пока нет МОП</div><div class="ds">Добавьте сотрудников в коллекцию mops в Firestore, чтобы увидеть команду здесь.</div></div>';
       return;
     }
 
