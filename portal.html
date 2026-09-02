@@ -1184,7 +1184,7 @@
     const firstName = (userData.name || '').split(' ')[0] || '';
     document.getElementById('topGreeting').textContent = firstName ? `Здравствуйте, ${firstName}` : 'Здравствуйте';
 
-    document.getElementById('realDataNote').style.display = 'block';
+    document.getElementById('realDataNote').style.display = calls.length > 0 ? 'none' : 'block';
     document.getElementById('teamCount').textContent = mops.length + ' МОП';
 
     const weekRange = getWeekRange(currentWeekOffset);
