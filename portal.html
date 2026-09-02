@@ -162,6 +162,12 @@
   .team-toggle-arrow{color:var(--gray-light); font-size:16px; font-weight:700; transition:transform 0.15s ease; width:16px; flex-shrink:0;}
   .team-toggle-arrow.open{transform:rotate(90deg); color:var(--orange);}
 
+  .empty-state{display:flex; flex-direction:column; align-items:center; justify-content:center; padding:52px 24px; text-align:center; gap:10px;}
+  .empty-state .ic{width:38px; height:38px; color:var(--orange); opacity:0.5; margin-bottom:4px;}
+  .empty-state .ic svg{width:100%; height:100%;}
+  .empty-state .tt{font-family:'Fraunces', serif; font-weight:600; font-size:16px; color:var(--graphite);}
+  .empty-state .ds{font-size:13px; color:var(--gray); max-width:300px; line-height:1.5;}
+
   /* ---------- CALL CARD ---------- */
   .back-link{font-size:13px; font-weight:700; color:var(--gray); margin-bottom:16px; display:inline-block;}
   .back-link:hover{color:var(--orange);}
@@ -320,7 +326,7 @@
     <div class="login-split">
       <div class="login-brand">
         <div class="login-brand-inner">
-          <div class="login-brand-mark"><svg viewBox="0 0 100 100"><use href="#scg-mark"/></svg></div>
+          <div class="login-brand-mark"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div>
           <div class="login-brand-eyebrow"><span class="dash"></span>Sales Consulting Group</div>
           <div class="login-brand-word">Система, которая находит рост в продажах</div>
           <p class="login-brand-quote">Технология распознаёт звонок. Аналитик подтверждает результат.</p>
@@ -350,7 +356,7 @@
   <section class="screen" id="screen-dashboard">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" class="on">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -456,7 +462,7 @@
   <section class="screen" id="screen-call">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -609,7 +615,7 @@
   <section class="screen" id="screen-manager">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -653,7 +659,7 @@
   <section class="screen" id="screen-rating">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" class="on">Рейтинг команды</a>
@@ -680,7 +686,7 @@
   <section class="screen" id="screen-games">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -772,7 +778,7 @@
   <section class="screen" id="screen-script">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -880,7 +886,7 @@
   <section class="screen" id="screen-addcall">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -926,7 +932,7 @@
   <section class="screen" id="screen-settings">
     <div class="shell">
       <aside class="sidebar">
-        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
@@ -1028,7 +1034,7 @@
     labelEl.textContent = range.label;
 
     if(!currentMops || currentMops.length === 0){
-      listEl.innerHTML = '<div class="rrow"><div class="who"><div class="n">Нет данных о команде</div></div></div>';
+      listEl.innerHTML = '<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">Нет данных о команде</div><div class="ds">Добавьте сотрудников в коллекцию mops в Firestore, чтобы увидеть рейтинг.</div></div>';
       return;
     }
 
@@ -1046,7 +1052,7 @@
     const scored = rows.filter(r => r.avg !== null).sort((a,b) => b.avg - a.avg);
 
     if(scored.length === 0){
-      listEl.innerHTML = '<div class="rrow"><div class="who"><div class="n">За этот месяц ещё нет оценённых звонков</div></div></div>';
+      listEl.innerHTML = '<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">Пока нет оценённых звонков</div><div class="ds">За этот месяц рейтинг ещё не сформирован — он появится, как только начнут поступать разборы звонков.</div></div>';
       return;
     }
 
@@ -1130,7 +1136,7 @@
             <div class="arrow-btn">›</div>
           </div>`;
         }).join('')
-      : '<div class="row"><div class="who"><div class="n">Звонков пока нет</div></div></div>';
+      : '<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">Звонков пока нет</div><div class="ds">Как только появятся разобранные звонки этого сотрудника, они отобразятся здесь.</div></div>';
 
     go('manager');
   }
