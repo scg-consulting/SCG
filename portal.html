@@ -123,6 +123,8 @@
   .trend{display:flex; align-items:center; gap:3px; font-size:12px; font-weight:700; width:52px;}
   .trend.up{color:var(--good);} .trend.down{color:var(--bad);} .trend.flat{color:var(--gray-light);}
   .grp-tag{font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px; background:var(--peach); color:var(--orange);}
+  .team-toggle-arrow{color:var(--gray-light); font-size:16px; font-weight:700; transition:transform 0.15s ease; width:16px; flex-shrink:0;}
+  .team-toggle-arrow.open{transform:rotate(90deg); color:var(--orange);}
 
   /* ---------- CALL CARD ---------- */
   .back-link{font-size:13px; font-weight:700; color:var(--gray); margin-bottom:16px; display:inline-block;}
@@ -1015,6 +1017,15 @@
     }).join('');
   }
 
+  function toggleTeamGroup(groupId, headerEl){
+    const groupEl = document.getElementById(groupId);
+    const arrowEl = document.getElementById('arrow_' + groupId);
+    if(!groupEl) return;
+    const isOpen = groupEl.style.display !== 'none';
+    groupEl.style.display = isOpen ? 'none' : 'block';
+    if(arrowEl) arrowEl.classList.toggle('open', !isOpen);
+  }
+
   function getInitials(name){
     if(!name) return '—';
     const parts = name.trim().split(/\s+/);
@@ -1337,11 +1348,15 @@
         const branchName = rop ? (rop.branch || rop.name) : 'Без филиала';
         const ropName = rop ? rop.name : '';
         const group = byRop[ropId];
+        const groupId = 'teamGroup_' + ropId.replace(/[^a-zA-Z0-9_]/g, '_');
         return `
-        <div class="row" style="background:#FCFAF7; cursor:default;">
+        <div class="row" style="background:#FCFAF7;" onclick="toggleTeamGroup('${groupId}', this)">
+          <div class="team-toggle-arrow" id="arrow_${groupId}">›</div>
           <div class="who"><div class="n">${branchName}</div><div class="m">${ropName ? 'РОП: ' + ropName + ' · ' : ''}${group.length} МОП</div></div>
         </div>
-        ${group.map(mopRow).join('')}`;
+        <div id="${groupId}" style="display:none;">
+          ${group.map(mopRow).join('')}
+        </div>`;
       }).join('');
     } else {
       list.innerHTML = mops.map(mopRow).join('');
