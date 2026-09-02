@@ -118,6 +118,11 @@
   .sb-foot{border-top:1px solid rgba(255,255,255,0.12); padding-top:14px; font-size:12.5px;}
   .sb-foot .nm{color:#fff; font-weight:700; margin-bottom:2px;}
   .sb-foot .br{color:rgba(255,255,255,0.4);}
+  .sb-quick{display:none;}
+  .sb-quick.filled{display:flex; flex-direction:row; gap:22px; padding-bottom:18px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1);}
+  .sb-quick .qrow{display:block;}
+  .sb-quick .qval{display:block; font-family:'Fraunces', serif; font-weight:600; font-size:21px; color:var(--gold-light); line-height:1.1;}
+  .sb-quick .qlbl{display:block; font-size:11px; color:rgba(255,255,255,0.42); margin-top:3px; line-height:1.3;}
 
   .main{padding:34px 40px 64px;}
   .topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:14px;}
@@ -365,6 +370,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot">
           <div class="nm sbName">Петров А.С.</div>
           <div class="br sbBranch">Санкт-Петербург · РОП</div>
@@ -471,6 +477,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
       </aside>
       <main class="main">
@@ -624,6 +631,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
       </aside>
       <main class="main">
@@ -668,6 +676,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
       </aside>
       <main class="main">
@@ -695,6 +704,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
       </aside>
       <main class="main">
@@ -787,6 +797,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
       </aside>
       <main class="main">
@@ -895,6 +906,7 @@
           <a href="#" class="on">+ Добавить звонок</a>
           <a href="#" onclick="go('settings');return false;">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
       </aside>
       <main class="main">
@@ -941,6 +953,7 @@
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
           <a href="#" class="on">Настройки</a>
         </nav>
+        <div class="sb-quick sbQuickStats"></div>
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div><div style="margin-top:8px;"><a href="#" onclick="doLogout();return false;" style="color:rgba(255,255,255,0.4); font-size:12px;">Выйти</a></div></div>
       </aside>
       <main class="main">
@@ -1322,6 +1335,20 @@
 
     document.querySelectorAll('.sbName').forEach(el => el.textContent = userData.name || ropData.name || '—');
     document.querySelectorAll('.sbBranch').forEach(el => el.textContent = (ropData.branch || '—') + (isAdminUser ? ' · Админ' : ' · РОП'));
+
+    const quickRows = isAdminUser
+      ? [
+          { val: (ropMap ? Object.keys(ropMap).length : 0), lbl: 'филиалов в работе' },
+          { val: mops.length, lbl: 'МОП в базе' },
+        ]
+      : [
+          { val: mops.length, lbl: 'человек в команде' },
+        ];
+    const quickHtml = quickRows.map(r => `<div class="qrow"><span class="qval">${r.val}</span><span class="qlbl">${r.lbl}</span></div>`).join('');
+    document.querySelectorAll('.sbQuickStats').forEach(el => {
+      el.innerHTML = quickHtml;
+      el.classList.add('filled');
+    });
 
     const firstName = (userData.name || '').split(' ')[0] || '';
     document.getElementById('topGreeting').textContent = firstName ? `Здравствуйте, ${firstName}` : 'Здравствуйте';
