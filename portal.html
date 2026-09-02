@@ -649,52 +649,10 @@
       <main class="main">
         <div class="topbar">
           <h2>Рейтинг команды</h2>
-          <div class="week-select"><span class="arrow">‹</span> Август 2026 <span class="arrow">›</span></div>
+          <div class="week-select"><span class="arrow" onclick="changeRatingMonth(-1)">‹</span> <span id="ratingMonthLabel">—</span> <span class="arrow" onclick="changeRatingMonth(1)">›</span></div>
         </div>
 
-        <div class="rating-list">
-          <div class="rrow top1">
-            <div class="rank">1</div>
-            <div class="who"><div class="n">Титов Сергей</div></div>
-            <div class="badges-row"><span class="badge">Топ месяца</span></div>
-            <div class="bar-wrap"><div class="bar" style="width:91%;"></div></div>
-            <div class="score">9.1</div>
-          </div>
-          <div class="rrow">
-            <div class="rank">2</div>
-            <div class="who"><div class="n">Волкова Мария</div></div>
-            <div class="badges-row"><span class="badge green">Стабильно топ</span></div>
-            <div class="bar-wrap"><div class="bar" style="width:87%;"></div></div>
-            <div class="score">8.7</div>
-          </div>
-          <div class="rrow">
-            <div class="rank">3</div>
-            <div class="who"><div class="n">Фролов Иван</div></div>
-            <div class="badges-row"><span class="badge blue">Растёт 3-ю неделю</span></div>
-            <div class="bar-wrap"><div class="bar" style="width:69%;"></div></div>
-            <div class="score">6.9</div>
-          </div>
-          <div class="rrow">
-            <div class="rank">4</div>
-            <div class="who"><div class="n">Игнатьева Ольга</div></div>
-            <div class="badges-row"></div>
-            <div class="bar-wrap"><div class="bar" style="width:61%;"></div></div>
-            <div class="score">6.1</div>
-          </div>
-          <div class="rrow">
-            <div class="rank">5</div>
-            <div class="who"><div class="n">Козлов Дмитрий</div></div>
-            <div class="badges-row"></div>
-            <div class="bar-wrap"><div class="bar" style="width:58%;"></div></div>
-            <div class="score">5.8</div>
-          </div>
-          <div class="rrow">
-            <div class="rank">6</div>
-            <div class="who"><div class="n">Смирнова Елена</div></div>
-            <div class="badges-row"><span class="badge" style="background:var(--bad-bg);color:var(--bad);">Нужна поддержка</span></div>
-            <div class="bar-wrap"><div class="bar" style="width:42%; background:var(--bad);"></div></div>
-            <div class="score">4.2</div>
-          </div>
+        <div class="rating-list" id="ratingList">
         </div>
       </main>
     </div>
@@ -1020,6 +978,73 @@
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-'+name).classList.add('active');
     window.scrollTo(0,0);
+    if(name === 'rating'){ renderRating(); }
+  }
+
+  let currentMonthOffset = 0;
+
+  function getMonthRange(offset){
+    const now = new Date();
+    const d = new Date(now.getFullYear(), now.getMonth() + offset, 1);
+    const start = new Date(d.getFullYear(), d.getMonth(), 1, 0,0,0,0);
+    const end = new Date(d.getFullYear(), d.getMonth()+1, 0, 23,59,59,999);
+    const label = d.toLocaleDateString('ru-RU', {month:'long', year:'numeric'});
+    return { start, end, label: label.charAt(0).toUpperCase() + label.slice(1) };
+  }
+
+  function changeRatingMonth(delta){
+    currentMonthOffset += delta;
+    renderRating();
+  }
+
+  function renderRating(){
+    const listEl = document.getElementById('ratingList');
+    const labelEl = document.getElementById('ratingMonthLabel');
+    if(!listEl || !labelEl) return;
+
+    const range = getMonthRange(currentMonthOffset);
+    labelEl.textContent = range.label;
+
+    if(!currentMops || currentMops.length === 0){
+      listEl.innerHTML = '<div class="rrow"><div class="who"><div class="n">Нет данных о команде</div></div></div>';
+      return;
+    }
+
+    const monthCalls = (currentCalls || []).filter(c => {
+      const d = new Date(c.date);
+      return d >= range.start && d <= range.end;
+    });
+
+    const rows = currentMops.map(m => {
+      const mopCalls = monthCalls.filter(c => c.mopId === m.id && c.aiAnalysis && typeof c.aiAnalysis.score === 'number');
+      const avg = mopCalls.length ? (mopCalls.reduce((s,c)=>s+c.aiAnalysis.score,0) / mopCalls.length) : null;
+      return { mop: m, avg };
+    });
+
+    const scored = rows.filter(r => r.avg !== null).sort((a,b) => b.avg - a.avg);
+
+    if(scored.length === 0){
+      listEl.innerHTML = '<div class="rrow"><div class="who"><div class="n">За этот месяц ещё нет оценённых звонков</div></div></div>';
+      return;
+    }
+
+    listEl.innerHTML = scored.map((r, idx) => {
+      const rank = idx + 1;
+      const pct = Math.max(0, Math.min(100, Math.round(r.avg * 10)));
+      const barColor = r.avg < 6 ? 'background:var(--bad);' : '';
+      const topClass = rank === 1 ? ' top1' : '';
+      let badge = '';
+      if(rank === 1) badge = '<span class="badge">Топ месяца</span>';
+      else if(r.avg < 6) badge = '<span class="badge" style="background:var(--bad-bg);color:var(--bad);">Нужна поддержка</span>';
+      return `
+        <div class="rrow${topClass}">
+          <div class="rank">${rank}</div>
+          <div class="who"><div class="n">${r.mop.name || 'Без имени'}</div></div>
+          <div class="badges-row">${badge}</div>
+          <div class="bar-wrap"><div class="bar" style="width:${pct}%; ${barColor}"></div></div>
+          <div class="score">${r.avg.toFixed(1)}</div>
+        </div>`;
+    }).join('');
   }
 
   function setLoginError(msg){
