@@ -1021,9 +1021,18 @@
 
         <div class="panel" style="max-width:520px;">
           <h4>Пароль</h4>
-          <p style="font-size:13.5px; color:var(--gray); margin-bottom:14px;">Мы отправим на вашу почту письмо со ссылкой для смены пароля.</p>
-          <button class="confirm-btn" id="resetPasswordBtn" onclick="sendPasswordReset()">Отправить письмо для смены пароля</button>
+          <p style="font-size:13.5px; color:var(--gray); margin-bottom:14px;">Введите новый пароль и сохраните — письмо на почту для этого не нужно.</p>
+          <div class="field" style="margin-bottom:14px;">
+            <label style="font-size:12.5px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Текущий пароль</label>
+            <input type="password" id="currentPasswordInput" placeholder="Понадобится, если сессия давняя" style="width:100%; padding:12px 14px; border:1px solid #DDD; border-radius:6px; font-size:14.5px; font-family:inherit;">
+          </div>
+          <div class="field" style="margin-bottom:14px;">
+            <label style="font-size:12.5px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:6px; display:block;">Новый пароль</label>
+            <input type="password" id="newPasswordInput" placeholder="Минимум 6 символов" style="width:100%; padding:12px 14px; border:1px solid #DDD; border-radius:6px; font-size:14.5px; font-family:inherit;">
+          </div>
+          <button class="confirm-btn" id="changePasswordBtn" onclick="changePasswordDirect()">Сохранить новый пароль</button>
           <div id="settingsMsg" style="display:none; font-size:13px; margin-top:10px;"></div>
+          <p style="font-size:12.5px; color:var(--gray-light); margin-top:16px;">Забыли текущий пароль и не можете сменить сами? Напишите аналитику SCG в Telegram — он сбросит пароль напрямую и пришлёт новый лично.</p>
         </div>
       </main>
     </div>
@@ -1918,31 +1927,76 @@
     document.getElementById('settingsBranch').textContent = ropData.branch || '—';
   }
 
-  function sendPasswordReset(){
-    const email = auth.currentUser && auth.currentUser.email;
+  function changePasswordDirect(){
     const msgBox = document.getElementById('settingsMsg');
-    const btn = document.getElementById('resetPasswordBtn');
-    if(!email){
+    const btn = document.getElementById('changePasswordBtn');
+    const currentPwd = document.getElementById('currentPasswordInput').value;
+    const newPwd = document.getElementById('newPasswordInput').value;
+    const user = auth.currentUser;
+
+    msgBox.style.display = 'none';
+
+    if(!newPwd || newPwd.length < 6){
       msgBox.style.display = 'block';
       msgBox.style.color = 'var(--bad)';
-      msgBox.textContent = 'Не удалось определить email.';
+      msgBox.textContent = 'Новый пароль должен быть не короче 6 символов.';
       return;
     }
-    btn.disabled = true;
-    btn.textContent = 'Отправляем...';
-    auth.sendPasswordResetEmail(email).then(() => {
-      msgBox.style.display = 'block';
-      msgBox.style.color = 'var(--good)';
-      msgBox.textContent = `Письмо отправлено на ${email} — проверьте почту (в т.ч. папку «Спам»).`;
-      btn.disabled = false;
-      btn.textContent = 'Отправить письмо для смены пароля';
-    }).catch(err => {
-      console.error(err);
+    if(!user){
       msgBox.style.display = 'block';
       msgBox.style.color = 'var(--bad)';
-      msgBox.textContent = 'Не удалось отправить письмо. Попробуйте позже.';
+      msgBox.textContent = 'Сессия не активна — войдите заново.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Сохраняем...';
+
+    user.updatePassword(newPwd).then(() => {
+      msgBox.style.display = 'block';
+      msgBox.style.color = 'var(--good)';
+      msgBox.textContent = 'Пароль изменён. Используйте новый пароль при следующем входе.';
+      document.getElementById('currentPasswordInput').value = '';
+      document.getElementById('newPasswordInput').value = '';
       btn.disabled = false;
-      btn.textContent = 'Отправить письмо для смены пароля';
+      btn.textContent = 'Сохранить новый пароль';
+    }).catch(err => {
+      if(err.code === 'auth/requires-recent-login'){
+        if(!currentPwd){
+          msgBox.style.display = 'block';
+          msgBox.style.color = 'var(--bad)';
+          msgBox.textContent = 'Сессия давняя — введите текущий пароль в поле выше и попробуйте снова.';
+          btn.disabled = false;
+          btn.textContent = 'Сохранить новый пароль';
+          return;
+        }
+        const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPwd);
+        user.reauthenticateWithCredential(cred).then(() => {
+          return user.updatePassword(newPwd);
+        }).then(() => {
+          msgBox.style.display = 'block';
+          msgBox.style.color = 'var(--good)';
+          msgBox.textContent = 'Пароль изменён. Используйте новый пароль при следующем входе.';
+          document.getElementById('currentPasswordInput').value = '';
+          document.getElementById('newPasswordInput').value = '';
+          btn.disabled = false;
+          btn.textContent = 'Сохранить новый пароль';
+        }).catch(err2 => {
+          console.error(err2);
+          msgBox.style.display = 'block';
+          msgBox.style.color = 'var(--bad)';
+          msgBox.textContent = err2.code === 'auth/wrong-password' ? 'Текущий пароль указан неверно.' : 'Не удалось сменить пароль. Попробуйте позже.';
+          btn.disabled = false;
+          btn.textContent = 'Сохранить новый пароль';
+        });
+      } else {
+        console.error(err);
+        msgBox.style.display = 'block';
+        msgBox.style.color = 'var(--bad)';
+        msgBox.textContent = 'Не удалось сменить пароль. Попробуйте позже.';
+        btn.disabled = false;
+        btn.textContent = 'Сохранить новый пароль';
+      }
     });
   }
 
