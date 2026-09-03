@@ -746,7 +746,7 @@
         </div>
         <p style="color:var(--gray); font-size:14px; margin-bottom:26px; max-width:640px;">Короткие ролевые упражнения на 10–20 минут — разбирайте с командой на планёрке то, что чаще всего проседает в звонках. Каждую игру можно развернуть и посмотреть, как проводить.</p>
 
-        <div class="games-grid">
+        <div class="games-grid" id="gamesGrid">
           <div class="game-card" onclick="this.classList.toggle('open')">
             <div class="gh"><h4>Отработка возражения «дорого»</h4></div>
             <div class="meta"><span>10–15 мин</span><span>2 участника</span></div>
@@ -812,10 +812,42 @@
           </div>
         </div>
 
-        <button class="game-card-add" style="margin-top:16px; width:100%;" onclick="alert('Добавление своих игр — в следующей версии портала')">+ Добавить свою игру</button>
+        <button class="game-card-add" id="showAddGameBtn" style="margin-top:16px; width:100%;" onclick="toggleAddGameForm(true)">+ Добавить свою игру</button>
+
+        <div class="panel" id="addGameForm" style="display:none; margin-top:16px;">
+          <h4>Новая игра</h4>
+          <div class="field" style="margin-bottom:12px;">
+            <label style="font-size:12px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Название</label>
+            <input type="text" id="newGameTitle" placeholder="Например: Работа с отказом" style="width:100%; padding:11px 13px; border:1px solid #DDD; border-radius:8px; font-size:14px; font-family:inherit;">
+          </div>
+          <div style="display:flex; gap:12px; margin-bottom:12px;">
+            <div class="field" style="flex:1;">
+              <label style="font-size:12px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Длительность</label>
+              <input type="text" id="newGameDuration" placeholder="10-15 мин" style="width:100%; padding:11px 13px; border:1px solid #DDD; border-radius:8px; font-size:14px; font-family:inherit;">
+            </div>
+            <div class="field" style="flex:1;">
+              <label style="font-size:12px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Участники</label>
+              <input type="text" id="newGameParticipants" placeholder="2 участника" style="width:100%; padding:11px 13px; border:1px solid #DDD; border-radius:8px; font-size:14px; font-family:inherit;">
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:12px;">
+            <label style="font-size:12px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Короткое описание</label>
+            <textarea id="newGameDesc" rows="2" placeholder="Одно-два предложения, что тренирует эта игра" style="width:100%; padding:11px 13px; border:1px solid #DDD; border-radius:8px; font-size:14px; font-family:inherit; resize:vertical;"></textarea>
+          </div>
+          <div class="field" style="margin-bottom:16px;">
+            <label style="font-size:12px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; display:block;">Как проводить (каждый шаг с новой строки)</label>
+            <textarea id="newGameSteps" rows="5" placeholder="Один МОП играет менеджера...&#10;Клиент один раз произносит возражение...&#10;После диалога команда разбирает..." style="width:100%; padding:11px 13px; border:1px solid #DDD; border-radius:8px; font-size:14px; font-family:inherit; resize:vertical;"></textarea>
+          </div>
+          <div id="addGameError" style="display:none; color:var(--bad); font-size:13px; margin-bottom:12px;"></div>
+          <div style="display:flex; gap:10px;">
+            <button class="confirm-btn" id="saveGameBtn" style="flex:1;" onclick="saveNewGame()">Сохранить игру</button>
+            <button class="confirm-btn" style="flex:0 0 auto; background:var(--white); color:var(--graphite); border:1px solid var(--line); box-shadow:none;" onclick="toggleAddGameForm(false)">Отмена</button>
+          </div>
+        </div>
       </main>
     </div>
   </section>
+
 
   <!-- ================= CALL SCRIPT (question checklist) ================= -->
   <section class="screen" id="screen-script">
@@ -1394,6 +1426,8 @@
         console.error('Не удалось загрузить общий справочник филиалов/МОП:', e);
       }
       loadBestCalls();
+      loadCustomGames();
+      applyGamesAccess();
 
       renderRealDashboard(userData, ropData, mops, calls);
       populateMopSelect(mops);
@@ -1692,6 +1726,104 @@
   let companyMopMap = {};
   let companyRopMap = {};
   let returnScreen = 'dashboard';
+
+  // ---------- CUSTOM BUSINESS GAMES ----------
+  let customGames = [];
+
+  function toggleAddGameForm(show){
+    const form = document.getElementById('addGameForm');
+    const btn = document.getElementById('showAddGameBtn');
+    if(!form || !btn) return;
+    form.style.display = show ? 'block' : 'none';
+    btn.style.display = show ? 'none' : 'flex';
+    if(!show){
+      document.getElementById('newGameTitle').value = '';
+      document.getElementById('newGameDuration').value = '';
+      document.getElementById('newGameParticipants').value = '';
+      document.getElementById('newGameDesc').value = '';
+      document.getElementById('newGameSteps').value = '';
+      const err = document.getElementById('addGameError');
+      if(err) err.style.display = 'none';
+    }
+  }
+
+  function applyGamesAccess(){
+    const btn = document.getElementById('showAddGameBtn');
+    if(!btn) return;
+    btn.style.display = isAdminUser ? 'flex' : 'none';
+    if(!isAdminUser){ toggleAddGameForm(false); }
+  }
+
+  async function loadCustomGames(){
+    try{
+      const snap = await db.collection('games').orderBy('createdAt', 'desc').get();
+      customGames = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch(e){
+      console.error('Не удалось загрузить игры:', e);
+      customGames = [];
+    }
+    renderCustomGames();
+  }
+
+  function renderCustomGames(){
+    const grid = document.getElementById('gamesGrid');
+    if(!grid) return;
+    document.querySelectorAll('.game-card[data-custom="1"]').forEach(el => el.remove());
+    customGames.forEach(g => {
+      const steps = Array.isArray(g.steps) ? g.steps : [];
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.setAttribute('data-custom', '1');
+      card.onclick = function(){ this.classList.toggle('open'); };
+      card.innerHTML = `
+        <div class="gh"><h4>${g.title || 'Без названия'}</h4></div>
+        <div class="meta">${g.duration ? `<span>${g.duration}</span>` : ''}${g.participants ? `<span>${g.participants}</span>` : ''}</div>
+        <p class="desc">${g.description || ''}</p>
+        <div class="expand">
+          <h5>Как проводить</h5>
+          <ol>${steps.map(s => `<li>${s}</li>`).join('')}</ol>
+          <span class="toggle">Свернуть ↑</span>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  async function saveNewGame(){
+    const errBox = document.getElementById('addGameError');
+    const btn = document.getElementById('saveGameBtn');
+    errBox.style.display = 'none';
+
+    const title = document.getElementById('newGameTitle').value.trim();
+    const duration = document.getElementById('newGameDuration').value.trim();
+    const participants = document.getElementById('newGameParticipants').value.trim();
+    const description = document.getElementById('newGameDesc').value.trim();
+    const stepsRaw = document.getElementById('newGameSteps').value;
+    const steps = stepsRaw.split('\n').map(s => s.trim()).filter(Boolean);
+
+    if(!title || !description || steps.length === 0){
+      errBox.style.display = 'block';
+      errBox.textContent = 'Заполните название, описание и хотя бы один шаг «Как проводить».';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Сохраняем...';
+    try{
+      await db.collection('games').add({
+        title, duration, participants, description, steps,
+        createdAt: new Date().toISOString(),
+        createdBy: currentUserData ? currentUserData.name : ''
+      });
+      await loadCustomGames();
+      toggleAddGameForm(false);
+    } catch(e){
+      console.error(e);
+      errBox.style.display = 'block';
+      errBox.textContent = 'Не удалось сохранить игру. Проверьте права доступа.';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Сохранить игру';
+  }
 
   const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе (Актион). Разбери расшифровку звонка менеджера (МОП) с клиентом строго по чек-листу SCG ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
 
