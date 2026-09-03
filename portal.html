@@ -747,220 +747,99 @@
         <p style="color:var(--gray); font-size:14px; margin-bottom:26px; max-width:640px;">Короткие ролевые упражнения на 10–20 минут — разбирайте с командой на планёрке то, что чаще всего проседает в звонках. Каждую игру можно развернуть и посмотреть, как проводить.</p>
 
         <div class="games-grid" id="gamesGrid">
-
           <div class="game-card" onclick="this.classList.toggle('open')">
             <div class="gh"><h4>Отработка возражения «дорого»</h4></div>
-            <div class="meta"><span>15 мин</span><span>2 участника</span><span>этап «Презентация цены»</span></div>
-            <p class="desc">Клиент сравнивает систему с конкурентом или с бесплатным поиском и держит позицию. Задача менеджера — не согласиться с возражением, не уйти в скидку, а назвать цену по формуле год → месяц → день и раскрыть, что входит в подписку. Игра тренирует не спор, а перевод разговора с цифры на ценность.</p>
+            <div class="meta"><span>10–15 мин</span><span>2 участника</span></div>
+            <p class="desc">РОП играет клиента, который сравнивает с конкурентом по цене. МОП должен не соглашаться с возражением сразу, а аргументировать ценность.</p>
             <div class="expand">
-              <h5>Что подготовить</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Шесть карточек систем — МОП тянет вслепую, по какой системе будет разговор.</li>
-                <li>Цену по каждой системе в трёх форматах: год, месяц, день. Считать в уме на игре нельзя.</li>
-                <li>Состав подписки: обновления, ответы экспертов, образцы документов, видео.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Хронометраж</h5>
-              <p style="font-size:13.5px; color:var(--gray); margin:0;">2 минуты — правила · 10 минут — раунды по 2–3 минуты · 3 минуты — общий разбор.</p>
-              <h5 style="margin-top:16px;">Как проводить</h5>
+              <h5>Как проводить</h5>
               <ol>
-                <li>МОП тянет карточку системы. Второй участник играет профильного специалиста: главбух для БСС, кадровик для КСС, юрист для ЮСС, специалист по охране труда для ОТ, бухгалтер учреждения для ГФ, контрактный управляющий для ГЗ.</li>
-                <li>Клиент произносит возражение по цене и держит позицию 2–3 реплики.</li>
-                <li>Жёсткое правило раунда: первые три реплики менеджер не имеет права упоминать скидку. Слово «скидка», сказанное раньше, — проигрыш раунда.</li>
-                <li>Менеджер обязан назвать цену в трёх форматах, сразу после цифры дать резюме, что входит в подписку, и только потом — акцию со сроком.</li>
-                <li>Меняются ролями, тянут новую карточку системы. 2–3 раунда на каждого.</li>
+                <li>Один МОП играет менеджера, РОП или другой МОП — клиента.</li>
+                <li>Клиент один раз произносит возражение по цене и не сдаётся сразу — держит позицию 2-3 реплики.</li>
+                <li>После диалога команда разбирает: где менеджер согласился с возражением вместо аргументации.</li>
+                <li>Повторить с другим МОП в роли менеджера.</li>
               </ol>
-              <h5 style="margin-top:16px;">Реплики клиента по системам</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li><b>БСС:</b> «У нас уже стоит другая правовая система, зачем платить дважды».</li>
-                <li><b>КСС:</b> «Кадровик у нас один, он справляется — это дорого для одного человека».</li>
-                <li><b>ЮСС:</b> «У нас юрист с опытом, он всё найдёт сам и бесплатно».</li>
-                <li><b>ОТ:</b> «Охраной труда занимается совместитель, ему хватит того, что есть в открытом доступе».</li>
-                <li><b>ГФ:</b> «Бюджет на год уже утверждён, статьи на подписку в нём нет».</li>
-                <li><b>ГЗ:</b> «Закупок у нас немного, документацию готовим сами по тексту закона».</li>
-              </ul>
-              <h5 style="margin-top:16px;">Пример раунда</h5>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:0 0 4px;">Клиент (БСС): «У конкурентов дешевле, а у вас за что такие деньги?»</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Неудачный ответ менеджера:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Да, у нас действительно немного дороже. Но продукт хороший, давайте я узнаю, можно ли сделать скидку.»</p>
-              <p style="font-size:13px; color:#C0392B; margin:0 0 10px;">Согласился с возражением и сразу ушёл в скидку. Ценность не названа, цена не прозвучала ни в одном формате — раунд проигран.</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Рабочий ответ менеджера:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Давайте я сначала назову цифры, а вы решите, дорого это или нет. Подписка — столько-то в год, это около стольких-то в месяц и порядка стольких-то в день. За эти деньги — ежедневно обновляемая база, ответы экспертов на ваши вопросы и готовые образцы документов. А с чем именно вы сравниваете — с другой системой или с бесплатным поиском?»</p>
-              <p style="font-size:13px; color:#2E7D46; margin:0 0 10px;">Цена названа в трёх форматах, следом — состав подписки, и разговор возвращён к выяснению, с чем сравнивает клиент. Скидка не упомянута.</p>
-              <h5 style="margin-top:16px;">Разбор в конце</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Прозвучала ли фраза «да, у нас дороже» — согласие с возражением до аргументации.</li>
-                <li>Была ли цена названа в трёх форматах и шло ли резюме подписки сразу после цифры.</li>
-                <li>Выяснил ли менеджер, с чем сравнивает клиент, прежде чем спорить о цене.</li>
-              </ul>
               <span class="toggle">Свернуть ↑</span>
             </div>
           </div>
 
           <div class="game-card" onclick="this.classList.toggle('open')">
             <div class="gh"><h4>Холодный звонок за 60 секунд</h4></div>
-            <div class="meta"><span>15 мин</span><span>2 участника</span><span>этап «Установление контакта»</span></div>
-            <p class="desc">Отработка первых секунд разговора — самой частой точки провала холодного звонка. Цель менеджера — за 60 секунд назвать понятный повод, привязанный к работе клиента, и получить согласие на короткую демонстрацию. Игра тренирует не «пробить» отказ, а дать клиенту причину продолжить разговор.</p>
+            <div class="meta"><span>15 мин</span><span>2 участника</span></div>
+            <p class="desc">Отработка первых секунд разговора — самой частой точки провала холодных звонков. Цель — зацепить внимание за 60 секунд.</p>
             <div class="expand">
-              <h5>Что подготовить</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>По одному свежему профильному поводу на каждую систему: изменение в законодательстве по профилю клиента, новая форма или отчёт, разъяснение ведомства, новый сервис внутри системы.</li>
-                <li>Карточки систем — менеджер не знает заранее, по какой системе будет звонок, и не может подготовить один заученный текст.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Хронометраж</h5>
-              <p style="font-size:13.5px; color:var(--gray); margin:0;">2 минуты — правила · 10 минут — раунды по 60 секунд с коротким разбором · 3 минуты — общий разбор.</p>
-              <h5 style="margin-top:16px;">Как проводить</h5>
+              <h5>Как проводить</h5>
               <ol>
-                <li>МОП тянет карточку системы и звонит «клиенту». Коллега играет профильного специалиста, который в первой же реплике говорит «нам ничего не нужно».</li>
-                <li>Запрещённая фраза: «удобно ли сейчас говорить». Вместо неё — приветствие по имени-отчеству, представление и сразу повод звонка.</li>
-                <li>Повод должен быть привязан к работе клиента, а не к продукту: не «мы предлагаем систему», а «вышло изменение, которое касается вашего участка».</li>
-                <li>Задача — за 60 секунд удержать разговор и получить согласие на 10–15 минут показа. Таймер останавливают ровно на 60-й секунде, даже на середине фразы.</li>
-                <li>Разбор вслух: что зацепило, а что прозвучало как шаблон. Повтор с другой системой и другим менеджером.</li>
+                <li>МОП звонит «клиенту» (роль играет коллега), который сразу говорит «нам ничего не нужно».</li>
+                <li>Задача — за 60 секунд удержать разговор и получить согласие на 2-3 минуты.</li>
+                <li>Засеките время, остановите ровно на 60-й секунде.</li>
+                <li>Разберите вслух: что зацепило, а что прозвучало как шаблон.</li>
               </ol>
-              <h5 style="margin-top:16px;">Повод звонка по системам</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li><b>БСС:</b> изменения по налогам и отчётности, которые бухгалтеру нужно применить в ближайший отчётный период.</li>
-                <li><b>КСС:</b> новые требования к оформлению кадровых документов и проверки трудовой инспекции.</li>
-                <li><b>ЮСС:</b> изменения в договорной работе и свежая судебная практика по типовым спорам.</li>
-                <li><b>ОТ:</b> обновления по инструктажам, обучению и СОУТ, штрафы за нарушения.</li>
-                <li><b>ГФ:</b> изменения в отчётности учреждений и порядке ведения учёта.</li>
-                <li><b>ГЗ:</b> поправки в закупочное законодательство и типовые ошибки в документации.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Пример раунда</h5>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:0 0 4px;">Клиент: «Нам ничего не нужно, спасибо».</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Шаблонный ответ:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Я вас понял, но всё-таки хотел бы рассказать о нашей системе, это займёт буквально пару минут...»</p>
-              <p style="font-size:13px; color:#C0392B; margin:0 0 10px;">Повода нет, есть только желание рассказать о продукте. Клиент слышит рекламу и кладёт трубку.</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Рабочий ответ:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Мария Ивановна, я и не с предложением. Звоню, потому что по вашему участку вышло изменение, которое вступает в силу в ближайшее время, — многие бухгалтеры о нём узнают уже по факту доначислений. Расскажу за две минуты, что именно поменялось, а дальше вы сами решите, нужно ли вам смотреть систему. Хорошо?»</p>
-              <p style="font-size:13px; color:#2E7D46; margin:0 0 10px;">Повод конкретный, привязан к работе клиента, обозначен регламент и оставлено право отказаться. Разговор продолжается.</p>
-              <h5 style="margin-top:16px;">Разбор в конце</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Понял ли клиент за первые 15 секунд, кто звонит и зачем.</li>
-                <li>Был ли повод конкретным и профильным — или это было общее «рассказать о нашей системе».</li>
-                <li>Прозвучал ли регламент разговора: сколько займёт и что будет по шагам.</li>
-              </ul>
               <span class="toggle">Свернуть ↑</span>
             </div>
           </div>
 
           <div class="game-card" onclick="this.classList.toggle('open')">
             <div class="gh"><h4>Выявление потребности: 5 вопросов</h4></div>
-            <div class="meta"><span>15 мин</span><span>2 участника</span><span>блок «До демонстрации»</span></div>
-            <p class="desc">Менеджер обязан задать пять открытых вопросов подряд, прежде чем предложить показать систему. Игра тренирует паузу перед продажей и умение попадать вопросами в профиль конкретной системы, а не задавать одинаковую анкету всем клиентам подряд.</p>
+            <div class="meta"><span>10 мин</span><span>2 участника</span></div>
+            <p class="desc">МОП должен задать 5 открытых вопросов подряд, прежде чем переходить к презентации продукта — тренирует паузу перед продажей.</p>
             <div class="expand">
-              <h5>Что подготовить</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Четыре обязательных вопроса блока «До демонстрации» из скрипта: чем занимается компания, какой правовой системой пользуются или пользовались, сколько платят или платили, до какого срока действует подписка.</li>
-                <li>Карточки систем — менеджер узнаёт профиль клиента только в момент начала раунда.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Хронометраж</h5>
-              <p style="font-size:13.5px; color:var(--gray); margin:0;">2 минуты — правила · 10 минут — раунды по 3–4 минуты · 3 минуты — общий разбор.</p>
-              <h5 style="margin-top:16px;">Как проводить</h5>
+              <h5>Как проводить</h5>
               <ol>
-                <li>«Клиент» отвечает односложно и сам разговор не поддерживает — все паузы держит менеджер.</li>
-                <li>Менеджер обязан задать минимум 5 открытых вопросов до того, как предложит показать систему.</li>
-                <li>Первые четыре — обязательный блок «До демонстрации». Пятый и последующие — профильные под вытянутую систему.</li>
-                <li>Вопрос, на который можно ответить «да» или «нет», не засчитывается: менеджер переформулирует его на месте, вслух.</li>
-                <li>В финале менеджер вслух формулирует два вывода: что он узнал о клиенте и какой раздел системы будет показывать в первую очередь.</li>
+                <li>«Клиент» отвечает односложно, не помогает разговору сам.</li>
+                <li>МОП обязан задать минимум 5 открытых вопросов, прежде чем предложить решение.</li>
+                <li>Каждый вопрос «да/нет» не засчитывается — нужно переформулировать.</li>
+                <li>В конце — что узнали о клиенте, чего не знали в начале.</li>
               </ol>
-              <h5 style="margin-top:16px;">Профильные вопросы по системам</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li><b>БСС:</b> какой режим налогообложения, какие участки закрывает бухгалтерия, что чаще всего ищут перед сдачей отчётности.</li>
-                <li><b>КСС:</b> сколько человек в штате, кто ведёт кадровый учёт, как оформляют нестандартные ситуации — переводы, совмещения, увольнения по спорным основаниям.</li>
-                <li><b>ЮСС:</b> какие договоры готовят чаще всего, есть ли сейчас споры в работе, кто проверяет документы перед подписанием.</li>
-                <li><b>ОТ:</b> сколько рабочих мест, кто отвечает за инструктажи и СОУТ, были ли проверки и предписания.</li>
-                <li><b>ГФ:</b> тип учреждения, какие отчётные формы вызывают больше всего вопросов, кто согласует учётную политику.</li>
-                <li><b>ГЗ:</b> по какому закону закупают, сколько процедур в месяц, кто готовит документацию и кто отвечает за обоснование цены.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Пример раунда</h5>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Закрытый вопрос (не засчитан):</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«У вас есть правовая система?»</p>
-              <p style="font-size:13px; color:#C0392B; margin:0 0 10px;">Ответ «да» или «нет» закрывает тему и не даёт менеджеру ничего для презентации.</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Тот же вопрос, переформулированный:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Расскажите, какой правовой системой сейчас пользуетесь и в каких задачах она вас чаще всего выручает?»</p>
-              <p style="font-size:13px; color:#2E7D46; margin:0 0 10px;">Клиент называет систему, сценарии работы и — почти всегда — то, чего ему не хватает. Это готовый материал для показа и для аргументации цены.</p>
-              <h5 style="margin-top:16px;">Разбор в конце</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Сколько вопросов оказались закрытыми и на каком месте разговора менеджера потянуло к продаже.</li>
-                <li>Звучал ли блок как анкета или как живой диалог: были ли реакции на ответы клиента.</li>
-                <li>Что нового узнали о клиенте, чего не было в начале разговора.</li>
-              </ul>
               <span class="toggle">Свернуть ↑</span>
             </div>
           </div>
 
           <div class="game-card" onclick="this.classList.toggle('open')">
             <div class="gh"><h4>Закрытие без «подумаю»</h4></div>
-            <div class="meta"><span>15 мин</span><span>2 участника</span><span>этап 5 · закрытие</span></div>
-            <p class="desc">Клиент в финале говорит «мне надо подумать». Задача менеджера — понять настоящую причину паузы, выйти на того, кто принимает решение, и зафиксировать конкретный следующий шаг вместо расплывчатого «созвонимся». Игра тренирует не дожим, а точность вопросов в финале разговора.</p>
+            <div class="meta"><span>10 мин</span><span>2 участника</span></div>
+            <p class="desc">Клиент в финале говорит «мне надо подумать» — задача МОП понять реальную причину паузы и назначить конкретный следующий шаг.</p>
             <div class="expand">
-              <h5>Что подготовить</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Карточки с настоящей причиной паузы — их видит только играющий клиента: цена не заложена в бюджет этого квартала; решение принимает не он; подписка у конкурента заканчивается только через несколько месяцев; не понял ценности; нужна процедура закупки.</li>
-                <li>Форму блока «Закрытие» из скрипта: дата и время следующего контакта, что высылаем, кому передать материалы, микро-обязательство клиента.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Хронометраж</h5>
-              <p style="font-size:13.5px; color:var(--gray); margin:0;">2 минуты — правила и раздача карточек причин · 10 минут — раунды по 3 минуты · 3 минуты — общий разбор.</p>
-              <h5 style="margin-top:16px;">Как проводить</h5>
+              <h5>Как проводить</h5>
               <ol>
-                <li>Клиент тянет карточку с причиной и произносит только «я подумаю». Настоящую причину не выдаёт, пока менеджер не нащупает её вопросами.</li>
-                <li>Менеджер выясняет причину, не дожимая продажу силой: давление и повторное «ну давайте оформим» считаются проигрышем раунда.</li>
-                <li>Отдельно проверяем, спросил ли менеджер, кто ещё влияет на решение и как согласуется покупка. Для ГФ и ГЗ причина паузы почти всегда в процедуре, а не в нежелании клиента.</li>
-                <li>Раунд засчитан, только если в финале вслух заполнены все четыре поля блока «Закрытие» — с конкретной датой, а не «на следующей неделе».</li>
-                <li>Меняются ролями, тянут новую карточку причины.</li>
+                <li>Клиент завершает разговор фразой «я подумаю» несмотря на попытки менеджера.</li>
+                <li>МОП должен выяснить настоящую причину сомнения, не дожимая продажу силой.</li>
+                <li>Финал — либо конкретная дата следующего созвона, либо честно понятая причина отказа.</li>
+                <li>Разбор: удалось ли уйти от общей фразы к конкретике.</li>
               </ol>
-              <h5 style="margin-top:16px;">Пример раунда</h5>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:0 0 4px;">Клиент (карточка: решение принимает финансовый директор): «Спасибо, я подумаю».</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Неудачный финал:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Хорошо, подумайте, я тогда наберу вас на следующей неделе. Всего доброго!»</p>
-              <p style="font-size:13px; color:#C0392B; margin:0 0 10px;">Причина не выяснена, дата не назначена, инициатива осталась у клиента. Такой звонок в отчёте выглядит как работа, но следующего шага в нём нет.</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Рабочий финал:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Конечно, решение не минутное. Подскажите, что для вас пока остаётся открытым вопросом — стоимость или то, как это ляжет на вашу работу? ... Понял, значит финальное слово за финансовым директором. Давайте сделаем так: сегодня пришлю вам короткое сравнение с тем, что у вас сейчас, вы покажете его руководителю, а в четверг в 11 созвонимся и обсудим его вопросы. Договорились?»</p>
-              <p style="font-size:13px; color:#2E7D46; margin:0 0 10px;">Причина названа, выявлен второй участник решения, зафиксированы дата, материалы и микро-обязательство клиента — показать документ руководителю.</p>
-              <h5 style="margin-top:16px;">Разбор в конце</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Совпала ли догадка менеджера с тем, что было написано на карточке клиента.</li>
-                <li>Кто назначил следующий шаг — менеджер или клиент. Инициатива должна остаться у менеджера.</li>
-                <li>Есть ли микро-обязательство клиента до следующего звонка: посмотреть материал, показать руководителю, уточнить срок подписки.</li>
-              </ul>
               <span class="toggle">Свернуть ↑</span>
             </div>
           </div>
 
           <div class="game-card" onclick="this.classList.toggle('open')">
-            <div class="gh"><h4>Кирпичик за 60 секунд</h4></div>
-            <div class="meta"><span>10 мин</span><span>2 участника</span><span>формула аргумента</span></div>
-            <p class="desc">Быстрая парная тренировка на скорость и беглость: превращать сырую выгоду системы в полный структурированный аргумент — выгода → факт/цифра → сравнение → источник — без раздумий, под таймер. Не про глубину, а про то, чтобы формула сама отскакивала от зубов.</p>
+            <div class="gh"><h4>Скупой миллионер в автосалоне</h4></div>
+            <div class="meta"><span>15 мин</span><span>2 участника</span></div>
+            <p class="desc">Клиент явно при деньгах — приехал за топовой комплектацией, но торгуется из принципа и придирается к каждой строчке цены. Задача МОП — не скатиться в скидку, а показать ценность.</p>
             <div class="expand">
-              <h5>Что подготовить</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>8–10 «сырых» выгод — по одной короткой фразе, без раскрытия. Можно взять из скрипта звонка или из ответов клиентов на вопрос «что нравится в системе больше всего»: ежедневные обновления, ответы экспертов, готовые образцы документов, доступ с любого устройства, быстрый поиск, видеосеминары.</li>
-                <li>Карточки систем: одна и та же выгода звучит по-разному для главбуха, кадровика и контрактного управляющего.</li>
-                <li>Написать выгоды на бумажках и тянуть вслепую — так интереснее, чем зачитывать по списку.</li>
-              </ul>
-              <h5 style="margin-top:16px;">Хронометраж</h5>
-              <p style="font-size:13.5px; color:var(--gray); margin:0;">1 минута — правила · 6 минут — раунды (3–4 круга на каждого) · 3 минуты — общий разбор.</p>
-              <h5 style="margin-top:16px;">Как проводить</h5>
+              <h5>Как проводить</h5>
               <ol>
-                <li>Партнёр А называет или тянет одну сырую выгоду вслух и добавляет систему: БСС, КСС, ЮСС, ОТ, ГФ или ГЗ.</li>
-                <li>Партнёр Б включает таймер на 60 секунд и вслух собирает полный аргумент по формуле.</li>
-                <li>Если не уложился в 60 секунд или пропустил один из четырёх кирпичиков — партнёр А называет, чего именно не хватило.</li>
-                <li>Меняются ролями, берут новую выгоду. Повторяют 3–4 круга на каждого.</li>
+                <li>«Клиент» — обеспеченный человек, который вслух сомневается в каждой опции, хотя явно может себе это позволить («а зачем платить за это отдельно, это же и так должно быть включено»).</li>
+                <li>МОП не имеет права предлагать скидку первым — только аргументировать ценность того, за что платит клиент.</li>
+                <li>Клиент соглашается на сделку только после того, как услышал минимум три весомых аргумента о выгоде, а не о цене.</li>
+                <li>Разбор: сколько раз МОП скатился в оправдания цены вместо аргументации ценности.</li>
               </ol>
-              <h5 style="margin-top:16px;">Пример раунда</h5>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:0 0 4px;">Выгода: «ежедневные обновления», система БСС</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Уложился, все четыре кирпичика:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«База обновляется каждый день — это значит, вы всегда работаете с последней редакцией, а не применяете уже отменённую норму и не получаете доначисление на ровном месте. Многие источники, включая бесплатные, обновляются заметно реже, а изменения по вашему участку выходят постоянно. Посмотреть можно прямо в системе — там виден журнал обновлений с датами.»</p>
-              <p style="font-size:13px; color:#2E7D46; margin:0 0 10px;">Выгода, факт, сравнение и источник на месте, уложился в 60 секунд — засчитано.</p>
-              <p style="font-size:13.5px; font-weight:700; color:var(--graphite); margin:10px 0 2px;">Неудачная попытка:</p>
-              <p style="background:var(--peach); border-left:3px solid var(--orange-deep); border-radius:0 6px 6px 0; padding:9px 13px; margin:6px 0 4px; font-size:13.5px; font-style:italic; color:var(--graphite);">«Мы обновляемся каждый день, это лучше, чем у других.»</p>
-              <p style="font-size:13px; color:#C0392B; margin:0 0 10px;">Пропущен факт (не раскрыто, что именно даёт ежедневное обновление) и источник (сравнение ничем не подкреплено).</p>
-              <h5 style="margin-top:16px;">Разбор в конце</h5>
-              <ul style="padding-left:18px; font-size:13.5px; color:var(--graphite); display:grid; gap:6px; margin:0;">
-                <li>Какие кирпичики выпадали чаще всего — обычно это факт и источник.</li>
-                <li>Какая выгода оказалась сложнее всего для сборки за 60 секунд.</li>
-                <li>На какой системе аргумент звучал слабее — там же обычно и проседают реальные звонки.</li>
-              </ul>
+              <span class="toggle">Свернуть ↑</span>
+            </div>
+          </div>
+
+          <div class="game-card" onclick="this.classList.toggle('open')">
+            <div class="gh"><h4>Аргументы для директора: 4 кирпичика</h4></div>
+            <div class="meta"><span>20 мин</span><span>вся команда</span></div>
+            <p class="desc">Сокращённая версия тренинга по переговорам с ЛПР — от разбора интересов директора до готовых аргументов по системе Главбух, собранных по формуле «выгода → факт → сравнение → источник».</p>
+            <div class="expand">
+              <h5>Как проводить</h5>
+              <ol>
+                <li>Разминка: вспомнить 4 функции управленца — планирование, организация, мотивация, контроль — и для каждой назвать, что директора беспокоит именно в этой роли.</li>
+                <li>Мозговой штурм: набросать сферу интересов директора — финансы, риски, время, люди и всё, что для него реально важно за пределами самого продукта.</li>
+                <li>Каждый называет 2-3 вопроса, которые нужно узнать о директоре до звонка (у секретаря, у контактного лица) — сверить со «Шагом 3. Перед ценой» в скрипте звонка.</li>
+                <li>Разобрать структуру одного сильного аргумента — 4 кирпичика: выгода → факт/цифра → сравнение → источник. Собрать один аргумент по формуле вслух на общем примере.</li>
+                <li>Финал: каждый МОП формулирует 5 аргументов для директора по системе Главбух, используя формулу из предыдущего шага, зачитывает вслух — команда даёт обратную связь.</li>
+              </ol>
               <span class="toggle">Свернуть ↑</span>
             </div>
           </div>
@@ -1231,6 +1110,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+<!-- EmailJS (client-side email sending — no backend needed) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyC8zai8A4ynGxJz22YKmkwNP7Ir2MXwbAQ",
@@ -1242,6 +1124,22 @@
   };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
+
+  // ---------- EmailJS: авто-отправка чек-листа РОПу после подтверждения оценки ----------
+  emailjs.init({ publicKey: 'ym_rT5D6FUWH1VyKF' });
+  const EMAILJS_SERVICE_ID = 'service_p3nngca';
+  const EMAILJS_TEMPLATE_ID = 'template_ka6z6mq';
+
+  const ROP_EMAILS = {
+    spb_onishchuk: 'a.onishchuk@1gl-spb.ru',
+    msk_murtazaev: 'e.murtazaev@1gl-spb.ru',
+    novgorod_bikmansurov: 'r.bikmansurov@1gl-spb.ru',
+    pskov_smirnov: 'al.smirnov@1gl-spb.ru',
+    cherepovets_zelenuho: 'a.zelenuho@1gl-spb.ru',
+    lipetsk_dediaeva: 'a.dediaeva@1gl-spb.ru',
+    voronezh_rotenberg: 's.rotenberg@1gl-spb.ru',
+    spb_dop: 'k.musakina@1gl-spb.ru'
+  };
   const db = firebase.firestore();
 
   const GROUP_LABELS = { 'новый':'Новый', 'слабый':'Слабый', 'средний':'Средний', 'сильный':'Сильный' };
@@ -1835,6 +1733,77 @@
     go('call');
   }
 
+  function buildChecklistEmailHtml(call, mopName, branchName){
+    const a = call.aiAnalysis || {};
+    const score = typeof a.score === 'number' ? a.score : '—';
+    const stages = a.stages || [];
+    const checklist = a.checklist || [];
+    const strengths = a.strengths || [];
+    const weaknesses = a.weaknesses || [];
+    const recommendation = a.recommendation || '';
+
+    const stageMarkText = s => s === 'done' ? '✓' : (s === 'partial' ? '±' : '✗');
+    const stageColor = s => s === 'done' ? '#2E7D32' : (s === 'partial' ? '#9C7A1E' : '#C0392B');
+
+    const stagesHtml = stages.map(st => `
+      <tr>
+        <td style="padding:4px 8px 4px 0; color:${stageColor(st.status)}; font-weight:bold; width:20px;">${stageMarkText(st.status)}</td>
+        <td style="padding:4px 0; color:#1A1A1A;">${st.id}. ${st.name}${st.comment ? ` — <span style="color:#595959;">${st.comment}</span>` : ''}</td>
+      </tr>`).join('');
+
+    const checklistHtml = checklist.map(block => {
+      const done = block.items.filter(i => i.done).length;
+      const itemsHtml = block.items.map(i => `
+        <tr>
+          <td style="padding:2px 8px 2px 16px; color:${i.done ? '#2E7D32' : '#C0392B'}; font-weight:bold; width:20px;">${i.done ? '✓' : '✗'}</td>
+          <td style="padding:2px 0; color:${i.done ? '#1A1A1A' : '#8A8A8A'};">${i.text}</td>
+        </tr>`).join('');
+      return `
+        <tr><td colspan="2" style="padding:10px 0 4px; font-weight:bold; color:#1A1A1A; border-top:1px solid #eee;">${block.block} — ${done}/${block.items.length}</td></tr>
+        ${itemsHtml}`;
+    }).join('');
+
+    const strengthsHtml = strengths.map(s => `<div style="color:#2E7D32; margin-bottom:3px;">+ ${s}</div>`).join('');
+    const weaknessesHtml = weaknesses.map(w => `<div style="color:#C0392B; margin-bottom:3px;">– ${w}</div>`).join('');
+
+    return `
+      <table style="width:100%; max-width:600px; border-collapse:collapse; font-family:Arial,sans-serif; font-size:14px;">
+        <tr><td colspan="2" style="padding-bottom:10px;">
+          <b>${mopName}</b> · ${branchName}<br>
+          <span style="color:#595959;">Звонок ${formatCallDate(call.date)} · Оценка <b style="color:#E8641F;">${score}/10</b></span>
+        </td></tr>
+        <tr><td colspan="2" style="padding:10px 0 4px; font-weight:bold; border-top:1px solid #eee;">Этапы звонка</td></tr>
+        ${stagesHtml}
+        ${checklistHtml}
+        <tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #eee;">Сильные стороны</td></tr>
+        <tr><td colspan="2">${strengthsHtml || '<span style="color:#8A8A8A;">Не выделено</span>'}</td></tr>
+        <tr><td colspan="2" style="padding:10px 0 4px; font-weight:bold;">Слабые стороны</td></tr>
+        <tr><td colspan="2">${weaknessesHtml || '<span style="color:#8A8A8A;">Не выделено</span>'}</td></tr>
+        ${recommendation ? `<tr><td colspan="2" style="padding:14px 0 4px; font-weight:bold; border-top:1px solid #eee;">Рекомендация специалисту</td></tr><tr><td colspan="2" style="color:#1A1A1A;">${recommendation}</td></tr>` : ''}
+      </table>`;
+  }
+
+  function sendChecklistEmail(call, mop){
+    if(!mop || !mop.ropId){ return; }
+    const ropEmail = ROP_EMAILS[mop.ropId];
+    if(!ropEmail){ console.warn('Нет email для ropId:', mop.ropId); return; }
+    const rop = companyRopMap[mop.ropId] || ropMap[mop.ropId];
+    const branchName = rop ? (rop.branch || rop.name) : '';
+
+    const checklistHtml = buildChecklistEmailHtml(call, mop.name || 'МОП', branchName);
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email: ropEmail,
+      mop_name: mop.name || 'МОП',
+      call_date: formatCallDate(call.date),
+      checklist_html: checklistHtml
+    }).then(() => {
+      console.log('Письмо с чек-листом отправлено на', ropEmail);
+    }).catch(err => {
+      console.error('Не удалось отправить письмо с чек-листом:', err);
+    });
+  }
+
   async function confirmCurrentCall(){
     if(!currentOpenCallId) return;
     const btn = document.getElementById('callConfirmBtn');
@@ -1847,9 +1816,11 @@
         'analystReview.comment': comment,
         'analystReview.confirmedAt': new Date().toISOString()
       });
-      const call = currentCalls.find(c => c.id === currentOpenCallId);
+      const call = currentCalls.find(c => c.id === currentOpenCallId) || bestCalls.find(c => c.id === currentOpenCallId);
       if(call){
         call.analystReview = { status: 'confirmed', comment, confirmedAt: new Date().toISOString() };
+        const mop = mopMap[call.mopId] || companyMopMap[call.mopId];
+        sendChecklistEmail(call, mop);
       }
       document.getElementById('callReviewStatus').innerHTML = '<span class="pill good">Подтверждено аналитиком</span>';
       btn.textContent = 'Оценка подтверждена';
