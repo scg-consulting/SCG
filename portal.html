@@ -365,6 +365,7 @@
         <nav class="sb-nav">
           <a href="#" class="on">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -472,6 +473,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -481,7 +483,7 @@
         <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
       </aside>
       <main class="main">
-        <a class="back-link" href="#" onclick="go('dashboard');return false;">← Назад к дашборду</a>
+        <a class="back-link" href="#" id="callBackLink" onclick="go(returnScreen);return false;">← Назад</a>
         <div class="topbar">
           <h2 id="callTitle">Звонок · Смирнова Елена</h2>
           <span class="pill bad" id="callPill">Низкий балл · 4.2</span>
@@ -626,6 +628,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -671,6 +674,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" class="on">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -691,7 +695,35 @@
     </div>
   </section>
 
-  <!-- ================= BUSINESS GAMES ================= -->
+  <!-- ================= BEST CALLS (company-wide, score >= 8) ================= -->
+  <section class="screen" id="screen-best">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sb-logo"><div class="mk"><svg><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tx">SCG AI SALES CONTROL</div></div>
+        <nav class="sb-nav">
+          <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
+          <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" class="on">Лучшие звонки</a>
+          <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
+          <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
+          <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
+          <a href="#" onclick="go('settings');return false;">Настройки</a>
+        </nav>
+        <div class="sb-quick sbQuickStats"></div>
+        <div class="sb-foot"><div class="nm sbName">Петров А.С.</div><div class="br sbBranch">Санкт-Петербург · РОП</div></div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Лучшие звонки компании</h2>
+          <span class="cnt" id="bestCount" style="font-size:13px;">0</span>
+        </div>
+        <p style="color:var(--gray); font-size:14px; margin-bottom:26px; max-width:640px;">Звонки с оценкой от 8.0 из 10 (80%+) — по всем филиалам, независимо от того, в чьей вы команде. Открывайте разбор целиком, как обычный звонок.</p>
+
+        <div class="list" id="bestCallsList">
+        </div>
+      </main>
+    </div>
+  </section>
   <section class="screen" id="screen-games">
     <div class="shell">
       <aside class="sidebar">
@@ -699,6 +731,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" class="on">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -792,6 +825,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" class="on">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -901,6 +935,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" class="on">+ Добавить звонок</a>
@@ -948,6 +983,7 @@
         <nav class="sb-nav">
           <a href="#" onclick="go('dashboard');return false;">Дашборд</a>
           <a href="#" onclick="go('rating');return false;">Рейтинг команды</a>
+          <a href="#" onclick="go('best');return false;">Лучшие звонки</a>
           <a href="#" onclick="go('games');return false;">Бизнес-игры</a>
           <a href="#" onclick="go('script');return false;">Скрипт звонка</a>
           <a href="#" onclick="go('addcall');return false;">+ Добавить звонок</a>
@@ -1020,6 +1056,8 @@
     document.getElementById('screen-'+name).classList.add('active');
     window.scrollTo(0,0);
     if(name === 'rating'){ renderRating(); }
+    if(name === 'best'){ bestCallsLoaded ? renderBestCalls() : loadBestCalls(); }
+    if(name === 'dashboard'){ returnScreen = 'dashboard'; }
   }
 
   let currentMonthOffset = 0;
@@ -1088,6 +1126,51 @@
     }).join('');
   }
 
+  async function loadBestCalls(){
+    try{
+      const snap = await db.collection('calls')
+        .where('aiAnalysis.score', '>=', BEST_SCORE_THRESHOLD)
+        .orderBy('aiAnalysis.score', 'desc')
+        .limit(30)
+        .get();
+      bestCalls = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch(e){
+      console.error('Не удалось загрузить лучшие звонки:', e);
+      bestCalls = [];
+    }
+    bestCallsLoaded = true;
+    renderBestCalls();
+  }
+
+  function renderBestCalls(){
+    const listEl = document.getElementById('bestCallsList');
+    const countEl = document.getElementById('bestCount');
+    if(!listEl) return;
+    if(countEl) countEl.textContent = bestCalls.length;
+
+    if(bestCalls.length === 0){
+      listEl.innerHTML = `<div class="empty-state"><div class="ic"><svg viewBox="0 0 100 100" width="38" height="38"><use href="#scg-mark" xlink:href="#scg-mark"/></svg></div><div class="tt">Пока нет звонков с оценкой от ${BEST_SCORE_THRESHOLD.toFixed(1)}</div><div class="ds">Как только у любого филиала появится звонок с оценкой 80% и выше, он окажется здесь и станет виден всей компании.</div></div>`;
+      return;
+    }
+
+    listEl.innerHTML = bestCalls.map(c => {
+      const mop = companyMopMap[c.mopId] || mopMap[c.mopId];
+      const mopName = mop ? mop.name : 'МОП';
+      const rop = mop ? companyRopMap[mop.ropId] : null;
+      const branchName = rop ? (rop.branch || rop.name) : '—';
+      const score = c.aiAnalysis && typeof c.aiAnalysis.score === 'number' ? c.aiAnalysis.score : '—';
+      const dateStr = formatCallDate(c.date);
+      const badgeText = (typeof score === 'number' && score >= 9) ? 'Топ' : '80%+';
+      return `
+        <div class="row" onclick="returnScreen='best'; openCallDetail('${c.id}')">
+          <div class="who"><div class="n">${branchName} · ${mopName}</div><div class="m">Звонок ${dateStr}</div></div>
+          <span class="pill good">${badgeText}</span>
+          <div class="score">${score}</div>
+          <div class="arrow-btn">›</div>
+        </div>`;
+    }).join('');
+  }
+
   function toggleTeamGroup(groupId, headerEl){
     const groupEl = document.getElementById(groupId);
     const arrowEl = document.getElementById('arrow_' + groupId);
@@ -1142,7 +1225,7 @@
           const pillText = isPending ? 'На проверке' : (score !== '—' && score < 6 ? 'Низкий балл' : 'Хорошо');
           const durMin = c.durationSeconds ? Math.round(c.durationSeconds/60) + ' мин' : '—';
           return `
-          <div class="row" onclick="openCallDetail('${c.id}')">
+          <div class="row" onclick="returnScreen='manager'; openCallDetail('${c.id}')">
             <div class="who"><div class="n">${formatCallDate(c.date)}</div><div class="m">${durMin}</div></div>
             <span class="pill ${pillClass}">${pillText}</span>
             <div class="score">${score}</div>
@@ -1286,6 +1369,22 @@
       currentCalls = calls;
       mopMap = {};
       mops.forEach(m => { mopMap[m.id] = m; });
+
+      // Company-wide directory (all branches, all MOP) — used to show names/branches
+      // on the company-wide "Лучшие звонки" list, available to every signed-in user.
+      // Requires Firestore rules to allow read on /rops and /mops for any signed-in user.
+      try{
+        const allRopsSnap = await db.collection('rops').get();
+        companyRopMap = {};
+        allRopsSnap.docs.forEach(d => { companyRopMap[d.id] = { id: d.id, ...d.data() }; });
+
+        const allMopsSnap = await db.collection('mops').get();
+        companyMopMap = {};
+        allMopsSnap.docs.forEach(d => { companyMopMap[d.id] = { id: d.id, ...d.data() }; });
+      } catch(e){
+        console.error('Не удалось загрузить общий справочник филиалов/МОП:', e);
+      }
+      loadBestCalls();
 
       renderRealDashboard(userData, ropData, mops, calls);
       populateMopSelect(mops);
@@ -1462,10 +1561,10 @@
   }
 
   function openCallDetail(callId){
-    const call = currentCalls.find(c => c.id === callId);
+    const call = currentCalls.find(c => c.id === callId) || bestCalls.find(c => c.id === callId);
     if(!call) return;
     currentOpenCallId = callId;
-    const mop = mopMap[call.mopId] || { name: 'МОП' };
+    const mop = mopMap[call.mopId] || companyMopMap[call.mopId] || { name: 'МОП' };
     const a = call.aiAnalysis || {};
     const stages = a.stages || [];
     const checklist = a.checklist || [];
@@ -1576,6 +1675,14 @@
   let currentUserData = null;
   let currentRopData = null;
   let currentWeekOffset = 0;
+
+  // ---------- BEST CALLS (company-wide showcase, score >= 8) ----------
+  const BEST_SCORE_THRESHOLD = 8;
+  let bestCalls = [];
+  let bestCallsLoaded = false;
+  let companyMopMap = {};
+  let companyRopMap = {};
+  let returnScreen = 'dashboard';
 
   const CALL_PROMPT_TEMPLATE = `Ты — аналитик отдела контроля качества в компании, продающей корпоративный доступ к правовой информационной системе (Актион). Разбери расшифровку звонка менеджера (МОП) с клиентом строго по чек-листу SCG ниже и верни ТОЛЬКО валидный JSON, без пояснений до или после.
 
