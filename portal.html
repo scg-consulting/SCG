@@ -1126,7 +1126,15 @@
   const auth = firebase.auth();
 
   // ---------- EmailJS: авто-отправка чек-листа РОПу после подтверждения оценки ----------
-  emailjs.init({ publicKey: 'ym_rT5D6FUWH1VyKF' });
+  try{
+    if(typeof emailjs !== 'undefined'){
+      emailjs.init({ publicKey: 'ym_rT5D6FUWH1VyKF' });
+    } else {
+      console.warn('EmailJS не загрузился — отправка чек-листа будет недоступна, но портал работает.');
+    }
+  } catch(e){
+    console.warn('Ошибка инициализации EmailJS:', e);
+  }
   const EMAILJS_SERVICE_ID = 'service_p3nngca';
   const EMAILJS_TEMPLATE_ID = 'template_ka6z6mq';
 
@@ -1784,6 +1792,7 @@
   }
 
   function sendChecklistEmail(call, mop){
+    if(typeof emailjs === 'undefined'){ console.warn('EmailJS недоступен — письмо не отправлено.'); return; }
     if(!mop || !mop.ropId){ return; }
     const ropEmail = ROP_EMAILS[mop.ropId];
     if(!ropEmail){ console.warn('Нет email для ropId:', mop.ropId); return; }
