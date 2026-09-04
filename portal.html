@@ -204,6 +204,15 @@
   .confirm-btn{background:linear-gradient(165deg, var(--ink), #2b2b2b); color:#fff; border:none; padding:12px 20px; border-radius:999px; font-size:13.5px; font-weight:700; width:100%; box-shadow:0 6px 16px rgba(23,19,15,0.18); transition:transform 0.12s ease, box-shadow 0.12s ease;}
   .confirm-btn:hover{background:linear-gradient(165deg, var(--orange), var(--orange-deep)); box-shadow:0 8px 20px rgba(232,100,31,0.28); transform:translateY(-1px);}
   .confirm-btn:disabled{background:#D9D2C4; box-shadow:none; cursor:not-allowed; transform:none;}
+  .delete-btn{
+    margin-top:10px;
+    background:linear-gradient(165deg, var(--bad), #8e2c20) !important;
+    box-shadow:0 6px 16px rgba(192,57,43,0.2) !important;
+  }
+  .delete-btn:hover{
+    background:linear-gradient(165deg, #d64432, var(--bad)) !important;
+    box-shadow:0 8px 20px rgba(192,57,43,0.3) !important;
+  }
 
   /* ---------- CALL REPORT (score/stages/checklist/objections) ---------- */
   .score-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px;}
@@ -618,6 +627,7 @@
               <div style="font-size:13px; color:var(--gray); margin-bottom:14px;"><b style="color:var(--graphite);">Рекомендация специалисту:</b> <span id="callRecommendation">отработать возражения по цене через ценность продукта, не соглашаться сразу; всегда фиксировать дату следующего контакта.</span></div>
               <textarea id="callComment" rows="4" placeholder="Комментарий аналитика...">Согласен с разбором по чек-листу. Ключевая проблема — менеджер не готова аргументировать цену через ценность продукта, сразу уходит в скидку. Рекомендую разбор возражений по цене на ближайшей встрече с командой.</textarea>
               <button class="confirm-btn" id="callConfirmBtn" onclick="confirmCurrentCall()">Подтвердить оценку 4.2</button>
+              <button class="confirm-btn delete-btn" id="callDeleteBtn" onclick="deleteCurrentCall()">Удалить звонок</button>
             </div>
           </div>
         </div>
