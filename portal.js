@@ -622,6 +622,9 @@
     confirmBtn.textContent = isPending ? `Подтвердить оценку ${score}` : 'Оценка подтверждена';
     confirmBtn.disabled = !isPending;
 
+    const deleteBtn = document.getElementById('callDeleteBtn');
+    if(deleteBtn){ deleteBtn.disabled = false; deleteBtn.textContent = 'Удалить звонок'; }
+
     const totalItems = checklist.reduce((sum, b) => sum + b.items.length, 0);
     const doneItems = checklist.reduce((sum, b) => sum + b.items.filter(i => i.done).length, 0);
     document.getElementById('callChecklistTitle').textContent = `Чек-лист МОП — ${doneItems} из ${totalItems || 34} пунктов`;
@@ -738,6 +741,50 @@
       alert('Не удалось подтвердить — проверьте права доступа в Firestore Rules (нужно allow update для /calls).');
       btn.disabled = false;
       btn.textContent = 'Подтвердить оценку';
+    }
+  }
+
+  // ---------- УДАЛЕНИЕ ЗВОНКА ----------
+  // Использует currentOpenCallId (тот же id, что и confirmCurrentCall) и
+  // удаляет документ прямо из Firestore. После успеха убирает звонок из
+  // локальных массивов currentCalls/bestCalls, чтобы он сразу пропал из
+  // списков без перезагрузки страницы, и возвращает на экран, откуда
+  // открывали карточку (returnScreen — та же переменная, что и у «← Назад»).
+  async function deleteCurrentCall(){
+    if(!currentOpenCallId) return;
+
+    if(!confirm('Удалить этот звонок безвозвратно? Это действие нельзя отменить.')) return;
+
+    const btn = document.getElementById('callDeleteBtn');
+    btn.disabled = true;
+    btn.textContent = 'Удаляю...';
+
+    try{
+      await db.collection('calls').doc(currentOpenCallId).delete();
+
+      currentCalls = currentCalls.filter(c => c.id !== currentOpenCallId);
+      bestCalls = bestCalls.filter(c => c.id !== currentOpenCallId);
+
+      const goBackTo = returnScreen || 'dashboard';
+      currentOpenCallId = null;
+
+      if(goBackTo === 'dashboard' && currentUserData){
+        renderRealDashboard(currentUserData, currentRopData, currentMops, currentCalls);
+      }
+      if(goBackTo === 'manager' && currentManagerMopId){
+        openManagerDetail(currentManagerMopId);
+        return; // openManagerDetail уже вызывает go('manager')
+      }
+      if(goBackTo === 'best'){
+        renderBestCalls();
+      }
+
+      go(goBackTo);
+    } catch(e){
+      console.error(e);
+      alert('Не удалось удалить звонок — проверьте права доступа в Firestore Rules (нужно allow delete для /calls).');
+      btn.disabled = false;
+      btn.textContent = 'Удалить звонок';
     }
   }
 
@@ -1179,4 +1226,3 @@
   // Метка успешной загрузки: если её нет, значит portal.js не долетел.
   window.__portalReady = true;
   console.log('portal.js загружен полностью. Firebase:', firebaseReady ? 'подключён' : 'НЕДОСТУПЕН');
-
