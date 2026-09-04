@@ -321,25 +321,58 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-  // Заглушки на случай, если portal.js не загрузится. Пока его нет, кнопка
-  // «Войти» показывает понятное сообщение вместо ошибки в консоли.
-  // После загрузки portal.js эти функции заменяются настоящими.
+  // ---------- Загрузчик portal.js с повторными попытками --------------------
+  // В корпоративных сетях запрос к файлу иногда обрывается на полпути.
+  // Раньше это означало мёртвый портал. Теперь загрузчик сам пробует ещё
+  // несколько раз, каждый раз с новым адресом (чтобы обойти кэш), и только
+  // после четырёх неудач показывает сообщение.
   window.__portalReady = false;
-  function showBootError(msg){
+
+  function setBootMsg(msg, isError){
     var box = document.getElementById('loginError');
-    if(box){ box.textContent = msg; box.style.display = 'block'; }
-    else { alert(msg); }
+    if(!box){ if(isError) alert(msg); return; }
+    box.textContent = msg;
+    box.style.display = msg ? 'block' : 'none';
+    box.style.color = isError ? '' : 'var(--gray)';
   }
-  window.doLogin  = function(){ showBootError('Портал не загрузился до конца. Обновите страницу сочетанием Ctrl+Shift+R. Если не помогает — сеть вашего офиса обрывает загрузку, сообщите аналитику SCG.'); };
+  function showBootError(msg){ setBootMsg(msg, true); }
+
+  // Заглушки: работают, пока portal.js не загрузился.
+  window.doLogin  = function(){ setBootMsg('Портал ещё загружается, подождите пару секунд и нажмите «Войти» снова.', false); };
   window.doLogout = function(){ location.reload(); };
   window.go       = function(){};
-  window.addEventListener('load', function(){
-    if(!window.__portalReady){
-      showBootError('Портал загрузился не полностью. Обновите страницу сочетанием Ctrl+Shift+R. Если сообщение повторяется — сообщите аналитику SCG.');
+
+  (function(){
+    var attempt = 0, MAX = 4, finished = false;
+
+    function done(){ finished = true; setBootMsg('', false); }
+
+    function fail(){
+      if(finished || window.__portalReady) return;
+      if(attempt >= MAX){
+        finished = true;
+        showBootError('Не удалось загрузить портал за 4 попытки. Обновите страницу сочетанием Ctrl+Shift+R. Если повторяется — сеть вашего офиса блокирует загрузку, сообщите аналитику SCG.');
+        return;
+      }
+      setBootMsg('Соединение оборвалось, пробуем ещё раз... (' + attempt + ' из ' + MAX + ')', false);
+      setTimeout(load, 1200);
     }
-  });
+
+    function load(){
+      if(finished || window.__portalReady) return;
+      attempt++;
+      var s = document.createElement('script');
+      s.src = 'portal.js?try=' + attempt + '&t=' + Date.now();
+      s.onload  = function(){ window.__portalReady ? done() : fail(); };
+      s.onerror = fail;
+      document.head.appendChild(s);
+      setTimeout(function(){ if(!window.__portalReady) fail(); }, 9000);
+    }
+
+    if(document.readyState === 'complete') load();
+    else window.addEventListener('load', load);
+  })();
 </script>
-<script defer src="portal.js" onerror="showBootError('Не удалось загрузить portal.js — соединение оборвано. Обновите страницу или сообщите аналитику SCG.')"></script>
 </head>
 <body>
 
