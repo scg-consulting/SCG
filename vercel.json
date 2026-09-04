@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/portal.html", "destination": "/", "permanent": false },
+    { "source": "/portal.js", "destination": "/", "permanent": false }
+  ]
+}
