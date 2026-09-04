@@ -623,7 +623,11 @@
     confirmBtn.disabled = !isPending;
 
     const deleteBtn = document.getElementById('callDeleteBtn');
-    if(deleteBtn){ deleteBtn.disabled = false; deleteBtn.textContent = 'Удалить звонок'; }
+    if(deleteBtn){
+      deleteBtn.style.display = isAdminUser ? '' : 'none';
+      deleteBtn.disabled = false;
+      deleteBtn.textContent = 'Удалить звонок';
+    }
 
     const totalItems = checklist.reduce((sum, b) => sum + b.items.length, 0);
     const doneItems = checklist.reduce((sum, b) => sum + b.items.filter(i => i.done).length, 0);
